@@ -1,8 +1,10 @@
 from django.contrib import admin
+from django.utils.html import format_html
+
+
 from .models import (
     Class,
     Section,
-    Parent,
     Student,
     Teacher,
     Subject,
@@ -11,94 +13,152 @@ from .models import (
     Attendance,
     Exam,
     ExamAssign,
+    ExamAttendance,
     ExamResult,
 )
+
+# Register your models here.
 
 
 @admin.register(Class)
 class ClassAdmin(admin.ModelAdmin):
-    list_display = ["name", "description"]
-    list_filter = ["name"]
-    search_fields = ["name"]
+    def get_class_name(self, obj):
+        return obj.title
+
+    get_class_name.short_description = "Class Name"
+
+    list_display = ("get_class_name", "class_teacher")
 
 
 @admin.register(Section)
 class SectionAdmin(admin.ModelAdmin):
-    list_display = ["name", "description", "class_name"]
-    list_filter = ["name"]
-    search_fields = ["name"]
-
-
-@admin.register(Parent)
-class ParentAdmin(admin.ModelAdmin):
-    list_display = [
-        "name",
-    ]
-    list_filter = ["name"]
-    search_fields = ["name"]
+    pass
 
 
 @admin.register(Student)
 class StudentAdmin(admin.ModelAdmin):
-    list_display = ["name", "parent", "section"]
-    list_filter = ["name"]
-    search_fields = ["name"]
+    list_display = (
+        "name_en",
+        "student_id",
+        "admission_class",
+        "admission_date",
+        "status",
+    )
+    fieldsets = [
+        (
+            "Personal Information",
+            {
+                "fields": [
+                    (
+                        "name_en",
+                        "name_bn",
+                    ),
+                    "dob",
+                    "gender",
+                    "religion",
+                    "blood_group",
+                    "student_id",
+                    "birth_certificate_no",
+                    "image",
+                ]
+            },
+        ),
+        (
+            "Contact Information",
+            {
+                "fields": [
+                    "mobile_no",
+                    "email",
+                    "present_address",
+                    "permanent_address",
+                    "nationality",
+                ]
+            },
+        ),
+        (
+            "Father's Information",
+            {
+                "fields": [
+                    (
+                        "fathers_name_en",
+                        "fathers_name_bn",
+                    ),
+                    "fathers_occupation",
+                    "fathers_nid",
+                    "fathers_mobile_no",
+                ]
+            },
+        ),
+        (
+            "Mother's Information",
+            {
+                "fields": [
+                    (
+                        "mothers_name_en",
+                        "mothers_name_bn",
+                    ),
+                    "mothers_occupation",
+                    "mothers_nid",
+                    "mothers_mobile_no",
+                ]
+            },
+        ),
+        (
+            "Other Information",
+            {
+                "fields": [
+                    "admission_date",
+                    "admission_class",
+                    "comment",
+                    "status",
+                ]
+            },
+        ),
+    ]
+    search_fields = ("name_en", "student_id", "admission_class__title")
+    list_filter = ("admission_class", "status")
 
 
 @admin.register(Teacher)
 class TeacherAdmin(admin.ModelAdmin):
-    list_display = ["name", "description"]
-    list_filter = ["name"]
-    search_fields = ["name"]
+    pass
 
 
 @admin.register(Subject)
 class SubjectAdmin(admin.ModelAdmin):
-    list_display = ["name", "section", "description"]
-    list_filter = ["name"]
-    search_fields = ["name"]
+    pass
 
 
 @admin.register(TeacherAssign)
 class TeacherAssignAdmin(admin.ModelAdmin):
-    list_display = [
-        "teacher",
-    ]
-    list_filter = ["teacher"]
-    search_fields = ["teacher"]
+    pass
 
 
 @admin.register(StudentAssign)
 class StudentAssignAdmin(admin.ModelAdmin):
-    list_display = ["student", "section"]
-    list_filter = ["student"]
-    search_fields = ["student"]
+    pass
 
 
 @admin.register(Attendance)
 class AttendanceAdmin(admin.ModelAdmin):
-    list_display = ["student", "date", "status"]
-    list_filter = ["student"]
-    search_fields = ["student"]
+    pass
 
 
 @admin.register(Exam)
 class ExamAdmin(admin.ModelAdmin):
-    list_display = ["name", "description", "date"]
-    list_filter = ["name"]
-    search_fields = ["name"]
+    pass
 
 
 @admin.register(ExamAssign)
 class ExamAssignAdmin(admin.ModelAdmin):
-    list_display = ["exam", "subject", "section", "is_done"]
-    list_filter = ["exam", "is_done"]
-    search_fields = ["exam"]
-    list_editable = ["is_done"]
+    pass
+
+
+@admin.register(ExamAttendance)
+class ExamAttendanceAdmin(admin.ModelAdmin):
+    pass
 
 
 @admin.register(ExamResult)
 class ExamResultAdmin(admin.ModelAdmin):
-    list_display = ["exam", "subject", "student", "marks"]
-    list_filter = ["exam"]
-    search_fields = ["exam"]
+    pass

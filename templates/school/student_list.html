@@ -14,7 +14,8 @@
             <th scope="col">#</th>
             <th scope="col">Name</th>
             <th scope="col">Parent</th>
-            <th scope="col">Section</th>
+            <th scope="col">ID</th>
+            <th scope="col">Birth ID</th>
             <th scope="col">Action</th>
         </tr>
     </thead>
@@ -22,9 +23,10 @@
         {% for student in students %}
         <tr>
             <th scope="row">{{ student.id }}</th>
-            <td><a href="{{ student.id }}">{{ student.name }}</a></td>
-            <td>{{ student.parent }}</td>
-            <td>{{ student.section }}</td>
+            <td><a href="{{ student.id }}">{{ student.name_en }}</a></td>
+            <td>{{ student.fathers_name_en }}</td>
+            <td>{{ student.student_id }}</td>
+            <td>{{ student.birth_certificate_no }}</td>
             <td>
                 <button type="button" class="btn btn-primary"
                     onclick="window.location.href='{{ student.id }}/edit'">Edit</button>
