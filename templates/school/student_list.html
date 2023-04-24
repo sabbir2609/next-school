@@ -1,0 +1,39 @@
+{% extends 'base/base.html' %}
+
+{% block title %} Student List {% endblock %}
+
+{% block content %}
+
+<h1>Student List</h1>
+
+<button type="button" class="btn btn-primary" onclick="window.location.href='new'">Add Student</button>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Parent</th>
+            <th scope="col">Section</th>
+            <th scope="col">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for student in students %}
+        <tr>
+            <th scope="row">{{ student.id }}</th>
+            <td><a href="{{ student.id }}">{{ student.name }}</a></td>
+            <td>{{ student.parent }}</td>
+            <td>{{ student.section }}</td>
+            <td>
+                <button type="button" class="btn btn-primary"
+                    onclick="window.location.href='{{ student.id }}/edit'">Edit</button>
+                <button type="button" class="btn btn-danger"
+                    onclick="window.location.href='{{ student.id }}/delete'">Delete</button>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

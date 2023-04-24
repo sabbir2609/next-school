@@ -1,0 +1,22 @@
+{% extends 'base/base.html' %}
+
+{% block title %} Student Detail {% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Student Detail</h1>
+    <p>ID: {{ student.id }}</p>
+    <p>Name: {{ student.name }}</p>
+    <p>Parent: {{ student.parent }}</p>
+    <p>Section: {{ student.section }}</p>
+
+    <a href="{% url 'school:student_list' %}" class="btn btn-primary">Back</a>
+    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal">
+        Delete
+    </button>
+    <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#updateModal">
+        Update
+    </button>
+</div>
+
+{% endblock %}
