@@ -73,9 +73,17 @@ class Student(models.Model):
     )
 
     # student info
-    name_bn = models.CharField(max_length=255)
-    name_en = models.CharField(max_length=255)
-    dob = models.DateField(null=True, blank=True)
+    name_en = models.CharField(
+        max_length=255, verbose_name="Name (EN)", help_text="Student's name in English"
+    )
+    name_bn = models.CharField(
+        max_length=255,
+        null=True,
+        blank=True,
+        verbose_name="Name (BN)",
+        help_text="Student's name in Bangla",
+    )
+    dob = models.DateField(verbose_name="Date of Birth", null=True, blank=True)
     gender = models.CharField(
         max_length=1, choices=GENDER_CHOICES, null=True, blank=True
     )
@@ -83,26 +91,48 @@ class Student(models.Model):
         max_length=1, choices=RELIGION_CHOICES, null=True, blank=True
     )
     blood_group = models.CharField(
-        max_length=3, choices=BLOOD_GROUP_CHOICES, null=True, blank=True
+        max_length=3,
+        choices=BLOOD_GROUP_CHOICES,
+        verbose_name="Blood Group",
+        null=True,
+        blank=True,
     )
-    student_id = models.CharField(max_length=7, null=False, blank=True)
-    birth_certificate_no = models.CharField(max_length=17, null=False, blank=True)
+    student_id = models.CharField(
+        max_length=7, unique=True, verbose_name="Student ID", null=False, blank=True
+    )
+    birth_certificate_no = models.CharField(
+        max_length=17, verbose_name="Birth Certificate Number", null=False, blank=True
+    )
 
     # student contact info
-    mobile_no = models.CharField(max_length=11, null=True, blank=True)
+    mobile_no = models.CharField(
+        max_length=11, verbose_name="Phone Number", null=True, blank=True
+    )
     email = models.EmailField(null=True, blank=True)
 
     # father's info
-    fathers_name_bn = models.CharField(max_length=255, null=True, blank=True)
-    fathers_name_en = models.CharField(max_length=255, null=True, blank=True)
-    fathers_nid = models.CharField(max_length=17, null=True, blank=True)
+    fathers_name_en = models.CharField(
+        max_length=255, verbose_name="Father's Name (EN)", null=True, blank=True
+    )
+    fathers_name_bn = models.CharField(
+        max_length=255, verbose_name="Father's Name (EN)", null=True, blank=True
+    )
+    fathers_nid = models.CharField(
+        max_length=17, unique=True, verbose_name="Father's NID", null=True, blank=True
+    )
     fathers_occupation = models.CharField(max_length=255, null=True, blank=True)
     fathers_mobile_no = models.CharField(max_length=11, null=True, blank=True)
 
     # mother's info
-    mothers_name_bn = models.CharField(max_length=255, null=True, blank=True)
-    mothers_name_en = models.CharField(max_length=255, null=True, blank=True)
-    mothers_nid = models.CharField(max_length=17, null=True, blank=True)
+    mothers_name_en = models.CharField(
+        max_length=255, verbose_name="Mother's Name (EN)", null=True, blank=True
+    )
+    mothers_name_bn = models.CharField(
+        max_length=255, verbose_name="Mother's Name (BN)", null=True, blank=True
+    )
+    mothers_nid = models.CharField(
+        max_length=17, verbose_name="Mother's NID", unique=True, null=True, blank=True
+    )
     mothers_occupation = models.CharField(max_length=255, null=True, blank=True)
     mothers_mobile_no = models.CharField(max_length=11, null=True, blank=True)
 
@@ -162,9 +192,9 @@ class Teacher(models.Model):
     )
 
     # teacher info
-    name_bn = models.CharField(max_length=255)
     name_en = models.CharField(max_length=255)
-    dob = models.DateField(auto_now_add=True)
+    name_bn = models.CharField(max_length=255, null=True, blank=True)
+    dob = models.DateField(null=True, blank=True)
     gender = models.CharField(
         max_length=1, choices=GENDER_CHOICES, null=True, blank=True
     )
@@ -187,7 +217,7 @@ class Teacher(models.Model):
     permanent_address = models.TextField(null=True, blank=True)
 
     # school info
-    joining_date = models.DateField(auto_now_add=True)
+    joining_date = models.DateField(null=True, blank=True)
     photo = models.ImageField(upload_to="teacher_photo", null=True, blank=True)
 
     created_at = models.DateTimeField(auto_now_add=True)

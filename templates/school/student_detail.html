@@ -5,18 +5,15 @@
 {% block content %}
 <div class="container">
     <h1>Student Detail</h1>
-    <p>ID: {{ student.id }}</p>
-    <p>Name: {{ student.name }}</p>
-    <p>Parent: {{ student.parent }}</p>
-    <p>Section: {{ student.section }}</p>
+    <p>ID: {{ student.student_id }}</p>
+    <p>Name: {{ student.name_en }}</p>
+    <p>Birth ID: {{ student.birth_certificate_no }}</p>
+    <p>Father's Name: {{ student.fathers_name_en }}</p>
+    <p>Date Of Birth: {{ student.dob }}</p>
 
     <a href="{% url 'school:student_list' %}" class="btn btn-primary">Back</a>
-    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal">
-        Delete
-    </button>
-    <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#updateModal">
-        Update
-    </button>
+    <a href="{% url 'school:student_edit' student.id %}" class="btn btn-warning">Update</a>
+    <a href="{% url 'school:student_delete' student.id %}" class="btn btn-danger">Delete</a>
 </div>
 
 {% endblock %}
