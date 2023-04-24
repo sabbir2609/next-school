@@ -34,7 +34,6 @@ class StudentCreateView(CreateView):
 class StudentUpdateView(UpdateView):
     model = Student
     template_name = "school/student_update.html"
-    # fields = "__all__"
     form_class = StudentForm
 
     def get_success_url(self):

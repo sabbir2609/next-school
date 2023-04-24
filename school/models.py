@@ -74,7 +74,9 @@ class Student(models.Model):
 
     # student info
     name_en = models.CharField(
-        max_length=255, verbose_name="Name (EN)", help_text="Student's name in English"
+        max_length=255,
+        verbose_name="Name (EN)",
+        help_text="Student's full name in English",
     )
     name_bn = models.CharField(
         max_length=255,
@@ -101,7 +103,11 @@ class Student(models.Model):
         max_length=7, unique=True, verbose_name="Student ID", null=False, blank=True
     )
     birth_certificate_no = models.CharField(
-        max_length=17, verbose_name="Birth Certificate Number", null=False, blank=True
+        max_length=17,
+        verbose_name="Birth Certificate Number",
+        unique=True,
+        null=False,
+        blank=True,
     )
 
     # student contact info
