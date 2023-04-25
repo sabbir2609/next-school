@@ -1,6 +1,19 @@
 from django.db import models
 
 
+class Subject(models.Model):
+    title = models.CharField(max_length=255, help_text="Subject Name")
+    description = models.TextField(
+        null=True, blank=True, help_text="Subject Description"
+    )
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name_plural = "Subjects"
+
+
 class Class(models.Model):
     CLASS_CHOICES = (
         ("6", "Six"),
@@ -18,7 +31,7 @@ class Class(models.Model):
     )
 
     def __str__(self):
-        return self.title
+        return f"Class {self.title}"
 
     class Meta:
         verbose_name_plural = "Classes"
@@ -26,25 +39,34 @@ class Class(models.Model):
 
 class Section(models.Model):
     SECTION_CHOICES = (
-        ("A", "A"),
-        ("B", "B"),
-        ("C", "C"),
+        ("A", "Section A"),
+        ("B", "Section B"),
+        ("C", "Section C"),
         ("Sc", "Science"),
         ("Co", "Commerce"),
         ("Ar", "Arts"),
     )
-    title = models.CharField(max_length=2, choices=SECTION_CHOICES, primary_key=True)
+    name = models.CharField(
+        max_length=2, choices=SECTION_CHOICES, verbose_name="Section"
+    )
     description = models.TextField(
         help_text="Section Description, e.g. 'Section A of Class 6, total 30 students'"
     )
-    class_name = models.ForeignKey(Class, on_delete=models.CASCADE)
+    class_name = models.ForeignKey(
+        Class, on_delete=models.CASCADE, help_text="Class", verbose_name="Class"
+    )
+    class_teacher = models.ForeignKey(
+        "Teacher", on_delete=models.SET_NULL, null=True, blank=True
+    )
+    total_students = models.PositiveIntegerField(default=0)
+    subjects = models.ManyToManyField(Subject, through="SectionSubject")
 
     def __str__(self):
-        return self.title
+        return f"{self.class_name} - Section {self.name}"
 
     class Meta:
         verbose_name_plural = "Sections"
-        unique_together = ("title", "class_name")
+        unique_together = ("name", "class_name")
 
 
 class Student(models.Model):
@@ -85,7 +107,9 @@ class Student(models.Model):
         verbose_name="Name (BN)",
         help_text="Student's name in Bangla",
     )
-    dob = models.DateField(verbose_name="Date of Birth", null=True, blank=True)
+    date_of_birth = models.DateField(
+        verbose_name="Date of Birth", null=True, blank=True
+    )
     gender = models.CharField(
         max_length=1, choices=GENDER_CHOICES, null=True, blank=True
     )
@@ -111,7 +135,7 @@ class Student(models.Model):
     )
 
     # student contact info
-    mobile_no = models.CharField(
+    phone = models.CharField(
         max_length=11, verbose_name="Phone Number", null=True, blank=True
     )
     email = models.EmailField(null=True, blank=True)
@@ -127,7 +151,7 @@ class Student(models.Model):
         max_length=17, unique=True, verbose_name="Father's NID", null=True, blank=True
     )
     fathers_occupation = models.CharField(max_length=255, null=True, blank=True)
-    fathers_mobile_no = models.CharField(max_length=11, null=True, blank=True)
+    fathers_phone = models.CharField(max_length=11, null=True, blank=True)
 
     # mother's info
     mothers_name_en = models.CharField(
@@ -140,7 +164,7 @@ class Student(models.Model):
         max_length=17, verbose_name="Mother's NID", unique=True, null=True, blank=True
     )
     mothers_occupation = models.CharField(max_length=255, null=True, blank=True)
-    mothers_mobile_no = models.CharField(max_length=11, null=True, blank=True)
+    mothers_phone = models.CharField(max_length=11, null=True, blank=True)
 
     # address
     present_address = models.TextField(null=True, blank=True)
@@ -200,7 +224,7 @@ class Teacher(models.Model):
     # teacher info
     name_en = models.CharField(max_length=255)
     name_bn = models.CharField(max_length=255, null=True, blank=True)
-    dob = models.DateField(null=True, blank=True)
+    date_of_birth = models.DateField(null=True, blank=True)
     gender = models.CharField(
         max_length=1, choices=GENDER_CHOICES, null=True, blank=True
     )
@@ -215,7 +239,7 @@ class Teacher(models.Model):
     nid = models.CharField(max_length=17, null=False, blank=True)
 
     # teacher contact info
-    mobile_no = models.CharField(max_length=11, null=True, blank=True)
+    phone = models.CharField(max_length=11, null=True, blank=True)
     email = models.EmailField(null=True, blank=True)
 
     # address
@@ -237,32 +261,13 @@ class Teacher(models.Model):
         unique_together = ("teacher_id", "nid")
 
 
-class Subject(models.Model):
-    title = models.CharField(max_length=255)
-    description = models.TextField(null=True, blank=True)
+class SectionSubject(models.Model):
     section = models.ForeignKey(Section, on_delete=models.CASCADE)
+    subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
+    teachers = models.ForeignKey(Teacher, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.title
-
-    class Meta:
-        verbose_name_plural = "Subjects"
-
-
-class TeacherAssign(models.Model):
-    teacher = models.ForeignKey(
-        Teacher, on_delete=models.CASCADE, related_name="teacher"
-    )
-    subject = models.ManyToManyField(Subject, related_name="subject")
-
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-    def __str__(self):
-        return f" {self.teacher} - {self.subject} "
-
-    class Meta:
-        verbose_name_plural = "Teacher Assign"
+        return f"{self.section} - {self.subject.title} - {self.teachers.name_en}"
 
 
 class StudentAssign(models.Model):
@@ -294,54 +299,23 @@ class Attendance(models.Model):
         verbose_name_plural = "Attendances"
 
 
-class Exam(models.Model):
-    title = models.CharField(max_length=100)
-    description = models.TextField()
-    date = models.DateField()
+# class Exam(models.Model):
+#     title = models.CharField(max_length=255, verbose_name="Exam Name")
+#     date = models.DateField(verbose_name="Exam Date")
 
-    def __str__(self):
-        return self.title
+#     def __str__(self):
+#         return self.title
 
-    class Meta:
-        verbose_name_plural = "Exams"
-
-
-class ExamAssign(models.Model):
-    exam = models.ForeignKey(Exam, on_delete=models.CASCADE, related_name="exam")
-    subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
-    section = models.ForeignKey(Section, on_delete=models.CASCADE)
-    teacher = models.ManyToManyField(Teacher, related_name="exam_teacher")
-
-    status = models.BooleanField(default=False)
-
-    def __str__(self):
-        return f" {self.exam} - {self.subject} - {self.section} "
-
-    class Meta:
-        verbose_name_plural = "Exam Assign"
+#     class Meta:
+#         verbose_name_plural = "Exams"
 
 
-class ExamAttendance(models.Model):
-    student = models.ForeignKey(Student, on_delete=models.CASCADE)
-    exam = models.ForeignKey(Exam, on_delete=models.CASCADE)
-    date = models.DateField(auto_now_add=True)
-    status = models.BooleanField(default=False)
+# class ExamAdmin(models.Model):
+#     exam = models.ForeignKey(Exam, on_delete=models.CASCADE)
+#     class_name = models.ForeignKey(Class, on_delete=models.CASCADE)
 
-    def __str__(self):
-        return f"{self.student} - {self.exam} - {self.date}"
+#     def __str__(self):
+#         return f"{self.exam} - {self.subject}"
 
-    class Meta:
-        verbose_name_plural = "Exam Attendances"
-
-
-class ExamResult(models.Model):
-    student = models.ForeignKey(Student, on_delete=models.CASCADE)
-    exam = models.ForeignKey(Exam, on_delete=models.CASCADE)
-    subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
-    marks = models.PositiveSmallIntegerField()
-
-    def __str__(self):
-        return f" {self.student} - {self.exam} - {self.subject} "
-
-    class Meta:
-        verbose_name_plural = "Exam Results"
+#     class Meta:
+#         verbose_name_plural = "Exam Admins"

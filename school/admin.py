@@ -3,21 +3,27 @@ from django.utils.html import format_html
 
 
 from .models import (
+    Subject,
     Class,
     Section,
     Student,
     Teacher,
-    Subject,
-    TeacherAssign,
+    SectionSubject,
     StudentAssign,
     Attendance,
-    Exam,
-    ExamAssign,
-    ExamAttendance,
-    ExamResult,
 )
 
 # Register your models here.
+
+
+class SectionSubjectInline(admin.TabularInline):
+    model = SectionSubject
+    extra = 0
+
+
+@admin.register(Subject)
+class SubjectAdmin(admin.ModelAdmin):
+    pass
 
 
 @admin.register(Class)
@@ -27,12 +33,23 @@ class ClassAdmin(admin.ModelAdmin):
 
     get_class_name.short_description = "Class Name"
 
-    list_display = ("get_class_name", "class_teacher")
+    list_display = (
+        "get_class_name",
+        "class_teacher",
+        "description",
+    )
 
 
 @admin.register(Section)
 class SectionAdmin(admin.ModelAdmin):
-    pass
+    list_display = (
+        "name",
+        "class_name",
+        "class_teacher",
+        "total_students",
+        "description",
+    )
+    inlines = [SectionSubjectInline]
 
 
 @admin.register(Student)
@@ -67,7 +84,7 @@ class StudentAdmin(admin.ModelAdmin):
             "Contact Information",
             {
                 "fields": [
-                    "mobile_no",
+                    "phone",
                     "email",
                     "present_address",
                     "permanent_address",
@@ -85,7 +102,7 @@ class StudentAdmin(admin.ModelAdmin):
                     ),
                     "fathers_occupation",
                     "fathers_nid",
-                    "fathers_mobile_no",
+                    "fathers_phone",
                 ]
             },
         ),
@@ -99,7 +116,7 @@ class StudentAdmin(admin.ModelAdmin):
                     ),
                     "mothers_occupation",
                     "mothers_nid",
-                    "mothers_mobile_no",
+                    "mothers_phone",
                 ]
             },
         ),
@@ -124,16 +141,6 @@ class TeacherAdmin(admin.ModelAdmin):
     pass
 
 
-@admin.register(Subject)
-class SubjectAdmin(admin.ModelAdmin):
-    pass
-
-
-@admin.register(TeacherAssign)
-class TeacherAssignAdmin(admin.ModelAdmin):
-    pass
-
-
 @admin.register(StudentAssign)
 class StudentAssignAdmin(admin.ModelAdmin):
     pass
@@ -141,24 +148,4 @@ class StudentAssignAdmin(admin.ModelAdmin):
 
 @admin.register(Attendance)
 class AttendanceAdmin(admin.ModelAdmin):
-    pass
-
-
-@admin.register(Exam)
-class ExamAdmin(admin.ModelAdmin):
-    pass
-
-
-@admin.register(ExamAssign)
-class ExamAssignAdmin(admin.ModelAdmin):
-    pass
-
-
-@admin.register(ExamAttendance)
-class ExamAttendanceAdmin(admin.ModelAdmin):
-    pass
-
-
-@admin.register(ExamResult)
-class ExamResultAdmin(admin.ModelAdmin):
     pass
