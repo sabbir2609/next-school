@@ -2,9 +2,19 @@ from django.views.generic import TemplateView, ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from django.contrib.messages.views import SuccessMessageMixin
+from django.contrib import messages
 
 from school.forms import StudentForm
-from .models import Student
+from .models import (
+    Subject,
+    Class,
+    Section,
+    Student,
+    Teacher,
+    SectionSubject,
+    StudentAssign,
+    Attendance,
+)
 
 
 class HomeView(TemplateView):
@@ -35,7 +45,7 @@ class StudentCreateView(SuccessMessageMixin, CreateView):
         return "Student profile created successfully"
 
 
-class StudentUpdateView(SuccessMessageMixin, UpdateView):
+class StudentUpdateView(UpdateView):
     model = Student
     template_name = "school/student_update.html"
     form_class = StudentForm
@@ -44,8 +54,13 @@ class StudentUpdateView(SuccessMessageMixin, UpdateView):
         pk = self.kwargs["pk"]
         return reverse_lazy("school:student_detail", kwargs={"pk": pk})
 
-    def get_success_message(self, cleaned_data):
-        return "Student updated successfully"
+    def form_valid(self, form):
+        if not form.has_changed():
+            messages.warning(self.request, "Nothing to update")
+            return super().form_invalid(form)
+        else:
+            messages.success(self.request, "Student profile updated successfully")
+            return super().form_valid(form)
 
 
 class StudentDeleteView(SuccessMessageMixin, DeleteView):
@@ -55,3 +70,21 @@ class StudentDeleteView(SuccessMessageMixin, DeleteView):
 
     def get_success_message(self, cleaned_data):
         return "Student deleted successfully"
+
+
+class SectionListView(ListView):
+    model = Section
+    context_object_name = "sections"
+    template_name = "school/section_list.html"
+
+
+class SectionDetailView(DetailView):
+    model = Section
+    template_name = "school/section_detail.html"
+    context_object_name = "section"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        section = self.get_object()
+        context["students"] = StudentAssign.objects.filter(section=section)
+        return context

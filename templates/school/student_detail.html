@@ -29,7 +29,7 @@
                     {% if student.image %}
                     <img src="{{ student.image.url }}" alt="Profile Picture" class="img-fluid"
                         style="height: 200px; width: 200px;">
-                    {% elif student.gender == M %}
+                    {% elif student.gender == 'M' %}
                     <img src="{% static 'images/default-male.jpg' %}" alt="Profile Picture" class="img-fluid"
                         style="height: 200px; width: 200px;">
                     {% else %}

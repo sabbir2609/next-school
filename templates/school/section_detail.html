@@ -1,0 +1,39 @@
+{% extends 'base/base.html' %}
+
+{% block title %} {{ section.class_name }} - {{ section.name }} {% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <h1>Section Details</h1>
+    <hr>
+    <div class="card">
+        <div class="card-header">
+            <h4>Section Information</h4>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <p><strong>Class :</strong> {{ section.class_name }}</p>
+                    <p><strong>Section :</strong> {{ section.name }}</p>
+                    <p><strong>Total Students:</strong> {{ section.total_students }}</p>
+                    <p><strong>Section Teacher:</strong> {{ section.class_teacher }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card mt-3">
+        <div class="card-header">
+            <h4>Students</h4>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    {% for student in students %}
+                    {{ student.name_en }}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

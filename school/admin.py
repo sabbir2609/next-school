@@ -19,11 +19,20 @@ from .models import (
 class SectionSubjectInline(admin.TabularInline):
     model = SectionSubject
     extra = 0
+    autocomplete_fields = [
+        "teachers",
+        "subject",
+    ]
 
 
 @admin.register(Subject)
 class SubjectAdmin(admin.ModelAdmin):
-    pass
+    list_display = (
+        "title",
+        "description",
+    )
+
+    search_fields = ("title",)
 
 
 @admin.register(Class)
@@ -50,10 +59,27 @@ class SectionAdmin(admin.ModelAdmin):
         "description",
     )
     inlines = [SectionSubjectInline]
+    search_fields = (
+        "name",
+        "class_name",
+    )
+
+    autocomplete_fields = [
+        "class_teacher",
+    ]
 
 
 @admin.register(Student)
 class StudentAdmin(admin.ModelAdmin):
+    readonly_fields = ["thumbnail"]
+
+    def thumbnail(self, instance):
+        if instance.image.name != "":
+            return format_html(
+                f'<img src="{instance.image.url}" height="100px" width="100px" />'
+            )
+        return ""
+
     list_display = (
         "name_en",
         "student_id",
@@ -61,6 +87,7 @@ class StudentAdmin(admin.ModelAdmin):
         "admission_date",
         "status",
     )
+
     fieldsets = [
         (
             "Personal Information",
@@ -70,14 +97,22 @@ class StudentAdmin(admin.ModelAdmin):
                         "name_en",
                         "name_bn",
                     ),
-                    "dob",
+                    "date_of_birth",
                     "gender",
                     "religion",
                     "blood_group",
                     "student_id",
                     "birth_certificate_no",
-                    "image",
                 ]
+            },
+        ),
+        (
+            "Image",
+            {
+                "fields": [
+                    ("image", "thumbnail"),
+                ],
+                # "classes": ["collapse"],
             },
         ),
         (
@@ -132,18 +167,44 @@ class StudentAdmin(admin.ModelAdmin):
             },
         ),
     ]
-    search_fields = ("name_en", "student_id", "admission_class__title")
-    list_filter = ("admission_class", "status")
+
+    search_fields = (
+        "name_en",
+        "student_id",
+    )
+
+    list_filter = (
+        "admission_class",
+        "status",
+    )
+
+    list_per_page = 10
 
 
 @admin.register(Teacher)
 class TeacherAdmin(admin.ModelAdmin):
-    pass
+    search_fields = (
+        "name_en",
+        "teacher_id",
+    )
 
 
 @admin.register(StudentAssign)
 class StudentAssignAdmin(admin.ModelAdmin):
-    pass
+    list_display = (
+        "student",
+        "section",
+        "class_roll",
+    )
+
+    list_filter = (
+        "section__name",
+        "section__class_name",
+    )
+
+    autocomplete_fields = ["student", "section"]
+
+    list_per_page = 10
 
 
 @admin.register(Attendance)

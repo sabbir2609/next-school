@@ -284,7 +284,7 @@ class StudentAssign(models.Model):
 
     class Meta:
         verbose_name_plural = "Student Assign"
-        unique_together = ("student", "section", "class_roll")
+        unique_together = ["student", "section"]
 
 
 class Attendance(models.Model):
