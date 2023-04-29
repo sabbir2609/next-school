@@ -11,6 +11,8 @@ from .views import (
     # Section
     SectionListView,
     SectionDetailView,
+    # Attendance
+    AttendanceView,
 )
 
 
@@ -38,4 +40,6 @@ urlpatterns = [
     # Section URLs
     path("sections/", SectionListView.as_view(), name="section_list"),
     path("sections/<int:pk>/", SectionDetailView.as_view(), name="section_detail"),
+    # Attendance URLs
+    path("attendance/", AttendanceView.as_view(), name="attendance"),
 ]

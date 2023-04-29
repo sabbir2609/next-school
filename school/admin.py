@@ -20,8 +20,8 @@ class SectionSubjectInline(admin.TabularInline):
     model = SectionSubject
     extra = 0
     autocomplete_fields = [
-        "teachers",
-        "subject",
+        # "teachers",
+        # "subject",
     ]
 
 
@@ -55,7 +55,7 @@ class SectionAdmin(admin.ModelAdmin):
         "name",
         "class_name",
         "class_teacher",
-        "total_students",
+        "seat",
         "description",
     )
     inlines = [SectionSubjectInline]
@@ -183,12 +183,20 @@ class StudentAdmin(admin.ModelAdmin):
 
 @admin.register(Teacher)
 class TeacherAdmin(admin.ModelAdmin):
+    list_display = (
+        "name_en",
+        "teacher_id",
+        "phone",
+    )
     search_fields = (
         "name_en",
         "teacher_id",
     )
+    list_filter = ("gender",)
+    list_per_page = 10
 
 
+# student assign to section and class_roll admin
 @admin.register(StudentAssign)
 class StudentAssignAdmin(admin.ModelAdmin):
     list_display = (
@@ -202,11 +210,31 @@ class StudentAssignAdmin(admin.ModelAdmin):
         "section__class_name",
     )
 
-    autocomplete_fields = ["student", "section"]
-
+    autocomplete_fields = [
+        "student",
+        "section",
+    ]
+    ordering = ("section__class_name", "section__name", "class_roll")
     list_per_page = 10
 
 
 @admin.register(Attendance)
 class AttendanceAdmin(admin.ModelAdmin):
-    pass
+    def student(self, instance):
+        return instance.student_assign.student.name_en
+
+    def section(self, instance):
+        return instance.student_assign.section
+
+    list_display = (
+        "student",
+        "section",
+        "date",
+        "status",
+    )
+
+    list_filter = (
+        "date",
+        "status",
+        "student_assign__section__name",
+    )

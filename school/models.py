@@ -1,4 +1,6 @@
+import datetime
 from django.db import models
+from django.core.validators import MaxValueValidator, MinValueValidator
 
 
 class Subject(models.Model):
@@ -58,7 +60,7 @@ class Section(models.Model):
     class_teacher = models.ForeignKey(
         "Teacher", on_delete=models.SET_NULL, null=True, blank=True
     )
-    total_students = models.PositiveIntegerField(default=0)
+    seat = models.PositiveIntegerField(default=0)
     subjects = models.ManyToManyField(Subject, through="SectionSubject")
 
     def __str__(self):
@@ -265,38 +267,53 @@ class SectionSubject(models.Model):
     section = models.ForeignKey(Section, on_delete=models.CASCADE)
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
     teachers = models.ForeignKey(Teacher, on_delete=models.CASCADE)
+    period = models.IntegerField(
+        default=0, validators=[MaxValueValidator(10), MinValueValidator(0)]
+    )
+    time = models.TimeField(
+        null=True,
+        blank=True,
+    )
+
+    class Meta:
+        ordering = ["period"]
+        unique_together = ("section", "period", "time")
 
     def __str__(self):
         return f"{self.section} - {self.subject.title} - {self.teachers.name_en}"
 
 
+# student assign to section and class roll model
 class StudentAssign(models.Model):
-    student = models.ForeignKey(
-        Student, on_delete=models.CASCADE, related_name="student"
+    student = models.OneToOneField(
+        Student,
+        on_delete=models.CASCADE,
+        related_name="student",
     )
     section = models.ForeignKey(
         Section, on_delete=models.CASCADE, related_name="section"
     )
     class_roll = models.CharField(max_length=3, null=True, blank=True)
 
-    def __str__(self):
-        return f"{self.student} - {self.section}"
-
     class Meta:
-        verbose_name_plural = "Student Assign"
-        unique_together = ["student", "section"]
+        unique_together = ("section", "class_roll")
+
+    def __str__(self):
+        return f"{self.student} - {self.section} ({self.class_roll})"
 
 
 class Attendance(models.Model):
-    student = models.ForeignKey(Student, on_delete=models.CASCADE)
-    date = models.DateField(auto_now_add=True)
+    student_assign = models.ForeignKey(
+        StudentAssign, on_delete=models.CASCADE, related_name="attendance"
+    )
+    date = models.DateField(default=datetime.date.today)
     status = models.BooleanField(default=False)
 
-    def __str__(self):
-        return f"{self.student} - {self.date}"
-
     class Meta:
-        verbose_name_plural = "Attendances"
+        unique_together = ("student_assign", "date")
+
+    def __str__(self):
+        return f"{self.student_assign} - {self.date} ({self.status})"
 
 
 # class Exam(models.Model):

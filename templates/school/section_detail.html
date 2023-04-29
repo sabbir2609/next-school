@@ -3,36 +3,82 @@
 {% block title %} {{ section.class_name }} - {{ section.name }} {% endblock %}
 
 {% block content %}
-<div class="container-fluid">
+<div class="container">
     <h1>Section Details</h1>
     <hr>
-    <div class="card">
+    <div class="card bg-info bg-gradient">
         <div class="card-header">
             <h4>Section Information</h4>
         </div>
         <div class="card-body">
-            <div class="row">
-                <div class="col-md-6">
-                    <p><strong>Class :</strong> {{ section.class_name }}</p>
-                    <p><strong>Section :</strong> {{ section.name }}</p>
-                    <p><strong>Total Students:</strong> {{ section.total_students }}</p>
-                    <p><strong>Section Teacher:</strong> {{ section.class_teacher }}</p>
-                </div>
-            </div>
+            <p><strong>Class :</strong> {{ section.class_name }}</p>
+            <p><strong>Section :</strong> {{ section.name }}</p>
+            <p><strong>Seat:</strong> {{ section.seat }}</p>
+            <p><strong>Section Teacher:</strong> {{ section.class_teacher }}</p>
+            <p><strong>Total Student:</strong> {{total_students}}</p>
         </div>
     </div>
-    <div class="card mt-3">
+    <hr>
+    <div class="card mt-3 bg-warning bg-gradient">
+        <div class="card-header">
+            <h4>Periods</h4>
+        </div>
+        <div class="card-body">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Period</th>
+                        <th scope="col">Subject</th>
+                        <th scope="col">Teacher</th>
+                        <th scope="col">Time</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for subject in subjects %}
+                    <tr>
+                        <td>{{ subject.period }}</td>
+                        <td>{{ subject.subject }}</td>
+                        <td>{{ subject.teachers }}</td>
+                        <td>{{ subject.time }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="3">No subjects found.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="card mt-3 bg-danger bg-gradient">
         <div class="card-header">
             <h4>Students</h4>
         </div>
         <div class="card-body">
-            <div class="row">
-                <div class="col-md-6">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Student ID</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Class Roll</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
                     {% for student in students %}
-                    {{ student.name_en }}
+                    <tr>
+                        <td>{{ student.student_id }}</td>
+                        <td>{{ student.student }}</td>
+                        <td>{{ student.class_roll }}</td>
+                        <td>
+                            <button type="button" class="btn bg-info bg-gradient"
+                                onclick="window.location.href='{% url 'school:student_detail' student.student_id %}'">Detail</button>
+                        </td>
+                    </tr>
                     {% endfor %}
-                </div>
-            </div>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>

@@ -30,7 +30,7 @@ class Command(BaseCommand):
                 name_bn=fake_bn.name(),
                 birth_certificate_no=fake.ssn(),
                 gender=random.choice(["M", "F"]),
-                religion=random.choice(["Islam", "Hindu", "Buddha", "Christian"]),
+                religion=random.choice(["M", "H", "C", "B", "O"]),
                 blood_group=random.choice(
                     ["A+", "A-", "B+", "B-", "O+", "O-", "AB+", "AB-"]
                 ),

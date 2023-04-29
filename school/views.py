@@ -1,8 +1,15 @@
-from django.views.generic import TemplateView, ListView, DetailView
+import datetime
+from django.views.generic import TemplateView, ListView, DetailView, View
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib import messages
+
+
+from django.shortcuts import get_object_or_404, redirect
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_exempt
 
 from school.forms import StudentForm
 from .models import (
@@ -78,6 +85,30 @@ class SectionListView(ListView):
     template_name = "school/section_list.html"
 
 
+# TODO: TeacherListView - config urls and templates
+class TeacherListView(ListView):
+    model = Teacher
+    context_object_name = "teachers"
+    template_name = "school/teacher_list.html"
+    pass
+
+
+# TODO: TeacherDetailView urls and templates
+class TeacherDetailView(DetailView):
+    model = Teacher
+    template_name = "school/teacher_detail.html"
+    context_object_name = "teacher"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["subjects"] = SectionSubject.objects.filter(
+            teachers=self.object
+        ).select_related("section", "subject")
+        return context
+
+    pass
+
+
 class SectionDetailView(DetailView):
     model = Section
     template_name = "school/section_detail.html"
@@ -85,6 +116,21 @@ class SectionDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        section = self.get_object()
-        context["students"] = StudentAssign.objects.filter(section=section)
+        # get all students of this section
+        context["students"] = StudentAssign.objects.filter(
+            section=self.object
+        ).select_related("student")
+
+        # get total students of this section
+        total_students = context["students"].count()
+        context["total_students"] = total_students
+
+        # get all subjects of this section
+        context["subjects"] = SectionSubject.objects.filter(section_id=self.object.id)
+
         return context
+
+
+class AttendanceView(TemplateView):
+    template_name = "school/attendance.html"
+    pass
