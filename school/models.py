@@ -303,36 +303,14 @@ class StudentAssign(models.Model):
 
 
 class Attendance(models.Model):
-    student_assign = models.ForeignKey(
-        StudentAssign, on_delete=models.CASCADE, related_name="attendance"
+    student = models.ForeignKey(
+        StudentAssign, on_delete=models.CASCADE, related_name="attendance", null=True
     )
     date = models.DateField(default=datetime.date.today)
     status = models.BooleanField(default=False)
 
     class Meta:
-        unique_together = ("student_assign", "date")
+        unique_together = ("student", "date")
 
     def __str__(self):
-        return f"{self.student_assign} - {self.date} ({self.status})"
-
-
-# class Exam(models.Model):
-#     title = models.CharField(max_length=255, verbose_name="Exam Name")
-#     date = models.DateField(verbose_name="Exam Date")
-
-#     def __str__(self):
-#         return self.title
-
-#     class Meta:
-#         verbose_name_plural = "Exams"
-
-
-# class ExamAdmin(models.Model):
-#     exam = models.ForeignKey(Exam, on_delete=models.CASCADE)
-#     class_name = models.ForeignKey(Class, on_delete=models.CASCADE)
-
-#     def __str__(self):
-#         return f"{self.exam} - {self.subject}"
-
-#     class Meta:
-#         verbose_name_plural = "Exam Admins"
+        return f"{self.student} - {self.date} ({self.status})"

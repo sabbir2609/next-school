@@ -1,4 +1,5 @@
 import datetime
+from typing import Any, Dict
 from django.views.generic import TemplateView, ListView, DetailView, View
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
@@ -11,7 +12,7 @@ from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 
-from school.forms import StudentForm
+from school.forms import StudentForm, AttendanceForm
 from .models import (
     Subject,
     Class,
@@ -131,6 +132,24 @@ class SectionDetailView(DetailView):
         return context
 
 
-class AttendanceView(TemplateView):
+class AttendanceView(CreateView):
     template_name = "school/attendance.html"
-    pass
+    form_class = AttendanceForm
+
+    def get_success_url(self):
+        return reverse_lazy("school:attendance")
+
+
+# TODO: AttendanceView - config urls and templates
+class AttendanceSectionListView(TemplateView):
+    template_name = "school/attendance_by_section.html"
+    model = Attendance
+    context_object_name = "attendance_list"
+
+    def get_context_data(self, **kwargs):
+        return super().get_context_data(**kwargs)
+        context["attendance_list"] = Attendance.objects.all().filter(
+            student__section_id=self.kwargs["pk"]
+        )
+        print(context["attendance_list"])
+        return context

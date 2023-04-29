@@ -214,27 +214,20 @@ class StudentAssignAdmin(admin.ModelAdmin):
         "student",
         "section",
     ]
+
+    search_fields = (
+        "student__name_en",
+        "student__student_id",
+    )
+
     ordering = ("section__class_name", "section__name", "class_roll")
     list_per_page = 10
 
 
 @admin.register(Attendance)
 class AttendanceAdmin(admin.ModelAdmin):
-    def student(self, instance):
-        return instance.student_assign.student.name_en
-
-    def section(self, instance):
-        return instance.student_assign.section
-
     list_display = (
         "student",
-        "section",
         "date",
         "status",
-    )
-
-    list_filter = (
-        "date",
-        "status",
-        "student_assign__section__name",
     )
