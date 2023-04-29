@@ -16,14 +16,14 @@ This is a School Management System that allows schools to manage their students,
 
 
 ## Installation
-- Clone the repository: git clone https://github.com/your-username/school-management-system.git
+- Clone the repository: git clone https://github.com/sabbir2609/next-school.git
 - Install the dependencies: pip install -r requirements.txt
 - Set up the database: python manage.py migrate
 - Create a superuser: python manage.py createsuperuser
 - Run the development server: python manage.py runserver
 Usage
 - Log in to the admin panel with your superuser account: http://localhost:8000/admin/
-- Create departments, courses, sections, subjects, teachers, classes, students, exams, results, attendance, fees, and routines as needed.
+- Create class, sections, subjects, teachers, students, exams, results, attendance, fees, and routines as needed.
 - Enroll students in classes and record their attendance.
 - Set up exams and record results.
 - Manage fees for exams and tuition.
