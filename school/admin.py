@@ -54,7 +54,7 @@ class SectionAdmin(admin.ModelAdmin):
     list_display = (
         "name",
         "class_name",
-        "class_teacher",
+        "section_teacher",
         "seat",
         "description",
     )
@@ -65,7 +65,7 @@ class SectionAdmin(admin.ModelAdmin):
     )
 
     autocomplete_fields = [
-        "class_teacher",
+        "section_teacher",
     ]
 
 

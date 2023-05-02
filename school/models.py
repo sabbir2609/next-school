@@ -57,8 +57,12 @@ class Section(models.Model):
     class_name = models.ForeignKey(
         Class, on_delete=models.CASCADE, help_text="Class", verbose_name="Class"
     )
-    class_teacher = models.ForeignKey(
-        "Teacher", on_delete=models.SET_NULL, null=True, blank=True
+    section_teacher = models.OneToOneField(
+        "Teacher",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        verbose_name="Section Teacher",
     )
     seat = models.PositiveIntegerField(default=0)
     subjects = models.ManyToManyField(Subject, through="SectionSubject")
@@ -95,7 +99,15 @@ class Student(models.Model):
         ("B", "Buddhist"),
         ("O", "Others"),
     )
-
+    student_id = models.CharField(
+        max_length=9,
+        primary_key=True,
+        unique=True,
+        null=False,
+        blank=False,
+        verbose_name="Student ID",
+        help_text="Student ID, e.g. 20190001",
+    )
     # student info
     name_en = models.CharField(
         max_length=255,
@@ -124,9 +136,6 @@ class Student(models.Model):
         verbose_name="Blood Group",
         null=True,
         blank=True,
-    )
-    student_id = models.CharField(
-        max_length=7, unique=True, verbose_name="Student ID", null=False, blank=True
     )
     birth_certificate_no = models.CharField(
         max_length=17,
@@ -223,6 +232,16 @@ class Teacher(models.Model):
         ("O", "Others"),
     )
 
+    teacher_id = models.CharField(
+        max_length=9,
+        primary_key=True,
+        unique=True,
+        verbose_name="Teacher ID",
+        null=False,
+        blank=False,
+        help_text="Teacher ID, e.g. 20190001",
+    )
+
     # teacher info
     name_en = models.CharField(max_length=255)
     name_bn = models.CharField(max_length=255, null=True, blank=True)
@@ -237,7 +256,6 @@ class Teacher(models.Model):
         max_length=3, choices=BLOOD_GROUP_CHOICES, null=True, blank=True
     )
 
-    teacher_id = models.CharField(max_length=7, null=False, blank=True)
     nid = models.CharField(max_length=17, null=False, blank=True)
 
     # teacher contact info
@@ -277,7 +295,7 @@ class SectionSubject(models.Model):
 
     class Meta:
         ordering = ["period"]
-        unique_together = ("section", "period", "time")
+        unique_together = ("teachers", "section", "period")
 
     def __str__(self):
         return f"{self.section} - {self.subject.title} - {self.teachers.name_en}"

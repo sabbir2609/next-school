@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     "crispy_bootstrap5",
     # dev tools
     "debug_toolbar",
+    "django_dbml",
 ]
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"

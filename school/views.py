@@ -1,6 +1,7 @@
 import datetime
 from typing import Any, Dict
-from django.views.generic import TemplateView, ListView, DetailView, View
+from django.http import HttpResponse
+from django.views.generic import TemplateView, ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from django.contrib.messages.views import SuccessMessageMixin
@@ -11,6 +12,9 @@ from django.shortcuts import get_object_or_404, redirect
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
+
+from django.forms import modelformset_factory
+from django.shortcuts import render
 
 from school.forms import StudentForm, AttendanceForm
 from .models import (
@@ -132,24 +136,35 @@ class SectionDetailView(DetailView):
         return context
 
 
+# Attendance for specific student
 class AttendanceView(CreateView):
-    template_name = "school/attendance.html"
+    template_name = "school/attendance/attendance.html"
     form_class = AttendanceForm
 
     def get_success_url(self):
-        return reverse_lazy("school:attendance")
+        return reverse_lazy("school:attendance_all_report")
 
 
-# TODO: AttendanceView - config urls and templates
-class AttendanceSectionListView(TemplateView):
-    template_name = "school/attendance_by_section.html"
+#  Attendance Report for all students
+class AttendanceReportView(ListView):
+    template_name = "school/attendance/attendance_report.html"
     model = Attendance
     context_object_name = "attendance_list"
 
+
+# Attendance Report for specific student
+class AttendanceReportDetailView(ListView):
+    template_name = "school/attendance/attendance_report_detail.html"
+
     def get_context_data(self, **kwargs):
-        return super().get_context_data(**kwargs)
-        context["attendance_list"] = Attendance.objects.all().filter(
-            student__section_id=self.kwargs["pk"]
+        context = super().get_context_data(**kwargs)
+        student_id = self.kwargs["pk"]
+        context["student"] = StudentAssign.objects.get(student_id=student_id)
+        context["attendance"] = Attendance.objects.filter(
+            student__student__student_id=student_id
         )
-        print(context["attendance_list"])
         return context
+
+    def get_queryset(self, **kwargs):
+        student_id = self.kwargs["pk"]
+        return Attendance.objects.filter(student__student__student_id=student_id)

@@ -1,0 +1,35 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Attendance{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <h2>All Student Attendance Report</h2>
+    <hr>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Date</th>
+                <th>Attendance</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for attendance in attendance_list %}
+            <tr>
+                <td>{{ attendance.student }}</td>
+                <td>{{ attendance.date }}</td>
+                {% if attendance.status == True %}
+                <td>Present</td>
+                {% else %}
+                <td>Absent</td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</div>
+
+{% endblock %}

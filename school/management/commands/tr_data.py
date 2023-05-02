@@ -17,10 +17,13 @@ class Command(BaseCommand):
         def phone():
             return f"01{random.randint(100000000, 999999999)}"
 
+        def teacher_id():
+            return f"2023{random.randint(1000, 9999)}"
+
         self.stdout.write(self.style.SUCCESS("Creating teacher..."))
         for _ in range(15):
             Teacher.objects.create(
-                teacher_id=random.randint(100000, 999999),
+                teacher_id=teacher_id(),
                 name_en=fake.name(),
                 name_bn=fake_bn.name(),
                 date_of_birth=fake.date_of_birth(),

@@ -22,10 +22,13 @@ class Command(BaseCommand):
             data = Class.objects.all()
             return random.choice(data)
 
+        def student_id():
+            return f"2023{random.randint(1000, 9999)}"
+
         self.stdout.write(self.style.SUCCESS("Creating students..."))
         for _ in range(50):
             Student.objects.create(
-                student_id=random.randint(100000, 999999),
+                student_id=student_id(),
                 name_en=fake.name(),
                 name_bn=fake_bn.name(),
                 birth_certificate_no=fake.ssn(),

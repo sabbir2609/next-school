@@ -13,7 +13,8 @@ from .views import (
     SectionDetailView,
     # Attendance
     AttendanceView,
-    AttendanceSectionListView,
+    AttendanceReportView,
+    AttendanceReportDetailView,
 )
 
 
@@ -44,11 +45,16 @@ urlpatterns = [
     # path("sections/new/", SectionCreateView.as_view(), name="section_new"),
     # path("sections/<int:pk>/edit/", SectionUpdateView.as_view(), name="section_edit"),
     # path("sections/<int:pk>/delete/", SectionDeleteView.as_view(), name="section_delete"),
-    path(
-        "attendance/section/<int:pk>/",
-        AttendanceSectionListView.as_view(),
-        name="section_attendance",
-    ),
     # Attendance URLs
-    path("attendance/", AttendanceView.as_view(), name="attendance"),
+    path("attendance/", AttendanceView.as_view(), name="attendance_new"),
+    path(
+        "attendance/all",
+        AttendanceReportView.as_view(),
+        name="attendance_all_report",
+    ),
+    path(
+        "attendance/student/<int:pk>/",
+        AttendanceReportDetailView.as_view(),
+        name="attendance_report_detail",
+    ),
 ]

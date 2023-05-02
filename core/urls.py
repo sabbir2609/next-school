@@ -8,7 +8,6 @@ urlpatterns = [
     path("", include("school.urls", "school"), name="school"),
 ]
 
-
 # Admin Site Config
 admin.site.site_header = "PB School Management System"
 admin.site.site_title = "School Management System"
