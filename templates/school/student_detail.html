@@ -97,8 +97,11 @@
         </div>
         <div class="card-body">
             <a href="{% url 'school:student_list' %}" class="btn btn-primary">Back</a>
-            <a href="{% url 'school:student_edit' student.id %}" class="btn btn-warning">Update</a>
-            <a href="{% url 'school:student_delete' student.id %}" class="btn btn-danger">Delete</a>
+            <a href="{% url 'school:student_edit' student.student_id %}" class="btn btn-warning">Update</a>
+            <a href="{% url 'school:student_delete' student.student_id %}" class="btn btn-danger">Delete</a>
+            ||
+            <a href="{% url 'school:attendance_report_detail' student.student_id %}"
+                class="btn btn-success">Attendance</a>
         </div>
     </div>
 </div>
