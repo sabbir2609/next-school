@@ -18,5 +18,8 @@
     {% for a in attendance %}
     <p>Date: {{a.date}} - Attendance: {{a.status}}</p>
     {% endfor %}
+    <hr>
+    <a href="{% url 'school:attendance_add' student.student_id %}" class="btn btn-warning">Add
+        Attendance for {{student.student}}</a>
 </div>
 {% endblock %}

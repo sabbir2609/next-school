@@ -1,10 +1,11 @@
 from django.urls import include, path
 
-from .views import (  # Student; Assign Student; Section; Attendance
-    AttendanceCreateViewView, AttendanceReportDetailView, AttendanceReportView,
-    HomeView, SectionDetailView, SectionListView, StudentAssignView,
-    StudentCreateView, StudentDeleteView, StudentDetailView, StudentListView,
-    StudentUpdateView)
+from .views import (AttendanceCreateView, AttendanceReportView, HomeView,
+                    SectionDetailView, SectionListView, StudentAssignView,
+                    StudentAttendanceCreateView,
+                    StudentAttendanceReportDetailView, StudentCreateView,
+                    StudentDeleteView, StudentDetailView, StudentListView,
+                    StudentUpdateView)
 
 app_name = "school"
 
@@ -22,10 +23,12 @@ urlpatterns = [
     # Assign Student URLs
     path("students/assign/", StudentAssignView.as_view(), name="student_assign"),
 
-    # Attendance URLs
-    path("students/<int:pk>/attendance-add/", AttendanceCreateViewView.as_view(), name="attendance_add"),
-    path("students/<int:pk>/attendance-report/", AttendanceReportDetailView.as_view(), name="attendance_report_detail"),
+    # Attendance URLs (Student)
+    path("students/<int:pk>/attendance-add/", StudentAttendanceCreateView.as_view(), name="attendance_add"),
+    path("students/<int:pk>/attendance-report/", StudentAttendanceReportDetailView.as_view(), name="attendance_report_detail"),
     
+    # Attendance URLs (All)
+    path("attendance/add", AttendanceCreateView.as_view(), name="attendance_add_any"),
     path("attendance/all", AttendanceReportView.as_view(), name="attendance_all_report"),
 
     # Section URLs

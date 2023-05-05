@@ -4,6 +4,7 @@ from typing import Any, Dict
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.messages.views import SuccessMessageMixin
+from django.db import models
 from django.forms import ValidationError, modelformset_factory
 from django.http import Http404, HttpRequest, HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
@@ -126,6 +127,7 @@ class SectionDetailView(DetailView):
 
         return context
 
+
 class StudentAssignView(SuccessMessageMixin, CreateView):
     template_name = "school/assign_student.html"
     form_class = StudentAssignForm
@@ -138,7 +140,7 @@ class StudentAssignView(SuccessMessageMixin, CreateView):
 
 
 # Attendance Create for specific student
-class AttendanceCreateViewView(CreateView):
+class StudentAttendanceCreateView(CreateView):
     template_name = "school/attendance/attendance.html"
     form_class = AttendanceForm
 
@@ -164,15 +166,8 @@ class AttendanceCreateViewView(CreateView):
         return reverse_lazy("school:attendance_report_detail" , kwargs={"pk": self.kwargs["pk"]})
 
 
-#  Attendance Report for all students
-class AttendanceReportView(ListView):
-    template_name = "school/attendance/attendance_report.html"
-    model = Attendance
-    context_object_name = "attendance_list"
-
-
 # Attendance Report for specific student
-class AttendanceReportDetailView(ListView):
+class StudentAttendanceReportDetailView(ListView):
     template_name = "school/attendance/attendance_report_detail.html"
 
     def get_context_data(self, **kwargs):
@@ -199,3 +194,20 @@ class AttendanceReportDetailView(ListView):
     def get_queryset(self, **kwargs):
         student_id = self.kwargs["pk"]
         return Attendance.objects.filter(student__student__student_id=student_id)
+
+
+# Attendance Update for any student
+class AttendanceCreateView(CreateView):
+    model = Attendance
+    template_name = "school/attendance/attendance_update_any.html"
+    fields = "__all__"
+    def get_success_url(self):
+        return reverse_lazy("school:attendance_all_report")
+
+#  Attendance Report for all students
+class AttendanceReportView(ListView):
+    # TODO: (44 queries including 40 similar and 20 duplicates) 🙄 check debug toolbar
+    template_name = "school/attendance/attendance_report.html"
+    model = Attendance
+    context_object_name = "attendance_list"
+    paginate_by = 10
