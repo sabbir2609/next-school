@@ -1,22 +1,9 @@
-from django.urls import path, include
+from django.urls import include, path
 
-from .views import (
-    HomeView,
-    # Student
-    StudentListView,
-    StudentDetailView,
-    StudentCreateView,
-    StudentUpdateView,
-    StudentDeleteView,
-    # Section
-    SectionListView,
-    SectionDetailView,
-    # Attendance
-    AttendanceView,
-    AttendanceReportView,
-    AttendanceReportDetailView,
-)
-
+from .views import (  # Student; Assign Student; Section; Attendance
+    AttendanceReportDetailView, AttendanceReportView, AttendanceView, HomeView,
+    SectionDetailView, SectionListView, StudentAssignView, StudentCreateView,
+    StudentDeleteView, StudentDetailView, StudentListView, StudentUpdateView)
 
 app_name = "school"
 
@@ -31,6 +18,9 @@ urlpatterns = [
     path(
         "students/<int:pk>/delete/", StudentDeleteView.as_view(), name="student_delete"
     ),
+    # Assign Student URLs
+    path("students/assign/", StudentAssignView.as_view(), name="student_assign"),
+
     # Teacher URLs
     # path("teachers/", TeacherListView.as_view(), name="teacher_list"),
     # path("teachers/<int:pk>/", TeacherDetailView.as_view(), name="teacher_detail"),

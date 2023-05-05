@@ -1,5 +1,6 @@
-from .models import Student, StudentAssign, Attendance
 from django import forms
+
+from .models import Attendance, Student, StudentAssign
 
 
 class StudentForm(forms.ModelForm):
@@ -26,3 +27,10 @@ class AttendanceForm(forms.ModelForm):
         widgets = {
             "date": forms.DateInput(attrs={"class": "form-control", "type": "date"}),
         }
+
+# student assign form
+
+class StudentAssignForm(forms.ModelForm):
+    class Meta:
+        model = StudentAssign
+        fields = "__all__"

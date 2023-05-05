@@ -19,3 +19,11 @@ toastElList.forEach(function (toastEl, index) {
     }, 5000)
 
 })
+
+
+// select2 widget for student dropdown in assign_student.html
+
+$(document).ready(function () {
+    $('#id_student').select2();
+    $('#id_section').select2();
+});

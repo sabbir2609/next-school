@@ -6,3 +6,10 @@ body {
     vertical-align: -.125em;
     fill: currentColor;
 }
+
+/* style for assign_student.html */
+
+#id_student,
+#id_section {
+    width: 100%;
+}

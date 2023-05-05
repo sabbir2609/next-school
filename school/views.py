@@ -1,32 +1,22 @@
 import datetime
 from typing import Any, Dict
-from django.http import HttpResponse
-from django.views.generic import TemplateView, ListView, DetailView
-from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from django.urls import reverse_lazy
-from django.contrib.messages.views import SuccessMessageMixin
+
 from django.contrib import messages
-
-
-from django.shortcuts import get_object_or_404, redirect
-from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
-from django.views.decorators.csrf import csrf_exempt
-
+from django.contrib.messages.views import SuccessMessageMixin
 from django.forms import modelformset_factory
-from django.shortcuts import render
+from django.http import Http404, HttpRequest, HttpResponse
+from django.shortcuts import get_object_or_404, redirect, render
+from django.urls import reverse_lazy
+from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import csrf_exempt
+from django.views.generic import DetailView, ListView, TemplateView
+from django.views.generic.edit import CreateView, DeleteView, UpdateView
 
-from school.forms import StudentForm, AttendanceForm
-from .models import (
-    Subject,
-    Class,
-    Section,
-    Student,
-    Teacher,
-    SectionSubject,
-    StudentAssign,
-    Attendance,
-)
+from school.forms import AttendanceForm, StudentAssignForm, StudentForm
+
+from .models import (Attendance, Class, Section, SectionSubject, Student,
+                     StudentAssign, Subject, Teacher)
 
 
 class HomeView(TemplateView):
@@ -36,8 +26,9 @@ class HomeView(TemplateView):
 class StudentListView(ListView):
     model = Student
     context_object_name = "students"
-    template_name = "student_list.html"
-
+    template_name = "school/student_list.html"
+    paginate_by = 10
+            
 
 class StudentDetailView(DetailView):
     model = Student
@@ -135,6 +126,16 @@ class SectionDetailView(DetailView):
 
         return context
 
+class StudentAssignView(SuccessMessageMixin, CreateView):
+    template_name = "school/assign_student.html"
+    form_class = StudentAssignForm
+
+    def get_success_url(self):
+        return reverse_lazy("school:section_detail", kwargs={"pk": self.object.section.id})
+
+    def get_success_message(self, cleaned_data):
+        return "Student assigned successfully"
+
 
 # Attendance for specific student
 class AttendanceView(CreateView):
@@ -159,11 +160,18 @@ class AttendanceReportDetailView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         student_id = self.kwargs["pk"]
+        StudentAssign.objects.filter(student_id=student_id)
         context["student"] = StudentAssign.objects.get(student_id=student_id)
         context["attendance"] = Attendance.objects.filter(
             student__student__student_id=student_id
         )
         return context
+        
+    def get(self, request, *args, **kwargs):
+        if not self.get_queryset():
+            messages.warning(request, "No attendance record found. You must assign the student to a section first.")
+            return redirect("school:student_assign")
+        return super().get(request, *args, **kwargs)
 
     def get_queryset(self, **kwargs):
         student_id = self.kwargs["pk"]

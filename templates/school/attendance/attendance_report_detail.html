@@ -1,16 +1,19 @@
 {% extends 'base/base.html' %}
 
-{% block title %} {{student.name_en}} || Attendance {% endblock %}
+{% block title %} {{student.student}} || Attendance {% endblock %}
 
 {% block content %}
 <div class="container">
-    <h1>Attendance report For {{student.name_en}}</h1>
+    <h1>Attendance report For {{student.student}}</h1>
+    <h2>ID: {{student.student_id}}</h2>
+    <hr>
 
-    <p>ID: {{student.student_id}}</p>
-    <p>Name: <a href="{% url 'school:student_detail' student.id %}">{{student.name_en}}</a></p>
-    <p>Class: {{student.class}}</p>
-    <p>Section: {{student.section}}</p>
+    <p>Name: <a href="{% url 'school:student_detail' student.student_id %}">{{student.student}}</a></p>
+    <p>Class - Section: {{student.section}}</p>
     <p>Roll No: {{student.class_roll}}</p>
+    <hr>
+
+    <h3>Attendance:</h3>
 
     {% for a in attendance %}
     <p>Date: {{a.date}} - Attendance: {{a.status}}</p>

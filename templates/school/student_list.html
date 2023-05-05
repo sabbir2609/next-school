@@ -3,39 +3,64 @@
 {% block title %} Student List {% endblock %}
 
 {% block content %}
+<br>
+<form action="" method=GET>
+    {% csrf_token %}
+    <div class="form-floating mb-3">
+        <input name="query" type="text" class="form-control" id="floatingInput" placeholder="John Doe">
+        <label for="floatingInput">Search Student</label>
+    </div>
+    <button class="btn btn-primary" type="submit">Search</button>
+</form>
 
-<h1>Student List</h1>
+<hr>
+<h2>Student List</h2>
 
 <button type="button" class="btn btn-primary" onclick="window.location.href='new'">Add Student</button>
 
 <table class="table">
     <thead>
         <tr>
-            <th scope="col">#</th>
+            <th scope="col">ID</th>
             <th scope="col">Name</th>
             <th scope="col">Parent</th>
-            <th scope="col">ID</th>
-            <th scope="col">Birth ID</th>
-            <th scope="col">Action</th>
+            <th scope="col">B-ID</th>
+            <!-- <th scope="col">Action</th> -->
         </tr>
     </thead>
     <tbody>
         {% for student in students %}
         <tr>
-            <th scope="row">{{ forloop.counter }}</th>
+            <th scope="row">{{ student.student_id }}</th>
             <td><a href="{{ student.student_id }}">{{ student.name_en }}</a></td>
             <td>{{ student.fathers_name_en }}</td>
-            <td>{{ student.student_id }}</td>
             <td>{{ student.birth_certificate_no }}</td>
-            <td>
+            <!-- <td>
                 <button type="button" class="btn btn-primary"
                     onclick="window.location.href='{{ student.student_id }}/edit'">Edit</button>
                 <button type="button" class="btn btn-danger"
                     onclick="window.location.href='{{ student.student_id }}/delete'">Delete</button>
-            </td>
+            </td> -->
         </tr>
         {% endfor %}
     </tbody>
 </table>
+
+<div class="pagination justify-content-center">
+    <ul class="pagination">
+        {% if page_obj.has_previous %}
+        <li class="page-item"><a class="page-link" href="?page=1">&laquo; first</a></li>
+        <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">previous</a></li>
+        {% endif %}
+
+        <li class="page-item active"><span class="page-link">{{ page_obj.number }}</span></li>
+
+        {% if page_obj.has_next %}
+        <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">next</a></li>
+        <li class="page-item"><a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a></li>
+        {% endif %}
+    </ul>
+</div>
+
 
 {% endblock %}
