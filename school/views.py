@@ -4,7 +4,7 @@ from typing import Any, Dict
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.messages.views import SuccessMessageMixin
-from django.forms import modelformset_factory
+from django.forms import ValidationError, modelformset_factory
 from django.http import Http404, HttpRequest, HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy
@@ -137,13 +137,31 @@ class StudentAssignView(SuccessMessageMixin, CreateView):
         return "Student assigned successfully"
 
 
-# Attendance for specific student
-class AttendanceView(CreateView):
+# Attendance Create for specific student
+class AttendanceCreateViewView(CreateView):
     template_name = "school/attendance/attendance.html"
     form_class = AttendanceForm
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        student_id = self.kwargs["pk"]
+        context["student"] = StudentAssign.objects.get(student__student_id=student_id)
+        return context
+
+    def form_valid(self, form):
+        # Set the student field to the object with the URL parameter primary key
+        student = StudentAssign.objects.get(student__student_id=self.kwargs["pk"])
+        date = form.cleaned_data["date"]
+        # Check if attendance already exists for this student on this date
+        if Attendance.objects.filter(student=student, date=date).exists():
+            messages.warning(self.request, "Attendance already exists for this student on this date")
+            return super().form_invalid(form)
+        form.instance.student = student
+        return super().form_valid(form)
+
+
     def get_success_url(self):
-        return reverse_lazy("school:attendance_all_report")
+        return reverse_lazy("school:attendance_report_detail" , kwargs={"pk": self.kwargs["pk"]})
 
 
 #  Attendance Report for all students
@@ -160,17 +178,22 @@ class AttendanceReportDetailView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         student_id = self.kwargs["pk"]
-        StudentAssign.objects.filter(student_id=student_id)
-        context["student"] = StudentAssign.objects.get(student_id=student_id)
-        context["attendance"] = Attendance.objects.filter(
-            student__student__student_id=student_id
-        )
-        return context
+        
+        try:
+            StudentAssign.objects.filter(student_id=student_id) # TODO: wtf is this? 🙄
+            context["student"] = StudentAssign.objects.get(student_id=student_id)
+            context["attendance"] = Attendance.objects.filter(
+                student__student__student_id=student_id
+            )
+            return context
+        except StudentAssign.DoesNotExist:
+            messages.warning(self.request, "No attendance record found. You must assign the student to a section first.")
+            raise Http404("Student does not exist")
         
     def get(self, request, *args, **kwargs):
         if not self.get_queryset():
-            messages.warning(request, "No attendance record found. You must assign the student to a section first.")
-            return redirect("school:student_assign")
+            messages.warning(request, "No attendance record found. Add attendance first.")
+            return redirect("school:attendance_add", pk=kwargs["pk"])
         return super().get(request, *args, **kwargs)
 
     def get_queryset(self, **kwargs):

@@ -1,15 +1,13 @@
 import random
+
 from django.core.management.base import BaseCommand
-
 from faker import Faker
-import faker.providers
 
-from school.models import Student
-from school.models import Class
+from school.models import Class, Student
 
 
 class Command(BaseCommand):
-    help = "This command creates many users"
+    help = "This command creates many Students"
 
     def handle(self, *args, **options):
         fake = Faker()

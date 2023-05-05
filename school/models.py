@@ -1,12 +1,14 @@
 import datetime
-from django.db import models
+
 from django.core.validators import MaxValueValidator, MinValueValidator
+from django.db import models
 
 
 class Subject(models.Model):
     title = models.CharField(max_length=255, help_text="Subject Name")
     description = models.TextField(
-        null=True, blank=True, help_text="Subject Description"
+        null=True, blank=True, help_text="Subject Description",
+        default=""
     )
 
     def __str__(self):
@@ -29,7 +31,8 @@ class Class(models.Model):
         "Teacher", on_delete=models.SET_NULL, null=True, blank=True
     )
     description = models.TextField(
-        help_text="eg: 'Class 6, total 120 students, 4 sections, 30 students in each section'"
+        null=True, blank=True,
+        help_text="eg: 'Class 6, total 120 students, 4 sections, 30 students in each section'", default=""
     )
 
     def __str__(self):
@@ -52,6 +55,7 @@ class Section(models.Model):
         max_length=2, choices=SECTION_CHOICES, verbose_name="Section"
     )
     description = models.TextField(
+        null=True, blank=True,
         help_text="Section Description, e.g. 'Section A of Class 6, total 30 students'"
     )
     class_name = models.ForeignKey(
@@ -322,7 +326,7 @@ class StudentAssign(models.Model):
 
 class Attendance(models.Model):
     student = models.ForeignKey(
-        StudentAssign, on_delete=models.CASCADE, related_name="attendance", null=True
+        StudentAssign, on_delete=models.CASCADE, related_name="attendance"
     )
     date = models.DateField(default=datetime.date.today)
     status = models.BooleanField(default=False)
