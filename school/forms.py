@@ -23,14 +23,12 @@ class AttendanceForm(forms.ModelForm):
     class Meta:
         model = Attendance
         fields = ["date", "status"]
-        # fields = "__all__"
 
         widgets = {
             "date": forms.DateInput(attrs={"class": "form-control", "type": "date"}),
         }
 
 # student assign form
-
 class StudentAssignForm(forms.ModelForm):
     class Meta:
         model = StudentAssign

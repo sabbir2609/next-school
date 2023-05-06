@@ -1,17 +1,8 @@
 from django.contrib import admin
 from django.utils.html import format_html
 
-
-from .models import (
-    Subject,
-    Class,
-    Section,
-    Student,
-    Teacher,
-    SectionSubject,
-    StudentAssign,
-    Attendance,
-)
+from .models import (Attendance, Class, Exam, ExamAssign, Section,
+                     SectionSubject, Student, StudentAssign, Subject, Teacher)
 
 # Register your models here.
 
@@ -23,7 +14,6 @@ class SectionSubjectInline(admin.TabularInline):
         # "teachers",
         # "subject",
     ]
-
 
 @admin.register(Subject)
 class SubjectAdmin(admin.ModelAdmin):
@@ -231,3 +221,6 @@ class AttendanceAdmin(admin.ModelAdmin):
         "date",
         "status",
     )
+
+admin.site.register(Exam)
+admin.site.register(ExamAssign)

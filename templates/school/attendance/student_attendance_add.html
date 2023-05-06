@@ -3,7 +3,7 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-<h1>Attendance for Any Student </h1>
+<h2>Add Attendance for {{ student }}</h2>
 <form method="post">
     {% csrf_token %}
     {{ form | crispy }}

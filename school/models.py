@@ -310,7 +310,7 @@ class StudentAssign(models.Model):
     student = models.OneToOneField(
         Student,
         on_delete=models.CASCADE,
-        related_name="student",
+        related_name="student_assign",
     )
     section = models.ForeignKey(
         Section, on_delete=models.CASCADE, related_name="section"
@@ -326,13 +326,53 @@ class StudentAssign(models.Model):
 
 class Attendance(models.Model):
     student = models.ForeignKey(
-        StudentAssign, on_delete=models.CASCADE, related_name="attendance"
+        StudentAssign, on_delete=models.CASCADE, related_name="student_attendance",
     )
     date = models.DateField(default=datetime.date.today)
     status = models.BooleanField(default=False)
 
     class Meta:
-        unique_together = ("student", "date")
+        ordering = ["-date"]
 
     def __str__(self):
         return f"{self.student} - {self.date} ({self.status})"
+
+"""
+Exam Model
+for handling exam related data
+"""
+    
+class Exam(models.Model):
+    EXAM_CHOICES = (
+        ("Half Yearly", "Half Yearly"),
+        ("Final", "Final"),
+        ("Test", "Test"),
+        ("Pre-Test", "Pre-Test")
+    )
+
+    exam_title = models.CharField(max_length=255, choices=EXAM_CHOICES)
+    exam_date = models.DateField(null=True, blank=True)
+    exam_time = models.TimeField(null=True, blank=True)
+
+    def __str__(self):
+        return self.exam_title
+
+class ExamAssign(models.Model):
+    exam = models.ForeignKey(Exam, on_delete=models.CASCADE)
+    section = models.ForeignKey(Section, on_delete=models.CASCADE)
+    subject = models.ForeignKey(SectionSubject, on_delete=models.CASCADE)
+    question_paper = models.FileField(upload_to="question_paper", null=True, blank=True)
+    full_mark = models.IntegerField(
+        default=0, validators=[MaxValueValidator(100), MinValueValidator(0)]
+    )
+    pass_mark = models.IntegerField(
+        default=0, validators=[MaxValueValidator(100), MinValueValidator(0)]
+    )
+    exam_date = models.DateField(null=True, blank=True)
+    exam_time = models.TimeField(null=True, blank=True)
+
+    class Meta:
+        unique_together = ("exam", "section", "subject")
+
+    def __str__(self):
+        return f"{self.exam} - {self.section} - {self.subject}"
