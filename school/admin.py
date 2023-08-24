@@ -1,8 +1,9 @@
 from django.contrib import admin
 from django.utils.html import format_html
+from django.contrib.admin import DateFieldListFilter
 
 from .models import (Attendance, Class, Exam, ExamAssign, Section,
-                     SectionSubject, Student, StudentAssign, Subject, Teacher)
+                     SectionSubject, Student, StudentAssign, Subject, Teacher, Result)
 
 # Register your models here.
 
@@ -216,11 +217,63 @@ class StudentAssignAdmin(admin.ModelAdmin):
 
 @admin.register(Attendance)
 class AttendanceAdmin(admin.ModelAdmin):
+
+    def get_student_id(self, obj):
+        return obj.student_assign.student.student_id
+
     list_display = (
-        "student",
+        "student_assign",
+        "get_student_id",
         "date",
         "status",
     )
 
+    search_fields = (
+        "student_assign__student__student_id",
+    )
+
+    list_filter = (
+        "student_assign__section__class_name",
+        "student_assign__section__name",
+        "status",
+    )
+
+    date_hierarchy = "date"
+
+    list_per_page = 10
+
 admin.site.register(Exam)
 admin.site.register(ExamAssign)
+
+@admin.register(Result)
+class ResultAdmin(admin.ModelAdmin):
+
+    def get_student_id(self, obj):
+        return obj.student_assign.student.student_id
+    
+    def get_exam_title(self, obj):
+        return obj.exam_assign.exam.exam_title
+    
+    def get_subject_title(self, obj):
+        return obj.exam_assign.subject.subject.title
+
+    list_display = (
+        "student_assign",
+        "get_student_id",
+        "get_exam_title",
+        "get_subject_title",
+    )
+
+    # search_fields = (
+    #     "student__student_id",
+    #     "exam__title",
+    #     "subject__title",
+    # )
+
+    # list_filter = (
+    #     "student__admission_class",
+    #     "exam__title",
+    #     "subject__title",
+    # )
+
+    list_per_page = 10

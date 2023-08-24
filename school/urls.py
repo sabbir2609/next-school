@@ -3,10 +3,9 @@ from django.urls import include, path
 from .views import (AttendanceCreateView, AttendanceReportView, HomeView,
                     SectionDetailView, SectionListView, StudentAssignView,
                     StudentAttendanceCreateView,
-                    StudentAttendanceReportDetailView,
-                    StudentAttendanceUpdateView, StudentCreateView,
+                    StudentAttendanceReportDetailView,StudentCreateView,
                     StudentDeleteView, StudentDetailView, StudentListView,
-                    StudentUpdateView)
+                    StudentUpdateView, StudentAutocompleteView)
 
 app_name = "school"
 
@@ -23,10 +22,11 @@ urlpatterns = [
     ),
     # Assign Student URLs
     path("students/assign/", StudentAssignView.as_view(), name="student_assign"),
+    # Student Autocomplete URLs
+    path('student-autocomplete/', StudentAutocompleteView.as_view(), name='student-autocomplete'),
 
     # Attendance URLs (Student)
     path("students/<int:pk>/attendance-add/", StudentAttendanceCreateView.as_view(), name="attendance_add"),
-    path("students/<int:pk>/attendance-update/", StudentAttendanceUpdateView.as_view(), name="attendance_update"),
 
     path("students/<int:pk>/attendance-report/", StudentAttendanceReportDetailView.as_view(), name="attendance_report_detail"),
     

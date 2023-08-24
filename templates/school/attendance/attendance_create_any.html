@@ -6,9 +6,9 @@
 <h1>Attendance Create for Any Student </h1>
 <form method="post">
     {% csrf_token %}
-    {{ form | crispy }}
+    {{ form.media }}
+    {{ form|crispy}}
     <button class="btn btn-warning" type="submit">Submit</button>
-
 </form>
 
 {% endblock %}

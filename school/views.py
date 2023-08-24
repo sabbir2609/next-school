@@ -19,6 +19,8 @@ from school.forms import AttendanceForm, StudentAssignForm, StudentForm
 from .models import (Attendance, Class, Section, SectionSubject, Student,
                      StudentAssign, Subject, Teacher)
 
+from dal import autocomplete
+
 
 class HomeView(TemplateView):
     template_name = "school/home.html"
@@ -138,6 +140,13 @@ class StudentAssignView(SuccessMessageMixin, CreateView):
     def get_success_message(self, cleaned_data):
         return "Student assigned successfully"
 
+# student autocomplete view
+class StudentAutocompleteView(autocomplete.Select2QuerySetView):
+    def get_queryset(self):
+        qs = StudentAssign.objects.all()
+        if self.q:
+            qs = qs.filter(student__name_en__istartswith=self.q)
+        return qs
 
 # Attendance Create for specific student
 class StudentAttendanceCreateView(CreateView):
@@ -155,7 +164,7 @@ class StudentAttendanceCreateView(CreateView):
         student = StudentAssign.objects.get(student__student_id=self.kwargs["pk"])
         date = form.cleaned_data["date"]
         # Check if attendance already exists for this student on this date
-        if Attendance.objects.filter(student=student, date=date).exists():
+        if Attendance.objects.filter(student_assign=student, date=date).exists():
             messages.warning(self.request, "Attendance already exists for this student on this date")
             return super().form_invalid(form)
         form.instance.student = student
@@ -163,16 +172,6 @@ class StudentAttendanceCreateView(CreateView):
 
 
     def get_success_url(self):
-        return reverse_lazy("school:attendance_report_detail" , kwargs={"pk": self.kwargs["pk"]})
-    
-# TODO: AttendanceReportDetailView - Not working
-class StudentAttendanceUpdateView(UpdateView):
-    model = Attendance
-    form_class = AttendanceForm
-    template_name = "school/attendance/student_attendance_update.html"
-
-    def get_success_url(self):
-        messages.success(self.request, "Attendance updated successfully")
         return reverse_lazy("school:attendance_report_detail" , kwargs={"pk": self.kwargs["pk"]})
 
 
@@ -210,9 +209,11 @@ class StudentAttendanceReportDetailView(ListView):
 class AttendanceCreateView(CreateView):
     model = Attendance
     template_name = "school/attendance/attendance_create_any.html"
-    fields = "__all__"
+    form_class = AttendanceForm
     def get_success_url(self):
         return reverse_lazy("school:attendance_all_report")
+    
+
 
 #  Attendance Report for all students
 class AttendanceReportView(ListView):

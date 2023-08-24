@@ -19,8 +19,8 @@
             {% for attendance in attendance_list %}
             <tr>
                 <td>
-                    <a href="{% url 'school:student_detail' attendance.student.student_id %}">
-                        {{ attendance.student }}
+                    <a href="{% url 'school:student_detail' attendance.student_assign.student_id %}">
+                        {{ attendance.student_assign }}
                     </a>
                 </td>
                 <td>{{ attendance.date }}</td>

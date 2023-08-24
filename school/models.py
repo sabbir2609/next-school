@@ -323,9 +323,9 @@ class StudentAssign(models.Model):
     def __str__(self):
         return f"{self.student} - {self.section} ({self.class_roll})"
 
-
+# student attendance model
 class Attendance(models.Model):
-    student = models.ForeignKey(
+    student_assign = models.ForeignKey(
         StudentAssign, on_delete=models.CASCADE, related_name="student_attendance",
     )
     date = models.DateField(default=datetime.date.today)
@@ -333,6 +333,8 @@ class Attendance(models.Model):
 
     class Meta:
         ordering = ["-date"]
+
+    unique_together = ("student", "date")
 
     def __str__(self):
         return f"{self.student} - {self.date} ({self.status})"
@@ -376,3 +378,7 @@ class ExamAssign(models.Model):
 
     def __str__(self):
         return f"{self.exam} - {self.section} - {self.subject}"
+
+class Result(models.Model):
+    student_assign = models.ForeignKey(StudentAssign, on_delete=models.CASCADE)
+    exam_assign = models.ForeignKey(ExamAssign, on_delete=models.CASCADE)
