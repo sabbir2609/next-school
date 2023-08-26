@@ -6,20 +6,18 @@
 <br>
 <form action="" method=GET>
     {% csrf_token %}
-
-    # TODO: Add search by student id
     <div class="form-floating mb-3">
-        <input name="query" type="text" class="form-control" id="floatingInput" placeholder="John Doe">
+        <input name="q" type="text" class="form-control" id="floatingInput" placeholder="John Doe">
         <label for="floatingInput">Search Student</label>
     </div>
     <button class="btn btn-primary" type="submit">Search</button>
 </form>
 
 <hr>
+
+{% if students.count != 0 %}
+
 <h2>Student List</h2>
-
-<button type="button" class="btn btn-primary" onclick="window.location.href='new'">Add Student</button>
-
 <table class="table">
     <thead>
         <tr>
@@ -64,5 +62,11 @@
     </ul>
 </div>
 
+{% else %}
+<h3>No Student Found</h3>
+<h4>Try to search with different name</h4>
+{% endif %}
+<hr>
+<button type="button" class="btn btn-primary" onclick="window.location.href='new'">Add Student</button>
 
 {% endblock %}

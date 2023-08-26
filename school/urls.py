@@ -22,7 +22,8 @@ urlpatterns = [
     ),
     # Assign Student URLs
     path("students/assign/", StudentAssignView.as_view(), name="student_assign"),
-    # Student Autocomplete URLs
+
+    # Student Autocomplete URLs for assigned students
     path('student-autocomplete/', StudentAutocompleteView.as_view(), name='student-autocomplete'),
 
     # Attendance URLs (Student)

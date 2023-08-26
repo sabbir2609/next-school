@@ -5,6 +5,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.messages.views import SuccessMessageMixin
 from django.db import models
+from django.db.models import Q
 from django.forms import ValidationError, modelformset_factory
 from django.http import Http404, HttpRequest, HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
@@ -31,6 +32,16 @@ class StudentListView(ListView):
     context_object_name = "students"
     template_name = "school/student_list.html"
     paginate_by = 10
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        search_query = self.request.GET.get('q')
+        if search_query:
+            queryset = queryset.filter(
+                Q(name_en__icontains=search_query) |
+                Q(student_id__icontains=search_query)
+            )
+        return queryset
             
 
 class StudentDetailView(DetailView):
@@ -140,7 +151,7 @@ class StudentAssignView(SuccessMessageMixin, CreateView):
     def get_success_message(self, cleaned_data):
         return "Student assigned successfully"
 
-# student autocomplete view
+# student autocomplete view for student assign
 class StudentAutocompleteView(autocomplete.Select2QuerySetView):
     def get_queryset(self):
         qs = StudentAssign.objects.all()
@@ -213,7 +224,6 @@ class AttendanceCreateView(CreateView):
     def get_success_url(self):
         return reverse_lazy("school:attendance_all_report")
     
-
 
 #  Attendance Report for all students
 class AttendanceReportView(ListView):
