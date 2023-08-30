@@ -362,22 +362,15 @@ class Exam(models.Model):
 class ExamAssign(models.Model):
     exam = models.ForeignKey(Exam, on_delete=models.CASCADE)
     section = models.ForeignKey(Section, on_delete=models.CASCADE)
-    subject = models.ForeignKey(SectionSubject, on_delete=models.CASCADE)
     question_paper = models.FileField(upload_to="question_paper", null=True, blank=True)
-    full_mark = models.IntegerField(
-        default=0, validators=[MaxValueValidator(100), MinValueValidator(0)]
-    )
-    pass_mark = models.IntegerField(
-        default=0, validators=[MaxValueValidator(100), MinValueValidator(0)]
-    )
     exam_date = models.DateField(null=True, blank=True)
     exam_time = models.TimeField(null=True, blank=True)
 
     class Meta:
-        unique_together = ("exam", "section", "subject")
+        unique_together = ("exam", "section")
 
     def __str__(self):
-        return f"{self.exam} - {self.section} - {self.subject}"
+        return f"{self.exam} - {self.section}"
 
 class Result(models.Model):
     student_assign = models.ForeignKey(StudentAssign, on_delete=models.CASCADE)
