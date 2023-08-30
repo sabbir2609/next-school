@@ -1,0 +1,17 @@
+{% extends 'base/base.html' %}
+
+{% block title %} {{ result.student.name_en }} {% endblock %}
+
+{% load static %}
+
+{% block content %}
+
+{% for res in result %}
+{{res}}
+MCQ: {{res.mcq_mark}} ||
+CQ: {{res.written_mark}} ||
+Practical: {{res.practical_mark}} ||
+<hr />
+{% endfor %}
+
+{% endblock %}

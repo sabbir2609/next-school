@@ -2,10 +2,12 @@ import datetime
 
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
+from django.forms import ValidationError
+from django.utils.text import slugify
 
 
 class Subject(models.Model):
-    title = models.CharField(max_length=255, help_text="Subject Name")
+    title = models.CharField(max_length=255, help_text="Subject Name", unique=True)
     description = models.TextField(
         null=True, blank=True, help_text="Subject Description",
         default=""
@@ -20,13 +22,14 @@ class Subject(models.Model):
 
 class Class(models.Model):
     CLASS_CHOICES = (
-        ("6", "Six"),
-        ("7", "Seven"),
-        ("8", "Eight"),
-        ("9", "Nine"),
-        ("10", "Ten"),
+        ("Six", "Six"),
+        ("Seven", "Seven"),
+        ("Eignt", "Eight"),
+        ("Nine", "Nine"),
+        ("Ten", "Ten"),
     )
-    title = models.CharField(max_length=2, choices=CLASS_CHOICES, primary_key=True)
+    title = models.CharField(max_length=8, choices=CLASS_CHOICES, primary_key=True)
+    slug = models.SlugField(unique=True, blank=True, null=True)
     class_teacher = models.ForeignKey(
         "Teacher", on_delete=models.SET_NULL, null=True, blank=True
     )
@@ -40,6 +43,7 @@ class Class(models.Model):
 
     class Meta:
         verbose_name_plural = "Classes"
+        ordering = ('slug',)
 
 
 class Section(models.Model):
@@ -61,6 +65,7 @@ class Section(models.Model):
     class_name = models.ForeignKey(
         Class, on_delete=models.CASCADE, help_text="Class", verbose_name="Class"
     )
+
     section_teacher = models.OneToOneField(
         "Teacher",
         on_delete=models.SET_NULL,
@@ -338,40 +343,66 @@ class Attendance(models.Model):
 
     def __str__(self):
         return f"{self.student} - {self.date} ({self.status})"
-
-"""
-Exam Model
-for handling exam related data
-"""
     
+
+    # Exam model
+
 class Exam(models.Model):
     EXAM_CHOICES = (
         ("Half Yearly", "Half Yearly"),
-        ("Final", "Final"),
+        ("Year Final", "Year Final"),
+        ("Pretest", "Pretest"),
         ("Test", "Test"),
-        ("Pre-Test", "Pre-Test")
     )
 
-    exam_title = models.CharField(max_length=255, choices=EXAM_CHOICES)
-    exam_date = models.DateField(null=True, blank=True)
-    exam_time = models.TimeField(null=True, blank=True)
+    exam_type = models.CharField(max_length=20, choices=EXAM_CHOICES)
+    date = models.DateField(default=datetime.date.today)
+
+    slug = models.SlugField(unique=True, blank=True, null=True)
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(f"{self.exam_type}-{self.date.year}")
+        super().save(*args, **kwargs)
+
+    class Meta:
+        ordering = ["-date"]
 
     def __str__(self):
-        return self.exam_title
+        return f"{self.exam_type} - {self.date}"
+    
 
 class ExamAssign(models.Model):
     exam = models.ForeignKey(Exam, on_delete=models.CASCADE)
-    section = models.ForeignKey(Section, on_delete=models.CASCADE)
+    subject = models.ForeignKey(SectionSubject, on_delete=models.CASCADE)
     question_paper = models.FileField(upload_to="question_paper", null=True, blank=True)
-    exam_date = models.DateField(null=True, blank=True)
-    exam_time = models.TimeField(null=True, blank=True)
+
+    full_mark = models.PositiveIntegerField(default=0, validators=[MaxValueValidator(100), MinValueValidator(0)])
+    pass_mark = models.PositiveIntegerField(default=0, validators=[MaxValueValidator(100), MinValueValidator(0)])
+    exam_time = models.TimeField(null=True, blank=True, help_text="Exam Time")
 
     class Meta:
-        unique_together = ("exam", "section")
+        unique_together = ("exam", "subject")
 
     def __str__(self):
-        return f"{self.exam} - {self.section}"
+        return f"{self.exam} || {self.subject}"
+    
 
-class Result(models.Model):
-    student_assign = models.ForeignKey(StudentAssign, on_delete=models.CASCADE)
-    exam_assign = models.ForeignKey(ExamAssign, on_delete=models.CASCADE)
+class StudentResult(models.Model):
+    exam_assign = models.ForeignKey(ExamAssign, on_delete=models.CASCADE, help_text="Exam Assign")
+    student_assign = models.ForeignKey(StudentAssign, on_delete=models.CASCADE, help_text="Student Assign")
+
+    # obtained marks
+    mcq_mark = models.PositiveIntegerField(default=0, validators=[MaxValueValidator(100), MinValueValidator(0)])
+    written_mark = models.PositiveIntegerField(default=0, validators=[MaxValueValidator(100), MinValueValidator(0)])
+    practical_mark = models.PositiveIntegerField(default=0, validators=[MaxValueValidator(100), MinValueValidator(0)])
+
+    def clean(self):
+        if self.mcq_mark + self.written_mark + self.practical_mark > self.exam_assign.full_mark:
+            raise ValidationError("Total marks can't be greater than full marks")
+
+    class Meta:
+        unique_together = ("exam_assign", "student_assign")
+
+    def __str__(self):
+        return f"{self.exam_assign} || {self.student_assign}"

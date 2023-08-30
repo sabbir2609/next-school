@@ -1,6 +1,8 @@
 import datetime
 from typing import Any, Dict, Optional
 
+from pprint import pprint
+
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.messages.views import SuccessMessageMixin
@@ -13,12 +15,13 @@ from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import DetailView, ListView, TemplateView
+from django.views.generic.list import MultipleObjectTemplateResponseMixin
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 
 from school.forms import AttendanceForm, StudentAssignForm, StudentForm
 
 from .models import (Attendance, Class, Section, SectionSubject, Student,
-                     StudentAssign, Subject, Teacher)
+                     StudentAssign, Subject, Teacher, StudentResult, Exam, ExamAssign,)
 
 from dal import autocomplete
 
@@ -233,4 +236,19 @@ class AttendanceReportView(ListView):
     context_object_name = "attendance_list"
     paginate_by = 10
 
+
+class StudentResultCreateView(CreateView):
+    pass
+
+class StudentResultDetailView(ListView):
+    model = StudentResult
+    template_name = "school/result/student_result_detail.html"
+    context_object_name = "result"
+
+    def get_object(self):
+        student_id = self.kwargs['student_id']
+        class_slug = self.kwargs['class_slug']
+        exam_slug = self.kwargs['exam_slug']
+        
+        return get_object_or_404(StudentResult, student_assign__student__student_id=student_id, exam_assign__subject__section__class_name__slug=class_slug, exam_assign__exam__slug=exam_slug)
 

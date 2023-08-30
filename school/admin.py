@@ -1,9 +1,9 @@
 from django.contrib import admin
+from django.forms import ValidationError
 from django.utils.html import format_html
-from django.contrib.admin import DateFieldListFilter
 
-from .models import (Attendance, Class, Exam, ExamAssign, Section,
-                     SectionSubject, Student, StudentAssign, Subject, Teacher, Result)
+from .models import (Attendance, Class, Section,
+                     SectionSubject, Student, StudentAssign, Subject, Teacher, Exam, ExamAssign, StudentResult,)
 
 # Register your models here.
 
@@ -37,7 +37,12 @@ class ClassAdmin(admin.ModelAdmin):
         "get_class_name",
         "class_teacher",
         "description",
+        "slug",
     )
+
+    prepopulated_fields = {
+        "slug" : ["title"]
+    }
 
 
 @admin.register(Section)
@@ -242,38 +247,67 @@ class AttendanceAdmin(admin.ModelAdmin):
 
     list_per_page = 10
 
-admin.site.register(Exam)
-admin.site.register(ExamAssign)
 
-@admin.register(Result)
-class ResultAdmin(admin.ModelAdmin):
+@admin.register(Exam)
+class ExamAdmin(admin.ModelAdmin):
+    list_display = (
+        "exam_type",
+        "date",
+    )
 
-    def get_student_id(self, obj):
-        return obj.student_assign.student.student_id
+ 
+    date_hierarchy = "date"
+
+    list_per_page = 10
+
+
+@admin.register(ExamAssign)
+class ExamAssignAdmin(admin.ModelAdmin):
     
-    def get_exam_title(self, obj):
-        return obj.exam_assign.exam.exam_title
-    
-    def get_subject_title(self, obj):
-        return obj.exam_assign.subject.subject.title
+    # get_date = lambda self, obj: obj.exam.date
+
+    list_display = (
+        "exam",
+        "subject",
+        "get_date",
+    )
+
+    @admin.display(description="Date")
+    def get_date(self, obj):
+        return obj.exam.date
+
+    list_filter = (
+        "subject__subject",
+        "exam__exam_type",
+    )
+
+    date_hierarchy = "exam__date"
+
+    list_per_page = 10
+
+
+@admin.register(StudentResult)
+class StudentResultAdmin(admin.ModelAdmin):
+    def get_subject(self, obj):
+        return obj.exam_assign.subject
 
     list_display = (
         "student_assign",
-        "get_student_id",
-        "get_exam_title",
-        "get_subject_title",
+        "get_subject",
+        'mcq_mark', 'written_mark', 'practical_mark'
+
     )
 
-    # search_fields = (
-    #     "student__student_id",
-    #     "exam__title",
-    #     "subject__title",
-    # )
+    search_fields = (
+        "student_assign__student__student_id",
+        "student_assign__student__name_en",
+        # "student_assign__section__class_name__title",
+    )
 
-    # list_filter = (
-    #     "student__admission_class",
-    #     "exam__title",
-    #     "subject__title",
-    # )
+    list_filter = (
+        "exam_assign__subject__subject__title",
+    )
 
-    list_per_page = 10
+    search_help_text = "You can search by student id or name"
+
+    autocomplete_fields = [ "student_assign"]
