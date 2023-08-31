@@ -1,9 +1,22 @@
+""" Import Necessery Modules"""
+
 from django.contrib import admin
-from django.forms import ValidationError
 from django.utils.html import format_html
 
-from .models import (Attendance, Class, Section,
-                     SectionSubject, Student, StudentAssign, Subject, Teacher, Exam, ExamAssign, StudentResult,)
+from .models import (
+    Attendance,
+    Class,
+    Section,
+    SectionSubject,
+    Student,
+    StudentAssign,
+    Subject,
+    Teacher,
+    Exam,
+    ExamAssign,
+    StudentResult,
+    ExamSubject,
+)
 
 # Register your models here.
 
@@ -16,8 +29,11 @@ class SectionSubjectInline(admin.TabularInline):
         # "subject",
     ]
 
+
 @admin.register(Subject)
 class SubjectAdmin(admin.ModelAdmin):
+    """Class representing Subject Admin"""
+
     list_display = (
         "title",
         "description",
@@ -40,9 +56,7 @@ class ClassAdmin(admin.ModelAdmin):
         "slug",
     )
 
-    prepopulated_fields = {
-        "slug" : ["title"]
-    }
+    prepopulated_fields = {"slug": ["title"]}
 
 
 @admin.register(Section)
@@ -222,7 +236,6 @@ class StudentAssignAdmin(admin.ModelAdmin):
 
 @admin.register(Attendance)
 class AttendanceAdmin(admin.ModelAdmin):
-
     def get_student_id(self, obj):
         return obj.student_assign.student.student_id
 
@@ -233,9 +246,7 @@ class AttendanceAdmin(admin.ModelAdmin):
         "status",
     )
 
-    search_fields = (
-        "student_assign__student__student_id",
-    )
+    search_fields = ("student_assign__student__student_id",)
 
     list_filter = (
         "student_assign__section__class_name",
@@ -252,18 +263,28 @@ class AttendanceAdmin(admin.ModelAdmin):
 class ExamAdmin(admin.ModelAdmin):
     list_display = (
         "exam_type",
-        "date",
+        "year",
     )
 
- 
-    date_hierarchy = "date"
+    list_filter = ("year",)
+
+    search_fields = ("exam_type",)
+
+    prepopulated_fields = {"slug": ("exam_type", "year")}
 
     list_per_page = 10
 
 
+@admin.register(ExamSubject)
+class ExamSubjectAdmin(admin.ModelAdmin):
+    list_display = (
+        "class_name",
+        "subject",
+    )
+
+
 @admin.register(ExamAssign)
 class ExamAssignAdmin(admin.ModelAdmin):
-    
     # get_date = lambda self, obj: obj.exam.date
 
     list_display = (
@@ -281,6 +302,10 @@ class ExamAssignAdmin(admin.ModelAdmin):
         "exam__exam_type",
     )
 
+    # autocomplete_fields = [
+    #     "subject",
+    # ]
+
     date_hierarchy = "exam__date"
 
     list_per_page = 10
@@ -294,8 +319,9 @@ class StudentResultAdmin(admin.ModelAdmin):
     list_display = (
         "student_assign",
         "get_subject",
-        'mcq_mark', 'written_mark', 'practical_mark'
-
+        "mcq_mark",
+        "written_mark",
+        "practical_mark",
     )
 
     search_fields = (
@@ -306,8 +332,9 @@ class StudentResultAdmin(admin.ModelAdmin):
 
     list_filter = (
         "exam_assign__subject__subject__title",
+        "exam_assign__subject__class_name__title",
     )
 
     search_help_text = "You can search by student id or name"
 
-    autocomplete_fields = [ "student_assign"]
+    autocomplete_fields = ["student_assign"]

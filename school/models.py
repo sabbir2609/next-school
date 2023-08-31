@@ -1,16 +1,15 @@
 import datetime
 
+from django.core.exceptions import ValidationError
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
-from django.forms import ValidationError
 from django.utils.text import slugify
 
 
 class Subject(models.Model):
     title = models.CharField(max_length=255, help_text="Subject Name", unique=True)
     description = models.TextField(
-        null=True, blank=True, help_text="Subject Description",
-        default=""
+        null=True, blank=True, help_text="Subject Description", default=""
     )
 
     def __str__(self):
@@ -34,8 +33,10 @@ class Class(models.Model):
         "Teacher", on_delete=models.SET_NULL, null=True, blank=True
     )
     description = models.TextField(
-        null=True, blank=True,
-        help_text="eg: 'Class 6, total 120 students, 4 sections, 30 students in each section'", default=""
+        null=True,
+        blank=True,
+        help_text="eg: 'Class 6, total 120 students, 4 sections, 30 students in each section'",
+        default="",
     )
 
     def __str__(self):
@@ -43,7 +44,7 @@ class Class(models.Model):
 
     class Meta:
         verbose_name_plural = "Classes"
-        ordering = ('slug',)
+        ordering = ("slug",)
 
 
 class Section(models.Model):
@@ -59,8 +60,9 @@ class Section(models.Model):
         max_length=2, choices=SECTION_CHOICES, verbose_name="Section"
     )
     description = models.TextField(
-        null=True, blank=True,
-        help_text="Section Description, e.g. 'Section A of Class 6, total 30 students'"
+        null=True,
+        blank=True,
+        help_text="Section Description, e.g. 'Section A of Class 6, total 30 students'",
     )
     class_name = models.ForeignKey(
         Class, on_delete=models.CASCADE, help_text="Class", verbose_name="Class"
@@ -328,10 +330,13 @@ class StudentAssign(models.Model):
     def __str__(self):
         return f"{self.student} - {self.section} ({self.class_roll})"
 
+
 # student attendance model
 class Attendance(models.Model):
     student_assign = models.ForeignKey(
-        StudentAssign, on_delete=models.CASCADE, related_name="student_attendance",
+        StudentAssign,
+        on_delete=models.CASCADE,
+        related_name="student_attendance",
     )
     date = models.DateField(default=datetime.date.today)
     status = models.BooleanField(default=False)
@@ -343,9 +348,9 @@ class Attendance(models.Model):
 
     def __str__(self):
         return f"{self.student} - {self.date} ({self.status})"
-    
 
     # Exam model
+
 
 class Exam(models.Model):
     EXAM_CHOICES = (
@@ -356,29 +361,40 @@ class Exam(models.Model):
     )
 
     exam_type = models.CharField(max_length=20, choices=EXAM_CHOICES)
+    year = models.CharField(max_length=4)
     date = models.DateField(default=datetime.date.today)
 
     slug = models.SlugField(unique=True, blank=True, null=True)
-
-    def save(self, *args, **kwargs):
-        if not self.slug:
-            self.slug = slugify(f"{self.exam_type}-{self.date.year}")
-        super().save(*args, **kwargs)
 
     class Meta:
         ordering = ["-date"]
 
     def __str__(self):
-        return f"{self.exam_type} - {self.date}"
-    
+        return f"{self.exam_type} - {self.year}"
+
+
+class ExamSubject(models.Model):
+    class_name = models.ForeignKey(Class, on_delete=models.PROTECT)
+    subject = models.ForeignKey(Subject, on_delete=models.PROTECT)
+
+    def __str__(self):
+        return f"{self.class_name} - {self.subject}"
+
 
 class ExamAssign(models.Model):
     exam = models.ForeignKey(Exam, on_delete=models.CASCADE)
-    subject = models.ForeignKey(SectionSubject, on_delete=models.CASCADE)
+    subject = models.ForeignKey(ExamSubject, on_delete=models.CASCADE)
+    teacher = models.ForeignKey(
+        Teacher, on_delete=models.PROTECT, null=True, blank=True
+    )
     question_paper = models.FileField(upload_to="question_paper", null=True, blank=True)
 
-    full_mark = models.PositiveIntegerField(default=0, validators=[MaxValueValidator(100), MinValueValidator(0)])
-    pass_mark = models.PositiveIntegerField(default=0, validators=[MaxValueValidator(100), MinValueValidator(0)])
+    full_mark = models.PositiveIntegerField(
+        default=0, validators=[MaxValueValidator(100), MinValueValidator(0)]
+    )
+    pass_mark = models.PositiveIntegerField(
+        default=0, validators=[MaxValueValidator(100), MinValueValidator(0)]
+    )
     exam_time = models.TimeField(null=True, blank=True, help_text="Exam Time")
 
     class Meta:
@@ -386,19 +402,32 @@ class ExamAssign(models.Model):
 
     def __str__(self):
         return f"{self.exam} || {self.subject}"
-    
+
 
 class StudentResult(models.Model):
-    exam_assign = models.ForeignKey(ExamAssign, on_delete=models.CASCADE, help_text="Exam Assign")
-    student_assign = models.ForeignKey(StudentAssign, on_delete=models.CASCADE, help_text="Student Assign")
+    exam_assign = models.ForeignKey(
+        ExamAssign, on_delete=models.CASCADE, help_text="Exam Assign"
+    )
+    student_assign = models.ForeignKey(
+        StudentAssign, on_delete=models.CASCADE, help_text="Student Assign"
+    )
 
     # obtained marks
-    mcq_mark = models.PositiveIntegerField(default=0, validators=[MaxValueValidator(100), MinValueValidator(0)])
-    written_mark = models.PositiveIntegerField(default=0, validators=[MaxValueValidator(100), MinValueValidator(0)])
-    practical_mark = models.PositiveIntegerField(default=0, validators=[MaxValueValidator(100), MinValueValidator(0)])
+    mcq_mark = models.PositiveIntegerField(
+        default=0, validators=[MaxValueValidator(100), MinValueValidator(0)]
+    )
+    written_mark = models.PositiveIntegerField(
+        default=0, validators=[MaxValueValidator(100), MinValueValidator(0)]
+    )
+    practical_mark = models.PositiveIntegerField(
+        default=0, validators=[MaxValueValidator(100), MinValueValidator(0)]
+    )
 
     def clean(self):
-        if self.mcq_mark + self.written_mark + self.practical_mark > self.exam_assign.full_mark:
+        if (
+            self.mcq_mark + self.written_mark + self.practical_mark
+            > self.exam_assign.full_mark
+        ):
             raise ValidationError("Total marks can't be greater than full marks")
 
     class Meta:

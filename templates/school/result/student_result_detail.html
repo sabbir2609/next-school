@@ -1,10 +1,12 @@
 {% extends 'base/base.html' %}
 
-{% block title %} {{ result.student.name_en }} {% endblock %}
+{% block title %} {{ student_name }} {% endblock %}
 
 {% load static %}
 
 {% block content %}
+
+{{ exam_name }}
 
 {% for res in result %}
 {{res}}
