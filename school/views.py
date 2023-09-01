@@ -2,12 +2,17 @@ from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from django.db.models import Q
 from django.http import Http404
-from django.shortcuts import get_object_or_404, redirect
+from django.shortcuts import get_list_or_404, get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views.generic import DetailView, ListView, TemplateView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 
-from school.forms import AttendanceForm, StudentAssignForm, StudentForm
+from school.forms import (
+    AttendanceForm,
+    StudentAssignForm,
+    StudentForm,
+    StudentResultForm,
+)
 from dal import autocomplete
 
 from .models import (
@@ -245,8 +250,19 @@ class AttendanceReportView(ListView):
     paginate_by = 10
 
 
+# student autocomplete view for student assign
+class StudentResultAutocompleteView(autocomplete.Select2QuerySetView):
+    def get_queryset(self):
+        qs = StudentAssign.objects.all()
+        if self.q:
+            qs = qs.filter(student__admission_class=self.q)
+        return qs
+
+
 class StudentResultCreateView(CreateView):
-    pass
+    model = StudentResult
+    template_name = "school/result/student_result_add.html"
+    form_class = StudentResultForm
 
 
 class StudentResultDetailView(ListView):
@@ -254,26 +270,37 @@ class StudentResultDetailView(ListView):
     template_name = "school/result/student_result_detail.html"
     context_object_name = "result"
 
-    def get_object(self):
+    def get_queryset(self, *args, **kwargs):
         student_id = self.kwargs["student_id"]
         class_slug = self.kwargs["class_slug"]
         exam_slug = self.kwargs["exam_slug"]
 
-        return get_object_or_404(
-            StudentResult,
-            student_assign__student__student_id=student_id,
-            exam_assign__subject__section__class_name__slug=class_slug,
-            exam_assign__exam__slug=exam_slug,
+        print(student_id, class_slug, exam_slug)
+
+        # TODO: Filter by all arguments
+        qs = (
+            StudentResult.objects.filter(student_assign__student__student_id=student_id)
+            .filter(exam_assign__exam__slug=exam_slug)
+            .filter(exam_assign__subject__section__class_name__slug=class_slug)
         )
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
+        return qs
 
-        # reformat the code if it works
-        student_id = self.kwargs["student_id"]
-        student_assign = StudentAssign.objects.get(student__student_id=student_id)
-        student_name = student_assign.student.name_en
-        context["student_name"] = student_name
+        # return get_list_or_404(
+        #     StudentResult,
+        #     Q(student_assign__student__student_id=student_id),
+        #     Q(exam_assign__subject__section__class_name__slug=class_slug),
+        #     Q(exam_assign__exam__slug=exam_slug),
+        # )
 
-        # pprint(exam_assign)
-        return context
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+
+    #     # reformat the code if it works
+    #     student_id = self.kwargs["student_id"]
+    #     student_assign = StudentAssign.objects.get(student__student_id=student_id)
+    #     student_name = student_assign.student.name_en
+    #     context["student_name"] = student_name
+
+    #     # pprint(exam_assign)
+    #     return context

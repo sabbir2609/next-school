@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import Attendance, Student, StudentAssign
+from .models import Attendance, Student, StudentAssign, StudentResult
 
 from dal import autocomplete
 
@@ -28,12 +28,25 @@ class AttendanceForm(forms.ModelForm):
         widgets = {
             "date": forms.DateInput(attrs={"class": "form-control", "type": "date"}),
             "student_assign": autocomplete.ModelSelect2(
-                url="school:student-autocomplete")
-
+                url="school:student-autocomplete"
+            ),
         }
+
 
 # student assign form
 class StudentAssignForm(forms.ModelForm):
     class Meta:
         model = StudentAssign
         fields = "__all__"
+
+
+class StudentResultForm(forms.ModelForm):
+    class Meta:
+        model = StudentResult
+        fields = "__all__"
+
+        # widgets = {
+        #     "student_assign": autocomplete.ModelSelect2(
+        #         url="school:student-result-autocomplete"
+        #     ),
+        # }

@@ -1,5 +1,6 @@
 """ Import Necessery Modules"""
 
+from django import forms
 from django.contrib import admin
 from django.utils.html import format_html
 
@@ -306,6 +307,8 @@ class ExamAssignAdmin(admin.ModelAdmin):
     #     "subject",
     # ]
 
+    search_fields = ("exam__exam",)
+
     date_hierarchy = "exam__date"
 
     list_per_page = 10
@@ -327,7 +330,7 @@ class StudentResultAdmin(admin.ModelAdmin):
     search_fields = (
         "student_assign__student__student_id",
         "student_assign__student__name_en",
-        # "student_assign__section__class_name__title",
+        "exam_assign",
     )
 
     list_filter = (
@@ -337,4 +340,4 @@ class StudentResultAdmin(admin.ModelAdmin):
 
     search_help_text = "You can search by student id or name"
 
-    autocomplete_fields = ["student_assign"]
+    autocomplete_fields = ["exam_assign", "student_assign"]
