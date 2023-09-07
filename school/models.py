@@ -343,11 +343,10 @@ class Attendance(models.Model):
 
     class Meta:
         ordering = ["-date"]
-
-    unique_together = ("student", "date")
+        unique_together = ("student_assign", "date")
 
     def __str__(self):
-        return f"{self.student} - {self.date} ({self.status})"
+        return f"{self.student_assign} - {self.date} ({self.status})"
 
     # Exam model
 
