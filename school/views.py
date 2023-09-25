@@ -27,7 +27,7 @@ from .models import (
 
 
 class HomeView(TemplateView):
-    template_name = "school/home.html"
+    template_name = "home/homepage.html"
 
 
 class StudentListView(ListView):

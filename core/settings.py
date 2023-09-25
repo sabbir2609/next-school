@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     # Third Party Apps
     "crispy_forms",
     "crispy_bootstrap5",
+    "django_browser_reload",
     # dev tools
     "debug_toolbar",
     "django_dbml",
@@ -67,6 +68,8 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     # Django Debug Toolbar
     "debug_toolbar.middleware.DebugToolbarMiddleware",
+    # reload
+    "django_browser_reload.middleware.BrowserReloadMiddleware",
 ]
 
 ROOT_URLCONF = "core.urls"

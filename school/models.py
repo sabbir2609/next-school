@@ -397,6 +397,7 @@ class ExamAssign(models.Model):
     exam_time = models.TimeField(null=True, blank=True, help_text="Exam Time")
 
     class Meta:
+        ordering = ["exam", "subject"]
         unique_together = ("exam", "subject")
 
     def __str__(self):
