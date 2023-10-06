@@ -33,7 +33,7 @@ class HomeView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["dropdowns"] = [
-            {"name": "Dropdown 1", "items": ["Item 1", "Item 2"]},
+            {"name": "Dropdown 1", "items": ["Item 1", "Item 2", "Some Item 3"]},
             {"name": "Dropdown 2", "items": ["Item A", "Item B"]},
             {"name": "Dropdown 3", "items": ["Option X", "Option Y"]},
             {"name": "Dropdown 4", "items": ["Choice I", "Choice II"]},
@@ -61,7 +61,7 @@ class HomeView(TemplateView):
                 "link": "https://example.com/maintenance-october",
             },
         ]
-
+        context["data"] = [i for i in range(1, 20)]
         return context
 
 

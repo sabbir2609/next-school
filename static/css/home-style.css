@@ -1,0 +1,77 @@
+body {
+    font-family: 'Roboto', sans-serif !important;
+}
+
+.news {
+    width: 160px
+}
+
+.news-scroll a {
+    text-decoration: none
+}
+
+.dot {
+    height: 6px;
+    width: 6px;
+    margin-left: 3px;
+    margin-right: 3px;
+    margin-top: 2px !important;
+    background-color: rgb(207, 23, 23);
+    border-radius: 50%;
+    display: inline-block
+}
+
+.dropdown:hover .dropdown-menu {
+    display: block;
+    margin-top: 0.125em;
+}
+
+@media screen and (min-width: 992px) {
+    .navbar {
+        padding: 0;
+    }
+
+    .navbar .navbar-nav .nav-link {
+        padding: 1em 0;
+    }
+
+    .navbar .navbar-nav .nav-item {
+        margin: 0 1em;
+    }
+}
+
+.navbar .navbar-nav .nav-item {
+    position: relative;
+}
+
+.navbar .navbar-nav .nav-item::after {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    content: "";
+    background-color: black;
+    width: 0%;
+    height: 4px;
+    transition: all 0.5s;
+}
+
+.navbar .navbar-nav .nav-item:hover::after {
+    width: 100%;
+}
+
+/* Custom CSS for the fixed-height container */
+.table-container {
+    max-height: 400px;
+    /* Set your desired fixed height here */
+    overflow-y: auto;
+}
+
+.th-mod {
+    position: sticky;
+    top: 0;
+    background-color: #1b0101;
+    color: white;
+    /* Add a background color to make the header stand out */
+}

@@ -12,52 +12,42 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
         integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="{% static 'css/homestyle.css' %}">
+    <link rel="stylesheet" href="{% static 'css/home-style.css' %}">
 </head>
 
 <body>
-
-    <div class="container-fluid text-center">
-        <!-- first row -->
-        <div class="row text-bg-warning">
-            <div class="col">
-                <p><i class="fa-solid fa-phone"></i> 01310782589</p>
-            </div>
-            <div class="col">
-                <div class="dropdown">
-                    <button class="btn btn-sm btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                        aria-expanded="false">
-                        Language
-                    </button>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">বাংলা</a></li>
-                        <li><a class="dropdown-item" href="#">English</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
+    <div class="container-fluid" style="background-color: #60cad8;">
         <!-- 2nd row -->
-        <div class="row text-bg-warning p-2 ">
+        <div class="row" style="background-color: #f7b95b;">
             <img src="media/assets/home/banner-big-live.gif" alt="" srcset="">
         </div>
         <!-- 3rd row -->
-        <div class="row">
-            {% include "home/dropdown-nav.html" %}
+        <div class="row" style="background-color: #df34ba;">
+            <div class="container">
+                {% include "home/dropdown-nav.html" %}
+            </div>
         </div>
 
-        <div class="row">
-            {% include "home/ticker.html" %}
+        <div class="row" style="background-color: #8467f0;">
+            <div class="container-fluid">
+                {% include "home/ticker.html" %}
+            </div>
         </div>
 
-        <div class="row p-2">
+
+        <div class="row" style="background-color: #30ec68;">
             {% include "home/carousel.html" %}
         </div>
 
+        <div class="row" style="background-color: #110770;">
 
+            <div class="col col-lg-8 col-md-6 col-12" style="background-color: #7af39e;">
+                {% include "home/notice.html" %}
+            </div>
+            <div class="col col-lg-4 col-md-6 col-12" style="background-color: #d8fc83;">col-4</div>
 
+        </div>
     </div>
-
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
         crossorigin="anonymous"></script>
