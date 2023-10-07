@@ -1,0 +1,36 @@
+<style>
+    /* Remove the link highlight */
+    a.phone-number,
+    a.email-address {
+        text-decoration: none;
+        /* Remove underline */
+        color: inherit;
+        /* Use the default text color */
+        padding-right: 10px;
+    }
+</style>
+
+<div class="d-flex align-items-center justify-content-between">
+    <div class="font-weight-bold">
+        <span class="d-block d-sm-inline">
+            <i class="fa-sharp fa-solid fa-phone"></i>
+            <a href="tel:02477701339" class="phone-number">02477701339</a>
+        </span>
+        <span class="d-block d-sm-inline">
+            <i class="fa-solid fa-envelope"></i>
+            <a href="mailto:info@turbo.edu.bd" class="email-address">info@turbo.edu.bd</a>
+        </span>
+    </div>
+
+    <div class="dropdown dropdown-hov">
+        <a class="btn btn-outline-warning dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+            aria-expanded="false">
+            <i class="fa-solid fa-language"></i>
+            Language - ভাষা
+        </a>
+        <ul class="dropdown-menu dropdown-menu-end">
+            <li><a class="dropdown-item" href="#">বাংলা</a></li>
+            <li><a class="dropdown-item" href="#">English</a></li>
+        </ul>
+    </div>
+</div>

@@ -16,7 +16,14 @@
 </head>
 
 <body>
+    <!-- top -->
     <div class="container-fluid" style="background-color: #60cad8;">
+        <!-- 1st row -->
+        <div class="row" style="background-color: #4b4ef7;">
+            <div class="container p-lg-1 p-md-1 " style="background-color: #118a39;">
+                {% include "home/topbar.html" %}
+            </div>
+        </div>
         <!-- 2nd row -->
         <div class="row" style="background-color: #f7b95b;">
             <img src="media/assets/home/banner-big-live.gif" alt="" srcset="">
@@ -34,16 +41,19 @@
             </div>
         </div>
 
-
+        <!-- 4th row  -->
         <div class="row" style="background-color: #30ec68;">
             {% include "home/carousel.html" %}
         </div>
 
+        <!-- 5th roe  -->
         <div class="row" style="background-color: #110770;">
 
+            <!-- 5th row col-1 / notice  -->
             <div class="col col-lg-8 col-md-6 col-12" style="background-color: #7af39e;">
                 {% include "home/notice.html" %}
             </div>
+
             <div class="col col-lg-4 col-md-6 col-12" style="background-color: #d8fc83;">col-4</div>
 
         </div>

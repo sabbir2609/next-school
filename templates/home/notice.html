@@ -1,8 +1,10 @@
 {% load random_date %}
-
+<div style="text-align: center; background-color: black; height: 35px; color: white;">
+    Notice
+</div>
 <div class="table-container">
     <table class="table">
-        <thead class="th-mod">
+        <thead class="th-modo">
             <tr>
                 <th scope="col">Date</th>
                 <th scope="col">Notice</th>
@@ -13,7 +15,9 @@
 
             {% for i in data %}
             <tr>
-                <th scope="row" id="{i}">{{ "2023-01-01"|random_date:"2023-12-31" }}</th>
+                <th scope="row">
+                    {{ "2023-01-01"|random_date:"2023-12-31" }}
+                </th>
                 <td>{% lorem 20 w %}</td>
                 <td><a href="#" class="btn btn-primary">View</a></td>
             </tr>
@@ -22,3 +26,16 @@
         </tbody>
     </table>
 </div>
+<nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-center">
+        <li class="page-item disabled">
+            <a class="page-link">Previous</a>
+        </li>
+        <li class="page-item"><a class="page-link" href="#">1</a></li>
+        <li class="page-item"><a class="page-link" href="#">2</a></li>
+        <li class="page-item"><a class="page-link" href="#">3</a></li>
+        <li class="page-item">
+            <a class="page-link" href="#">Next</a>
+        </li>
+    </ul>
+</nav>

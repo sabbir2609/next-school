@@ -21,7 +21,8 @@ body {
     display: inline-block
 }
 
-.dropdown:hover .dropdown-menu {
+/* dropdown expand on hover */
+.dropdown-hov:hover .dropdown-menu {
     display: block;
     margin-top: 0.125em;
 }
@@ -66,6 +67,7 @@ body {
     max-height: 400px;
     /* Set your desired fixed height here */
     overflow-y: auto;
+    background-color: blueviolet;
 }
 
 .th-mod {
@@ -74,4 +76,19 @@ body {
     background-color: #1b0101;
     color: white;
     /* Add a background color to make the header stand out */
+}
+
+/* Scrollbar */
+
+::-webkit-scrollbar {
+    width: .45rem;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: rgba(27, 27, 27, .4);
+    border-radius: 3px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
 }
