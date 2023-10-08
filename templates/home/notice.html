@@ -1,8 +1,8 @@
 {% load random_date %}
-<div style="text-align: center; background-color: black; height: 35px; color: white;">
-    Notice
+<div class="d-flex flex-row flex-grow-1 flex-fill justify-content-center bg-danger py-2 text-white px-1">
+    <span class="d-flex align-items-center">Notice</span>
 </div>
-<div class="table-container">
+<div class="table-container position-relative">
     <table class="table">
         <thead class="th-modo">
             <tr>
@@ -12,30 +12,33 @@
             </tr>
         </thead>
         <tbody>
-
             {% for i in data %}
             <tr>
                 <th scope="row">
-                    {{ "2023-01-01"|random_date:"2023-12-31" }}
+                    <div class="d-block d-inline text-nowrap">
+                        {{ "2023-01-01"|random_date:"2023-12-31" }}
+                    </div>
                 </th>
                 <td>{% lorem 20 w %}</td>
                 <td><a href="#" class="btn btn-primary">View</a></td>
             </tr>
-            {% endfor%}
-
+            {% endfor %}
         </tbody>
     </table>
+
+    <!-- Pagination -->
+    <nav aria-label="Page navigation example mt-2">
+        <ul class="pagination justify-content-center">
+            <li class="page-item disabled">
+                <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+            </li>
+            <li class="page-item"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item">
+                <a class="page-link" href="#">Next</a>
+            </li>
+        </ul>
+    </nav>
+
 </div>
-<nav aria-label="Page navigation example">
-    <ul class="pagination justify-content-center">
-        <li class="page-item disabled">
-            <a class="page-link">Previous</a>
-        </li>
-        <li class="page-item"><a class="page-link" href="#">1</a></li>
-        <li class="page-item"><a class="page-link" href="#">2</a></li>
-        <li class="page-item"><a class="page-link" href="#">3</a></li>
-        <li class="page-item">
-            <a class="page-link" href="#">Next</a>
-        </li>
-    </ul>
-</nav>

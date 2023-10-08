@@ -1,6 +1,11 @@
 body {
     font-family: 'Roboto', sans-serif !important;
+    background-color: rgb(194, 189, 189);
 }
+
+/* * {
+    outline: 1px solid #f00 !important;
+} */
 
 .news {
     width: 160px
@@ -67,7 +72,7 @@ body {
     max-height: 400px;
     /* Set your desired fixed height here */
     overflow-y: auto;
-    background-color: blueviolet;
+    background-color: #FFAD3B;
 }
 
 .th-mod {
@@ -79,26 +84,97 @@ body {
 }
 
 
-/* governing body section */
 
 .governing-container {
     max-height: 400px;
     /* Set your desired fixed height here */
     overflow-y: auto;
-    background-color: blueviolet;
+    background-color: #FFAD3B;
+
 }
 
-/* Scrollbar */
 
-::-webkit-scrollbar {
+/* =================================== */
+/* Scroll-to-top button styles */
+#scrollToTopBtn {
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 99;
+    border: none;
+    border-radius: 50%;
+    background-color: #007bff;
+    /* Change to your preferred button color */
+    color: #fff;
+    cursor: pointer;
+}
+
+#scrollToTopBtn:hover {
+    background-color: #ff5e00;
+    /* Change to your preferred hover color */
+}
+
+
+/* embed maps */
+
+.responsive-map {
+    overflow: hidden;
+    padding-bottom: 56.25%;
+    position: relative;
+    height: 0;
+}
+
+.responsive-map iframe {
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+}
+
+/* =================================== */
+
+
+/* hr style  */
+hr.style {
+    border: 0;
+    height: 1px;
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+}
+
+/* Scrollbar for Firefox */
+* {
+    scrollbar-width: thin;
+    /* Thin scrollbar */
+    scrollbar-color: rgba(27, 27, 27, .4) transparent;
+    /* Thumb and track color */
+}
+
+/* Style for the scrollbar thumb (the draggable part) in Firefox */
+*::-webkit-scrollbar-thumb {
+    background-color: transparent;
+    /* Make thumb transparent in WebKit */
+}
+
+/* Style for the scrollbar track (the non-draggable part) in Firefox */
+*::-webkit-scrollbar-track {
+    background: transparent;
+    /* Make track transparent in WebKit */
+}
+
+/* Scrollbar for WebKit-based browsers like Chrome */
+*::-webkit-scrollbar {
     width: .45rem;
 }
 
-::-webkit-scrollbar-thumb {
+/* Style for the scrollbar thumb (the draggable part) in WebKit-based browsers */
+*::-webkit-scrollbar-thumb {
     background-color: rgba(27, 27, 27, .4);
     border-radius: 3px;
 }
 
-::-webkit-scrollbar-track {
+/* Style for the scrollbar track (the non-draggable part) in WebKit-based browsers */
+*::-webkit-scrollbar-track {
     background: transparent;
 }

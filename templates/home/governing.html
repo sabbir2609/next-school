@@ -1,12 +1,31 @@
+<div class="d-flex flex-row flex-grow-1 flex-fill justify-content-center bg-danger py-2 text-white px-1">
+    <span class="d-flex align-items-center">Governing Bodies</span>
+</div>
+
 <div class="governing-container">
 
-    <div class="card" style="width: 18rem;">
-        <img src="media/assets/home/profile/profile1.jpg" class="card-img-top" alt="...">
-        <div class="card-body">
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
-                content.</p>
+    {% for i in data %}
+    <div class="card border-0" style="background-color: #FFAD3B;">
+        <div class="card-body p-2">
+            <div class="d-flex text-black">
+                <div class="flex-shrink-0">
+                    <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-1.webp"
+                        alt="Generic placeholder image" class="img-fluid" style="width: 180px; border-radius: 5px;">
+                </div>
+                <div class="flex-grow-1 ms-3">
+                    <h5 class="mb-1">Danny McLoan</h5>
+                    <p class="mb-2 pb-1" style="color: #000000;">Senior Journalist</p>
+                    <div class="d-flex justify-content-start rounded-3 p-2 mb-2" style="background-color: #bea04d;">
+                        {% lorem 6 w %}
+                    </div>
+                    <div class="d-flex pt-1">
+                        <button type="button" class="btn btn-primary flex-grow-1">More</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-
+    <hr>
+    {% endfor %}
 
 </div>

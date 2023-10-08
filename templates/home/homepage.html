@@ -16,50 +16,63 @@
 </head>
 
 <body>
-    <!-- top -->
-    <div class="container-fluid" style="background-color: #60cad8;">
-        <!-- 1st row -->
-        <div class="row" style="background-color: #4b4ef7;">
-            <div class="container p-lg-1 p-md-1 " style="background-color: #118a39;">
-                {% include "home/topbar.html" %}
-            </div>
-        </div>
-        <!-- 2nd row -->
-        <div class="row" style="background-color: #f7b95b;">
-            <img src="media/assets/home/banner-big-live.gif" alt="" srcset="">
-        </div>
-        <!-- 3rd row -->
-        <div class="row" style="background-color: #df34ba;">
-            <div class="container">
-                {% include "home/dropdown-nav.html" %}
-            </div>
-        </div>
 
-        <div class="row" style="background-color: #8467f0;">
-            <div class="container-fluid">
-                {% include "home/ticker.html" %}
-            </div>
-        </div>
+    <header>
+        <!-- Top Bar -->
+        {% include "home/topbar.html" %}
 
-        <!-- 4th row  -->
-        <div class="row" style="background-color: #30ec68;">
-            {% include "home/carousel.html" %}
-        </div>
+        <!-- Banner -->
+        <img src="media/assets/home/banner-big-live.gif" alt="Banner" class="img-fluid">
 
-        <!-- 5th roe  -->
-        <div class="row" style="background-color: #110770;">
 
-            <!-- 5th row col-1 / notice  -->
-            <div class="col col-lg-8 col-md-6 col-12" style="background-color: #7af39e;">
-                {% include "home/notice.html" %}
-            </div>
+        <!-- Dropdown Navigation -->
+        {% include "home/dropdown-nav.html" %}
 
-            <div class="col col-lg-4 col-md-6 col-12" style="background-color: #d8fc83;">
-                {% include "home/governing.html" %}
+
+        <!-- Ticker -->
+        {% include "home/ticker.html" %}
+
+
+        <!-- Carousel -->
+        {% include "home/carousel.html" %}
+    </header>
+    <hr class="style" class="featurette-divider">
+    <main>
+        <div class="container-fluid">
+            <!-- Notices and Governing -->
+            <div class="row g-2">
+                <!-- Notices -->
+                <div class="col-lg-8 col-md-6 col-12">
+                    <!-- Your notices content here -->
+                    {% include "home/notice.html" %}
+                </div>
+
+                <!-- Governing -->
+                <div class="col-lg-4 col-md-6 col-12">
+                    <!-- Your governing content here -->
+                    {% include "home/governing.html" %}
+                </div>
             </div>
 
+            <hr class="style">
+
+            <!-- contact and location info -->
+
+            {% include "home/contact.html" %}
         </div>
-    </div>
+        <hr class="style">
+    </main>
+
+    <!-- footer  -->
+    {% include "home/footer.html" %}
+
+    <!-- Scroll-to-top button -->
+    <button id="scrollToTopBtn" class="btn btn-primary" title="Go to top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- scripts  -->
+    <script src="{% static 'js/home-script.js' %}"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
         crossorigin="anonymous"></script>
