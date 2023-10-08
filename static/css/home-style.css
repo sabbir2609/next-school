@@ -78,6 +78,16 @@ body {
     /* Add a background color to make the header stand out */
 }
 
+
+/* governing body section */
+
+.governing-container {
+    max-height: 400px;
+    /* Set your desired fixed height here */
+    overflow-y: auto;
+    background-color: blueviolet;
+}
+
 /* Scrollbar */
 
 ::-webkit-scrollbar {
