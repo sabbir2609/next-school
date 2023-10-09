@@ -17,3 +17,28 @@ scrollToTopBtn.addEventListener("click", () => {
         behavior: "smooth", // Smooth scrolling animation
     });
 });
+
+
+// Function to show the floating button when scrolling down
+window.addEventListener('scroll', function() {
+    const floatingButton = document.querySelector('.floating-language-button');
+    if (window.scrollY > 100) {
+        floatingButton.style.display = 'block';
+    } else {
+        floatingButton.style.display = 'none';
+    }
+});
+
+// <!-- Custom JavaScript to change language -->
+
+function changeLanguage(language) {
+    const translatedText = {
+        'Bangla': 'বিশ্বাস করুন, স্কুলের জন্য একটি স্মার্ট সমাধান',
+        'English': 'Believe in a smart solution for school'
+    };
+
+    document.getElementById('translatedText').innerText = translatedText[language];
+    document.querySelector('.language-picker button').innerHTML = `<i class="fas fa-flag"></i> ${language}`;
+
+    event.preventDefault();
+}

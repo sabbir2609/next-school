@@ -1,36 +1,98 @@
 <style>
-    /* Remove the link highlight */
-    a.phone-number,
-    a.email-address {
-        text-decoration: none;
-        /* Remove underline */
-        color: inherit;
-        /* Use the default text color */
-        padding-right: 10px;
+  /* Remove the link highlight */
+  a.phone-number,
+  a.email-address {
+    text-decoration: none;
+    /* Remove underline */
+    color: inherit;
+    /* Use the default text color */
+    padding-right: 10px;
+  }
+
+  /* language-picker css  */
+
+  .language-picker .dropdown-toggle {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    /* padding: 5px 20px; */
+  }
+
+  .language-picker .dropdown-menu {
+    animation: fadeInUp 0.3s ease-in-out;
+  }
+
+  .language-picker .dropdown-menu a {
+    color: #007bff;
+  }
+
+  .language-picker .dropdown-menu a:hover {
+    background-color: #007bff;
+    color: white;
+  }
+
+  .floating-language-button {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    z-index: 1000;
+  }
+
+  @keyframes fadeInUp {
+    from {
+      transform: translateY(10px);
+      opacity: 0;
     }
+
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
 </style>
 
-<div class="d-flex align-items-center justify-content-between px-2"
-    style="background-color: rgb(38, 98, 228); color:aliceblue">
-    <div class="font-weight-bold">
-        <span class="d-block d-sm-inline">
-            <i class="fa-sharp fa-solid fa-phone"></i>
-            <a href="tel:02477701339" class="phone-number">02477701339</a>
-        </span>
-        <span class="d-block d-sm-inline">
-            <i class="fa-solid fa-envelope"></i>
-            <a href="mailto:info@turbo.edu.bd" class="email-address">info@turbo.edu.bd</a>
-        </span>
-    </div>
+<div
+  class="d-flex align-items-center justify-content-between px-2"
+  style="background-color: rgb(38, 98, 228); color: aliceblue"
+>
+  <div class="font-weight-bold">
+    <span class="d-block d-sm-inline">
+      <i class="fa-sharp fa-solid fa-phone"></i>
+      <a href="tel:02477701339" class="phone-number">02477701339</a>
+    </span>
+    <span class="d-block d-sm-inline">
+      <i class="fa-solid fa-envelope"></i>
+      <a href="mailto:info@turbo.edu.bd" class="email-address"
+        >info@turbo.edu.bd</a
+      >
+    </span>
+  </div>
 
-    <div class="dropdown dropdown-hov">
-        <a class="btn dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            <i class="fa-solid fa-globe"></i>
-            Language - ভাষা
+  <div class="language-picker dropdown">
+    <button
+      class="btn btn-secondary dropdown-toggle"
+      type="button"
+      id="languageDropdown"
+      data-bs-toggle="dropdown"
+      aria-expanded="false"
+    >
+      <i class="fas fa-globe"></i>
+      Bangla
+    </button>
+    <ul class="dropdown-menu" aria-labelledby="languageDropdown">
+      <li>
+        <a class="dropdown-item" href="#" onclick="changeLanguage('Bangla')">
+          <i class="fas fa-globe"></i>
+          Bangla
         </a>
-        <ul class="dropdown-menu dropdown-menu-end">
-            <li><a class="dropdown-item" href="#">বাংলা</a></li>
-            <li><a class="dropdown-item" href="#">English</a></li>
-        </ul>
-    </div>
+      </li>
+      <li>
+        <a class="dropdown-item" href="#" onclick="changeLanguage('English')">
+          <i class="fas fa-globe"></i>
+          English
+        </a>
+      </li>
+    </ul>
+  </div>
 </div>
