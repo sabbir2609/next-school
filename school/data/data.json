@@ -1,0 +1,128 @@
+{
+    "images": [
+        {
+            "large_img": "https://unsplash.it/1200/768.jpg?image=251",
+            "thumbnail": "https://unsplash.it/600.jpg?image=251"
+        },
+        {
+            "large_img": "https://unsplash.it/1200/768.jpg?image=261",
+            "thumbnail": "https://unsplash.it/600.jpg?image=261"
+        },
+        {
+            "large_img": "https://unsplash.it/1200/768.jpg?image=351",
+            "thumbnail": "https://unsplash.it/600.jpg?image=351"
+        },
+        {
+            "large_img": "https://unsplash.it/1200/768.jpg?image=566",
+            "thumbnail": "https://unsplash.it/600.jpg?image=566"
+        },
+        {
+            "large_img": "https://unsplash.it/1200/768.jpg?image=875",
+            "thumbnail": "https://unsplash.it/600.jpg?image=875"
+        },
+        {
+            "large_img": "https://unsplash.it/1200/768.jpg?image=987",
+            "thumbnail": "https://unsplash.it/600.jpg?image=987"
+        },
+        {
+            "large_img": "https://unsplash.it/1200/768.jpg?image=998",
+            "thumbnail": "https://unsplash.it/600.jpg?image=998"
+        },
+        {
+            "large_img": "https://unsplash.it/1200/768.jpg?image=983",
+            "thumbnail": "https://unsplash.it/600.jpg?image=983"
+        },
+        {
+            "large_img": "https://unsplash.it/1200/768.jpg?image=554",
+            "thumbnail": "https://unsplash.it/600.jpg?image=554"
+        },
+        {
+            "large_img": "https://unsplash.it/1200/768.jpg?image=334",
+            "thumbnail": "https://unsplash.it/600.jpg?image=334"
+        },
+        {
+            "large_img": "https://unsplash.it/1200/768.jpg?image=331",
+            "thumbnail": "https://unsplash.it/600.jpg?image=331"
+        },
+        {
+            "large_img": "https://unsplash.it/1200/768.jpg?image=221",
+            "thumbnail": "https://unsplash.it/600.jpg?image=221"
+        },
+        {
+            "large_img": "https://unsplash.it/1200/768.jpg?image=445",
+            "thumbnail": "https://unsplash.it/600.jpg?image=445"
+        },
+        {
+            "large_img": "https://unsplash.it/1200/768.jpg?image=555",
+            "thumbnail": "https://unsplash.it/600.jpg?image=555"
+        },
+        {
+            "large_img": "https://unsplash.it/1200/768.jpg?image=443",
+            "thumbnail": "https://unsplash.it/600.jpg?image=443"
+        },
+        {
+            "large_img": "https://unsplash.it/1200/768.jpg?image=112",
+            "thumbnail": "https://unsplash.it/600.jpg?image=112"
+        }
+    ],
+    "notices": [
+        {
+            "title": "Important Announcement 1",
+            "link": "https://example.com/announcement1"
+        },
+        {
+            "title": "Upcoming Event: Conference 2023",
+            "link": "https://example.com/conference2023"
+        },
+        {
+            "title": "Holiday Closure: Labor Day",
+            "link": "https://example.com/labor-day"
+        },
+        {
+            "title": "New Product Launch: XYZ Widget",
+            "link": "https://example.com/new-widget"
+        },
+        {
+            "title": "Maintenance Schedule: October 2023",
+            "link": "https://example.com/maintenance-october"
+        }
+    ],
+    "dropdowns": [
+        {
+            "name": "Dropdown 1",
+            "items": [
+                "Item 1",
+                "Item 2",
+                "Some Item 3"
+            ]
+        },
+        {
+            "name": "Dropdown 2",
+            "items": [
+                "Item A",
+                "Item B"
+            ]
+        },
+        {
+            "name": "Dropdown 3",
+            "items": [
+                "Option X",
+                "Option Y"
+            ]
+        },
+        {
+            "name": "Dropdown 4",
+            "items": [
+                "Choice I",
+                "Choice II"
+            ]
+        },
+        {
+            "name": "Dropdown 5",
+            "items": [
+                "Selection P",
+                "Selection Q"
+            ]
+        }
+    ]
+}

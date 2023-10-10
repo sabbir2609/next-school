@@ -20,89 +20,27 @@
     .image-gallery img:hover {
         transform: scale(1.05);
     }
-
-    /* Pagination styles */
-    .pagination {
-        display: flex;
-        justify-content: center;
-        margin-top: 20px;
-    }
-
-    .pagination a {
-        margin: 0 5px;
-        padding: 5px 10px;
-        background-color: #007bff;
-        color: #fff;
-        text-decoration: none;
-        border-radius: 3px;
-    }
-
-    /* Hover effect on pagination links */
-    .pagination a:hover {
-        background-color: #0056b3;
-    }
 </style>
 
 
 <div class="container">
-    <h2 class="text-center my-4">Image Gallery</h2>
+    <h2 class="text-center my-2">Image Gallery</h2>
 
     <!-- Image Gallery -->
     <div class="image-gallery">
         <!-- Replace the following with your image URLs -->
-        <a href="https://unsplash.it/1200/768.jpg?image=251" data-toggle="lightbox">
-            <img src="https://unsplash.it/600.jpg?image=251">
+        {% for item in img_data %}
+        <a href="{{ item.large_img}}" data-toggle="lightbox" data-gallery="mixedgallery">
+            <img src="{{ item.thumbnail}}" alt="Random Image">
         </a>
-        <a href="https://unsplash.it/1200/768.jpg?image=251" data-toggle="lightbox">
-            <img src="https://unsplash.it/600.jpg?image=251">
-        </a>
-        <a href="https://unsplash.it/1200/768.jpg?image=251" data-toggle="lightbox">
-            <img src="https://unsplash.it/600.jpg?image=251">
-        </a>
-        <a href="https://unsplash.it/1200/768.jpg?image=251" data-toggle="lightbox">
-            <img src="https://unsplash.it/600.jpg?image=251">
-        </a>
-        <a href="https://unsplash.it/1200/768.jpg?image=251" data-toggle="lightbox">
-            <img src="https://unsplash.it/600.jpg?image=251">
-        </a>
-        <a href="https://unsplash.it/1200/768.jpg?image=251" data-toggle="lightbox">
-            <img src="https://unsplash.it/600.jpg?image=251">
-        </a>
-        <a href="https://unsplash.it/1200/768.jpg?image=251" data-toggle="lightbox">
-            <img src="https://unsplash.it/600.jpg?image=251">
-        </a>
-        <a href="https://unsplash.it/1200/768.jpg?image=251" data-toggle="lightbox">
-            <img src="https://unsplash.it/600.jpg?image=251">
-        </a>
-        <a href="https://unsplash.it/1200/768.jpg?image=251" data-toggle="lightbox">
-            <img src="https://unsplash.it/600.jpg?image=251">
-        </a>
-        <a href="https://unsplash.it/1200/768.jpg?image=251" data-toggle="lightbox">
-            <img src="https://unsplash.it/600.jpg?image=251">
-        </a>
-        <a href="https://unsplash.it/1200/768.jpg?image=251" data-toggle="lightbox">
-            <img src="https://unsplash.it/600.jpg?image=251">
-        </a>
-        <a href="https://unsplash.it/1200/768.jpg?image=251" data-toggle="lightbox">
-            <img src="https://unsplash.it/600.jpg?image=251">
-        </a>
-        <a href="https://unsplash.it/1200/768.jpg?image=251" data-toggle="lightbox">
-            <img src="https://unsplash.it/600.jpg?image=251">
-        </a>
-        <a href="https://unsplash.it/1200/768.jpg?image=251" data-toggle="lightbox">
-            <img src="https://unsplash.it/600.jpg?image=251">
-        </a>
-        <a href="https://unsplash.it/1200/768.jpg?image=251" data-toggle="lightbox">
-            <img src="https://unsplash.it/600.jpg?image=251">
-        </a>
-        <!-- Add more images here -->
-    </div>
-
-    <!-- Pagination -->
-    <div class="pagination">
-        <!-- Replace the href attributes with the actual links or page numbers -->
-        <a href="#">1</a>
-        <a href="#">2</a>
-        <!-- Add more pagination links here -->
+        {% endfor %}
     </div>
 </div>
+
+
+
+<!-- 
+   docs & ref :  
+https://trvswgnr.github.io/bs5-lightbox/#mixed-gallery 
+
+-->

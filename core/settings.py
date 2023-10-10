@@ -29,8 +29,19 @@ ALLOWED_HOSTS = ["*"]
 
 INTERNAL_IPS = [
     "127.0.0.1",
+    "localhost",
 ]
 
+# CORS_ALLOWED_ORIGINS = [
+#     "https://unsplash.it",
+# ]
+
+# CORS_ALLOW_ALL_ORIGINS = True
+
+# CORS_TRUSTED_ORIGINS = [
+#     "https://unsplash.it",
+#     "http://localhost:3000",
+# ]
 
 # Application definition
 

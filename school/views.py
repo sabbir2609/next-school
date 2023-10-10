@@ -1,4 +1,5 @@
-from typing import Any
+import os
+import json
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from django.db.models import Q
@@ -32,35 +33,15 @@ class HomeView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["dropdowns"] = [
-            {"name": "Dropdown 1", "items": ["Item 1", "Item 2", "Some Item 3"]},
-            {"name": "Dropdown 2", "items": ["Item A", "Item B"]},
-            {"name": "Dropdown 3", "items": ["Option X", "Option Y"]},
-            {"name": "Dropdown 4", "items": ["Choice I", "Choice II"]},
-            {"name": "Dropdown 5", "items": ["Selection P", "Selection Q"]},
-        ]
-        context["notices"] = [
-            {
-                "title": "Important Announcement 1",
-                "link": "https://example.com/announcement1",
-            },
-            {
-                "title": "Upcoming Event: Conference 2023",
-                "link": "https://example.com/conference2023",
-            },
-            {
-                "title": "Holiday Closure: Labor Day",
-                "link": "https://example.com/labor-day",
-            },
-            {
-                "title": "New Product Launch: XYZ Widget",
-                "link": "https://example.com/new-widget",
-            },
-            {
-                "title": "Maintenance Schedule: October 2023",
-                "link": "https://example.com/maintenance-october",
-            },
-        ]
+
+        # using temporary data for dev purpose
+        json_file_path = os.path.join(os.path.dirname(__file__), "data/data.json")
+        with open(json_file_path, "r") as json_file:
+            data = json.load(json_file)
+
+        context["dropdowns"] = data["dropdowns"]
+        context["notices"] = data["notices"]
+        context["img_data"] = data["images"]
         context["data"] = [i for i in range(1, 20)]
         return context
 
