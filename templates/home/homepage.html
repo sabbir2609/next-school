@@ -53,10 +53,17 @@
       <hr class="style" />
 
       <!-- contact and location info -->
-
       {% include "home/contact.html" %}
+
+      <hr class="style" />
+
+      <!-- gallery -->
+      {% include "home/gallery.html" %}
+
     </div>
+
     <hr class="style" />
+
   </main>
 
   <!-- footer  -->
@@ -88,9 +95,11 @@
 
   <!-- scripts  -->
   <script src="{% static 'js/home-script.js' %}"></script>
+
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
     crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bs5-lightbox@1.8.3/dist/index.bundle.min.js"></script>
 </body>
 
 </html>

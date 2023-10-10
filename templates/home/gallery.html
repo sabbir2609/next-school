@@ -1,0 +1,108 @@
+<style>
+    /* Styling for the image gallery */
+    .image-gallery {
+        display: flex;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        overflow-y: hidden;
+        gap: 10px;
+        padding: 10px;
+    }
+
+    .image-gallery img {
+        width: auto;
+        height: 150px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        transition: transform 0.2s ease;
+    }
+
+    .image-gallery img:hover {
+        transform: scale(1.05);
+    }
+
+    /* Pagination styles */
+    .pagination {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+    }
+
+    .pagination a {
+        margin: 0 5px;
+        padding: 5px 10px;
+        background-color: #007bff;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 3px;
+    }
+
+    /* Hover effect on pagination links */
+    .pagination a:hover {
+        background-color: #0056b3;
+    }
+</style>
+
+
+<div class="container">
+    <h2 class="text-center my-4">Image Gallery</h2>
+
+    <!-- Image Gallery -->
+    <div class="image-gallery">
+        <!-- Replace the following with your image URLs -->
+        <a href="https://unsplash.it/1200/768.jpg?image=251" data-toggle="lightbox">
+            <img src="https://unsplash.it/600.jpg?image=251">
+        </a>
+        <a href="https://unsplash.it/1200/768.jpg?image=251" data-toggle="lightbox">
+            <img src="https://unsplash.it/600.jpg?image=251">
+        </a>
+        <a href="https://unsplash.it/1200/768.jpg?image=251" data-toggle="lightbox">
+            <img src="https://unsplash.it/600.jpg?image=251">
+        </a>
+        <a href="https://unsplash.it/1200/768.jpg?image=251" data-toggle="lightbox">
+            <img src="https://unsplash.it/600.jpg?image=251">
+        </a>
+        <a href="https://unsplash.it/1200/768.jpg?image=251" data-toggle="lightbox">
+            <img src="https://unsplash.it/600.jpg?image=251">
+        </a>
+        <a href="https://unsplash.it/1200/768.jpg?image=251" data-toggle="lightbox">
+            <img src="https://unsplash.it/600.jpg?image=251">
+        </a>
+        <a href="https://unsplash.it/1200/768.jpg?image=251" data-toggle="lightbox">
+            <img src="https://unsplash.it/600.jpg?image=251">
+        </a>
+        <a href="https://unsplash.it/1200/768.jpg?image=251" data-toggle="lightbox">
+            <img src="https://unsplash.it/600.jpg?image=251">
+        </a>
+        <a href="https://unsplash.it/1200/768.jpg?image=251" data-toggle="lightbox">
+            <img src="https://unsplash.it/600.jpg?image=251">
+        </a>
+        <a href="https://unsplash.it/1200/768.jpg?image=251" data-toggle="lightbox">
+            <img src="https://unsplash.it/600.jpg?image=251">
+        </a>
+        <a href="https://unsplash.it/1200/768.jpg?image=251" data-toggle="lightbox">
+            <img src="https://unsplash.it/600.jpg?image=251">
+        </a>
+        <a href="https://unsplash.it/1200/768.jpg?image=251" data-toggle="lightbox">
+            <img src="https://unsplash.it/600.jpg?image=251">
+        </a>
+        <a href="https://unsplash.it/1200/768.jpg?image=251" data-toggle="lightbox">
+            <img src="https://unsplash.it/600.jpg?image=251">
+        </a>
+        <a href="https://unsplash.it/1200/768.jpg?image=251" data-toggle="lightbox">
+            <img src="https://unsplash.it/600.jpg?image=251">
+        </a>
+        <a href="https://unsplash.it/1200/768.jpg?image=251" data-toggle="lightbox">
+            <img src="https://unsplash.it/600.jpg?image=251">
+        </a>
+        <!-- Add more images here -->
+    </div>
+
+    <!-- Pagination -->
+    <div class="pagination">
+        <!-- Replace the href attributes with the actual links or page numbers -->
+        <a href="#">1</a>
+        <a href="#">2</a>
+        <!-- Add more pagination links here -->
+    </div>
+</div>

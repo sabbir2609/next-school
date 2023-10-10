@@ -136,3 +136,165 @@
         </div>
     </div>
 </div>
+
+
+
+<!-- gallery  -->
+
+<style>
+    /* Styling for the image gallery */
+    .image-gallery {
+        display: flex;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        overflow-y: hidden;
+        gap: 10px;
+        padding: 10px;
+    }
+
+    .image-gallery img {
+        width: auto;
+        height: 150px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        transition: transform 0.2s ease;
+    }
+
+    .image-gallery img:hover {
+        transform: scale(1.05);
+    }
+
+    /* Pagination styles */
+    .pagination {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+    }
+
+    .pagination a {
+        margin: 0 5px;
+        padding: 5px 10px;
+        background-color: #007bff;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 3px;
+    }
+
+    /* Hover effect on pagination links */
+    .pagination a:hover {
+        background-color: #0056b3;
+    }
+
+    /* Modal styles */
+    .modal img {
+        max-width: 100%;
+        max-height: 80vh;
+        margin: auto;
+        display: block;
+    }
+
+    /* Modal navigation arrows */
+    .modal .prev,
+    .modal .next {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 24px;
+        cursor: pointer;
+        color: #fff;
+        background-color: rgba(0, 0, 0, 0.5);
+        padding: 10px;
+        border-radius: 50%;
+    }
+
+    .modal .prev {
+        left: 10px;
+    }
+
+    .modal .next {
+        right: 10px;
+    }
+</style>
+
+<div class="container">
+    <h2 class="text-center my-4">Image Gallery</h2>
+
+    <!-- Image Gallery -->
+    <div class="image-gallery">
+        <!-- Replace the following with your image URLs -->
+        <img src="https://via.placeholder.com/200" alt="Image 1">
+        <img src="https://via.placeholder.com/200" alt="Image 2">
+        <!-- Add more images here -->
+        <img src="https://via.placeholder.com/200" alt="Image 3">
+        <img src="https://via.placeholder.com/200" alt="Image 4">
+        <img src="https://via.placeholder.com/200" alt="Image 5">
+        <img src="https://via.placeholder.com/200" alt="Image 6">
+        <img src="https://via.placeholder.com/200" alt="Image 7">
+        <img src="https://via.placeholder.com/200" alt="Image 8">
+        <img src="https://via.placeholder.com/200" alt="Image 9">
+        <img src="https://via.placeholder.com/200" alt="Image 10">
+    </div>
+
+    <!-- Pagination -->
+    <div class="pagination">
+        <!-- Replace the href attributes with the actual links or page numbers -->
+        <a href="#">1</a>
+        <a href="#">2</a>
+        <!-- Add more pagination links here -->
+    </div>
+
+    <!-- Modal for image display -->
+    <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <img id="modalImage" src="" alt="">
+                <span class="prev" onclick="changeImage(-1)">&#10094;</span>
+                <span class="next" onclick="changeImage(1)">&#10095;</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    let currentIndex = 0;
+
+    // Images array, replace with your image URLs
+    const images = [
+        'https://via.placeholder.com/600',
+        'https://via.placeholder.com/600',
+        // Add more image URLs here
+    ];
+
+    // Function to open the modal and display the selected image
+    function openModal(index) {
+        currentIndex = index;
+        const modalImage = document.getElementById('modalImage');
+        modalImage.src = images[index];
+        $('#imageModal').modal('show');
+    }
+
+    // Function to change the displayed image in the modal
+    function changeImage(step) {
+        currentIndex += step;
+        if (currentIndex < 0) {
+            currentIndex = images.length - 1;
+        } else if (currentIndex >= images.length) {
+            currentIndex = 0;
+        }
+        const modalImage = document.getElementById('modalImage');
+        modalImage.src = images[currentIndex];
+    }
+
+    // Handle scrolling on small screens
+    window.addEventListener('load', () => {
+        const imageGallery = document.querySelector('.image-gallery');
+        const isSmallScreen = window.innerWidth < 768;
+
+        if (isSmallScreen) {
+            imageGallery.style.flexDirection = 'column';
+            imageGallery.style.overflowX = 'hidden';
+            imageGallery.style.overflowY = 'auto';
+            imageGallery.style.height = '400px'; // Adjust this value as needed
+        }
+    });
+</script>
