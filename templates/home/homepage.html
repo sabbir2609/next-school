@@ -2,111 +2,95 @@
 
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Home | Turbo School</title>
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
-      crossorigin="anonymous"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
-      integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    />
-    <link rel="stylesheet" href="{% static 'css/home-style.css' %}" />
-  </head>
 
-  <body>
-    <header>
-      <!-- Top Bar -->
-      {% include "home/topbar.html" %}
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Home | Turbo School</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+    integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="{% static 'css/home-style.css' %}" />
+</head>
 
-      <!-- Banner -->
-      <img
-        src="media/assets/home/banner-big-live.gif"
-        alt="Banner"
-        class="img-fluid"
-      />
+<body>
+  <header>
+    <!-- Top Bar -->
+    {% include "home/topbar.html" %}
 
-      <!-- Dropdown Navigation -->
-      {% include "home/dropdown-nav.html" %}
+    <!-- Banner -->
+    <img src="media/assets/home/banner-big-live.gif" alt="Banner" class="img-fluid" />
 
-      <!-- Ticker -->
-      {% include "home/ticker.html" %}
+    <!-- Dropdown Navigation -->
+    {% include "home/dropdown-nav.html" %}
 
-      <!-- Carousel -->
-      {% include "home/carousel.html" %}
-    </header>
-    <hr class="style" class="featurette-divider" />
-    <main>
-      <div class="container-fluid">
-        <!-- Notices and Governing -->
-        <div class="row g-2">
-          <!-- Notices -->
-          <div class="col-lg-8 col-md-6 col-12">
-            <!-- Your notices content here -->
-            {% include "home/notice.html" %}
-          </div>
+    <!-- Ticker -->
+    {% include "home/ticker.html" %}
 
-          <!-- Governing -->
-          <div class="col-lg-4 col-md-6 col-12">
-            <!-- Your governing content here -->
-            {% include "home/governing.html" %}
-          </div>
+    <!-- Carousel -->
+    {% include "home/carousel.html" %}
+  </header>
+  <hr class="style" class="featurette-divider" />
+  <main>
+    <div class="container-fluid">
+      <!-- Notices and Governing -->
+      <div class="row g-2">
+        <!-- Notices -->
+        <div class="col-lg-8 col-md-6 col-12">
+          <!-- Your notices content here -->
+          {% include "home/notice.html" %}
         </div>
 
-        <hr class="style" />
-
-        <!-- contact and location info -->
-
-        {% include "home/contact.html" %}
+        <!-- Governing -->
+        <div class="col-lg-4 col-md-6 col-12">
+          <!-- Your governing content here -->
+          {% include "home/governing.html" %}
+        </div>
       </div>
+
       <hr class="style" />
-    </main>
 
-    <!-- footer  -->
-    {% include "home/footer.html" %}
+      <!-- contact and location info -->
 
-    <!-- Scroll-to-top button -->
-    <button id="scrollToTopBtn" class="btn btn-primary" title="Go to top">
-      <i class="fas fa-arrow-up"></i>
-    </button>
-
-    <!-- Floating Language Button -->
-    <div class="floating-language-button">
-      <button
-        class="btn btn-secondary"
-        data-bs-toggle="dropdown"
-        aria-expanded="false"
-      >
-        <i class="fa-solid fa-globe"></i>
-      </button>
-      <ul class="dropdown-menu" aria-labelledby="languageDropdown">
-        <li>
-          <a class="dropdown-item" href="#" onclick="changeLanguage('Bangla')">
-            Bangla
-          </a>
-        </li>
-        <li>
-          <a class="dropdown-item" href="#" onclick="changeLanguage('English')">
-            English
-          </a>
-        </li>
-      </ul>
+      {% include "home/contact.html" %}
     </div>
+    <hr class="style" />
+  </main>
 
-    <!-- scripts  -->
-    <script src="{% static 'js/home-script.js' %}"></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
-      crossorigin="anonymous"
-    ></script>
-  </body>
+  <!-- footer  -->
+  {% include "home/footer.html" %}
+
+  <!-- Scroll-to-top button -->
+  <button id="scrollToTopBtn" class="btn btn-primary" title="Go to top">
+    <i class="fas fa-arrow-up"></i>
+  </button>
+
+  <!-- Floating Language Button -->
+  <div class="floating-language-button">
+    <button class="btn btn-warning" data-bs-toggle="dropdown" aria-expanded="false">
+      <i class="fa-solid fa-globe"></i>
+    </button>
+    <ul class="dropdown-menu" aria-labelledby="languageDropdown">
+      <li>
+        <a class="dropdown-item" href="#" onclick="changeLanguage('Bangla')">
+          Bangla
+        </a>
+      </li>
+      <li>
+        <a class="dropdown-item" href="#" onclick="changeLanguage('English')">
+          English
+        </a>
+      </li>
+    </ul>
+  </div>
+
+  <!-- scripts  -->
+  <script src="{% static 'js/home-script.js' %}"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+    crossorigin="anonymous"></script>
+</body>
+
 </html>

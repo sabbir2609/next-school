@@ -38,7 +38,7 @@ function changeLanguage(language) {
     };
 
     document.getElementById('translatedText').innerText = translatedText[language];
-    document.querySelector('.language-picker button').innerHTML = `<i class="fas fa-flag"></i> ${language}`;
+    document.querySelector('.language-picker button').innerHTML = `${language}`;
 
     event.preventDefault();
 }
