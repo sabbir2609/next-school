@@ -68,23 +68,23 @@
     "notices": [
         {
             "title": "Important Announcement 1",
-            "link": "https://example.com/announcement1"
+            "url": "https://example.com/announcement1"
         },
         {
             "title": "Upcoming Event: Conference 2023",
-            "link": "https://example.com/conference2023"
+            "url": "https://example.com/conference2023"
         },
         {
             "title": "Holiday Closure: Labor Day",
-            "link": "https://example.com/labor-day"
+            "url": "https://example.com/labor-day"
         },
         {
             "title": "New Product Launch: XYZ Widget",
-            "link": "https://example.com/new-widget"
+            "url": "https://example.com/new-widget"
         },
         {
             "title": "Maintenance Schedule: October 2023",
-            "link": "https://example.com/maintenance-october"
+            "url": "https://example.com/maintenance-october"
         }
     ],
     "dropdowns": [
@@ -123,6 +123,62 @@
                 "Selection P",
                 "Selection Q"
             ]
+        }
+    ],
+    "useful_links": [
+        {
+            "site": "শিক্ষা মন্ত্রণালয়",
+            "url": "#"
+        },
+        {
+            "site": "মাধ্যমিক ও উচ্চ শিক্ষা বিভাগ",
+            "url": "#"
+        },
+        {
+            "site": "মাধ্যমিক ও উচ্চ শিক্ষা অধিদপ্তর",
+            "url": "#"
+        },
+        {
+            "site": "যশোর বোর্ড",
+            "url": "#"
+        },
+        {
+            "site": "জাতীয় ওয়েব পোর্টাল",
+            "url": "#"
+        },
+        {
+            "site": "Turbo School Facebook Page",
+            "url": "#"
+        },
+        {
+            "site": "Others",
+            "url": "#"
+        }
+    ],
+    "whatsHappening": [
+        {
+            "id": 1,
+            "image": "https://source.unsplash.com/200x200/?random",
+            "description": "Your description goes here. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+            "url": "#"
+        },
+        {
+            "id": 2,
+            "image": "https://source.unsplash.com/200x200/?random",
+            "description": "Your description goes here. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+            "url": "#"
+        },
+        {
+            "id": 3,
+            "image": "https://source.unsplash.com/200x200/?random",
+            "description": "Your description goes here. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+            "url": "#"
+        },
+        {
+            "id": 4,
+            "image": "https://source.unsplash.com/200x200/?random",
+            "description": "Your description goes here. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+            "url": "#"
         }
     ]
 }

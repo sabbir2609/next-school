@@ -42,6 +42,8 @@ class HomeView(TemplateView):
         context["dropdowns"] = data["dropdowns"]
         context["notices"] = data["notices"]
         context["img_data"] = data["images"]
+        context["useful_links"] = data["useful_links"]
+        context["whatsHappening"] = data["whatsHappening"]
         context["data"] = [i for i in range(1, 20)]
         return context
 

@@ -1,0 +1,79 @@
+{% load random_image %}
+
+{% load static %}
+
+
+<div class="container-fluid bg-light border border-1" style="border-radius: 10px;">
+    <div class="row mt-1 ">
+        <!-- First Column (col-lg-9) -->
+        <div class="col-lg-9">
+            <div class="h4 pb-2 mb-2 fw-semibold border-bottom border-end border-1">
+                What's happening :
+            </div>
+            <div class="row">
+                {% for item in whatsHappening %}
+                <!-- Sub-column {{ item.id }} -->
+                <div class="col-lg-3 col-md-6 col-sm-6">
+
+                    <div class="card mb-2" style="height: 300px;">
+                        <img src="{{ item.image }}" class="card-img-top card-img-custom" alt="Image">
+                        <div class="card-body">
+                            <p class="card-text">
+                                {{ item.description }}
+                            </p>
+                        </div>
+                        <div class="text-end">
+                            <a href="{{ item.url }}" class="btn btn-link custom-link" target=”_blank”>
+                                See More
+                                <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+                {% endfor %}
+
+            </div>
+        </div>
+
+        <!-- Second Column (col-lg-3) -->
+        <div class="col-lg-3">
+            <div class="h4 pb-2 mb-2 fw-semibold border-bottom border-1 ">
+                Login ( Student / Teacher )
+            </div>
+            <div class="d-grid gap-2">
+                <div class="card login-card">
+                    <img src="{% static 'images/login/admin.png' %}" class="card-img-top mx-2 " alt="student login">
+                    <div class="card-body">
+                        <h5 class="">Admin Login</h5>
+                        <a href="#" class="btn btn-sm btn-outline-info ">
+                            Login
+                            <i class="fa-solid fa-right-to-bracket"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="card login-card">
+                    <img src="{% static 'images/login/teacher.png' %}" class="card-img-top mx-2 " alt="student login">
+                    <div class="card-body">
+                        <h5 class="">Teacher Login</h5>
+                        <a href="#" class="btn btn-sm btn-outline-info ">
+                            Login
+                            <i class="fa-solid fa-right-to-bracket"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="card login-card">
+                    <img src="{% static 'images/login/student.png' %}" class="card-img-top mx-2 " alt="student login">
+                    <div class="card-body">
+                        <h5 class="">Student Login</h5>
+                        <a href="#" class="btn btn-sm btn-outline-info ">
+                            Login
+                            <i class="fa-solid fa-right-to-bracket"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
