@@ -134,14 +134,10 @@ body {
 .image-gallery-container {
   display: flex;
   flex-wrap: nowrap;
-  overflow-y: hidden;
-  /* Hide vertical scrollbar */
-  overflow-x: hidden;
-  /* Hide horizontal scrollbar */
   gap: 10px;
   padding: 10px;
   max-height: 400px;
-  /* scroll-behavior: auto; */
+  scroll-behavior: auto;
 
   /* Add smooth scrolling */
 }
@@ -153,10 +149,6 @@ body {
   overflow-y: hidden;
   gap: 10px;
   padding: 10px;
-  overflow-y: hidden;
-  /* Hide vertical scrollbar */
-  overflow-x: hidden;
-  /* Hide horizontal scrollbar */
 }
 
 .image-gallery img {
