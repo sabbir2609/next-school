@@ -128,18 +128,97 @@ body {
   position: absolute;
 }
 
+/* Styling for the image gallery */
+.image-gallery-container {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  overflow-y: hidden;
+  gap: 10px;
+  padding: 10px;
+  max-height: 400px;
+  scroll-behavior: auto;
+  /* Add smooth scrolling */
+}
+
+.image-gallery {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  overflow-y: hidden;
+  gap: 10px;
+  padding: 10px;
+}
+
+.image-gallery img {
+  width: auto;
+  height: 300px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  transition: transform 0.2s ease;
+}
+
+
+.image-gallery img:hover {
+  transform: scale(1.05);
+}
+
+
+
+/* Remove the link highlight */
+a.phone-number,
+a.email-address {
+  text-decoration: none;
+  /* Remove underline */
+  color: inherit;
+  /* Use the default text color */
+  padding-right: 10px;
+}
+
+.language-picker .dropdown-menu {
+  animation: fadeInUp 0.3s ease-in-out;
+}
+
+.language-picker .dropdown-menu a {
+  color: #007bff;
+}
+
+.language-picker .dropdown-menu a:hover {
+  background-color: #007bff;
+  color: white;
+}
+
+.floating-language-button {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  z-index: 1000;
+}
+
+
+/* Remove underline and set black text for links */
+.custom-link {
+  text-decoration: none;
+  color: rgb(0, 94, 235);
+  font-weight: bold;
+}
+
+/* Change link color on hover */
+.custom-link:hover {
+  color: #ffe600;
+  /* Change to your desired hover color */
+}
+
 /* =================================== */
 
 /* hr style  */
 hr.style {
   border: 0;
   height: 1px;
-  background-image: linear-gradient(
-    to right,
-    rgba(0, 0, 0, 0),
-    rgba(0, 0, 0, 0.75),
-    rgba(0, 0, 0, 0)
-  );
+  background-image: linear-gradient(to right,
+      rgba(0, 0, 0, 0),
+      rgba(0, 0, 0, 0.75),
+      rgba(0, 0, 0, 0));
 }
 
 /* Scrollbar for Firefox */

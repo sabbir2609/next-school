@@ -20,7 +20,7 @@ scrollToTopBtn.addEventListener("click", () => {
 
 
 // Function to show the floating button when scrolling down
-window.addEventListener('scroll', function() {
+window.addEventListener('scroll', function () {
     const floatingButton = document.querySelector('.floating-language-button');
     if (window.scrollY > 100) {
         floatingButton.style.display = 'block';
@@ -42,3 +42,15 @@ function changeLanguage(language) {
 
     event.preventDefault();
 }
+
+
+// Add scroll event listener to the gallery container
+const imageGalleryContainer = document.getElementById("imageGalleryContainer");
+imageGalleryContainer.addEventListener("wheel", (event) => {
+    if (event.deltaY !== 0) {
+        event.preventDefault();
+        imageGalleryContainer.scrollBy({
+            left: event.deltaY,
+        });
+    }
+});

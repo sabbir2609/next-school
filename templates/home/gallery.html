@@ -1,43 +1,18 @@
-<style>
-    /* Styling for the image gallery */
-    .image-gallery {
-        display: flex;
-        flex-wrap: nowrap;
-        overflow-x: auto;
-        overflow-y: hidden;
-        gap: 10px;
-        padding: 10px;
-    }
-
-    .image-gallery img {
-        width: auto;
-        height: 150px;
-        border: 1px solid #ddd;
-        border-radius: 5px;
-        transition: transform 0.2s ease;
-    }
-
-    .image-gallery img:hover {
-        transform: scale(1.05);
-    }
-</style>
-
-
 <div class="container">
     <h2 class="text-center my-2">Image Gallery</h2>
 
     <!-- Image Gallery -->
-    <div class="image-gallery">
-        <!-- Replace the following with your image URLs -->
+    <div class="image-gallery image-gallery-container" id="imageGalleryContainer">
         {% for item in img_data %}
-        <a href="{{ item.large_img}}" data-toggle="lightbox" data-gallery="mixedgallery">
-            <img src="{{ item.thumbnail}}" alt="Random Image">
-        </a>
+        <div>
+            <a href="{{ item.large_img}}" data-toggle="lightbox" data-gallery="mixedgallery">
+                <img src="{{ item.thumbnail}}" alt="Random Image">
+            </a>
+        </div>
         {% endfor %}
     </div>
+
 </div>
-
-
 
 <!-- 
    docs & ref :  
