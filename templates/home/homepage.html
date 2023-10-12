@@ -43,33 +43,38 @@
     <!-- Carousel -->
     {% include "home/carousel.html" %}
   </header>
-  <hr class="style" class="featurette-divider" />
-  <main>
-    <div class="container-fluid">
-      <!-- Notices and Governing -->
-      <div class="row g-2">
-        <!-- Notices -->
-        <div class="col-lg-8 col-md-6 col-12">
-          <!-- Your notices content here -->
-          {% include "home/notice.html" %}
-        </div>
 
-        <!-- Governing -->
-        <div class="col-lg-4 col-md-6 col-12">
-          <!-- Your governing content here -->
-          {% include "home/governing.html" %}
+  <hr class="style" class="featurette-divider" />
+
+  <main>
+
+    <div class="container-fluid">
+
+      <div class="container-fluid border border-1 mb-2 " style="border-radius: 10px; background-color: #D1E7DD;">
+        <!-- Notices and Governing -->
+        <div class="row mt-1">
+          <!-- Notices -->
+          <div class="col-lg-8 col-md-6 col-12 border-end">
+            <!-- Your notices content here -->
+            {% include "home/notice.html" %}
+          </div>
+
+          <!-- Governing -->
+          <div class="col-lg-4 col-md-6 col-12">
+            <!-- Your governing content here -->
+            {% include "home/governing.html" %}
+          </div>
         </div>
       </div>
-
-      <hr class="style" />
 
       <!-- contact and location info -->
       {% include "home/contact.html" %}
 
-      <hr class="style" />
-
       <!-- gallery -->
       {% include "home/gallery.html" %}
+
+      <!-- statistics  -->
+      {% include "home/stat.html" %}
 
       <!-- whats happening and login section  -->
       {% include "home/whatsup.html" %}

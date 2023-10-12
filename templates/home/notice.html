@@ -1,17 +1,19 @@
 {% load random_date %}
-<div class="d-flex flex-row flex-grow-1 flex-fill justify-content-center bg-danger py-2 text-white px-1">
-    <span class="d-flex align-items-center">Notice</span>
+
+<div class="d-flex flex-row flex-grow-1 flex-fill justify-content-center py-2 px-1">
+    <span class="d-flex align-items-center fw-bold ">Notice</span>
 </div>
-<div class="table-container position-relative">
+
+<div class="table-container position-relative mb-2" style="border-radius: 10px;">
     <table class="table">
-        <thead class="th-modo">
+        <thead class="sticky-top bg-body ">
             <tr>
                 <th scope="col">Date</th>
                 <th scope="col">Notice</th>
                 <th scope="col">View</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody style="background-color: #FFF3CD;">
             {% for i in data %}
             <tr>
                 <th scope="row">

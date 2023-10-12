@@ -66,27 +66,19 @@ body {
   width: 100%;
 }
 
+/* TODO: use same class  */
+
 /* Custom CSS for the fixed-height container */
 .table-container {
   max-height: 400px;
   /* Set your desired fixed height here */
   overflow-y: auto;
-  background-color: #ffad3b;
-}
-
-.th-mod {
-  position: sticky;
-  top: 0;
-  background-color: #1b0101;
-  color: white;
-  /* Add a background color to make the header stand out */
 }
 
 .governing-container {
   max-height: 400px;
   /* Set your desired fixed height here */
   overflow-y: auto;
-  background-color: #ffad3b;
 }
 
 /* =================================== */
