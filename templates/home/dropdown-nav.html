@@ -1,7 +1,8 @@
-<nav class="navbar navbar-expand-lg" style="background-color: #e3f2fd;">
+<nav class="navbar navbar-dark navbar-expand-lg" style="background-color:#1d2951;">
     <form class="d-flex px-2" role="search">
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+        <button class="btn " type="submit" style="background-color: rgb(230, 230, 230);"><i
+                class="fa-solid fa-magnifying-glass"></i></button>
     </form>
     <button class="navbar-toggler me-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
         aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -12,7 +13,7 @@
             <ul class="navbar-nav mx-auto">
                 {% for dropdown in dropdowns %}
                 <li class="nav-item dropdown dropdown-hov">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown1" role="button"
+                    <a class="nav-link dropdown-toggle text-white fw-bold" href="#" id="navbarDropdown1" role="button"
                         data-bs-toggle="dropdown" aria-expanded="false">
                         {{ dropdown.name }}
                     </a>

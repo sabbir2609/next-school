@@ -13,7 +13,8 @@
   <meta property="og:title" content="Turbo School">
   <meta property="og:description" content="A brief description of Turbo School">
   <meta property="og:url" content="#">
-  <meta property="og:image" content="{% static 'banner.png' %}">
+  <meta property="og:image"
+    content="https://lh3.googleusercontent.com/pw/ADCreHfpFEy3td8h5kV7HW_4w12x0lu3mEJFqq-1E0ACYm6aOjsYBwhPZs4Xs75XNR_Ne3L5fiaBrUR-wxZ1ubUlYvZdbcTCdk_bqhtWmqubzoNkdIJzTZxD2xi96VvUUsjeqosdqEp2_zxd9RlyNfYwHBg3Ow=w500-h500-s-no?authuser=0">
   <meta property="og:site_name" content="Turbo School">
   <meta property="og:locale" content="en_US">
 
@@ -28,12 +29,17 @@
 </head>
 
 <body>
+
   <header>
     <!-- Top Bar -->
     {% include "home/topbar.html" %}
 
     <!-- Banner -->
-    <img src="media/assets/home/banner-big-live.gif" alt="Banner" class="img-fluid" />
+    <img src="{% static 'assets/banner-sm.png' %}" class="d-block d-sm-none img-fluid" alt="Small Screen Banner">
+    <img src="{% static 'assets/banner-xl-s.png' %}" class="d-none d-sm-block img-fluid" alt="Large Screen Banner">
+    <!-- <img src="media/assets/home/banner-big.png" class="d-none d-sm-block img-fluid" alt="Large Screen Banner"> -->
+
+
 
     <!-- Dropdown Navigation -->
     {% include "home/dropdown-nav.html" %}
@@ -41,47 +47,87 @@
     <!-- Ticker -->
     {% include "home/ticker.html" %}
 
-    <!-- Carousel -->
-    {% include "home/carousel.html" %}
-  </header>
+    <div class="container-fluid mb-2" style="background-color: 	#1d2951;">
+      <div class="row g-1">
+        <!-- First Column (6 columns wide on extra-large screens, 12 columns on smaller screens) -->
+        <div class="col-lg-8">
+          <!-- Content for the first column goes here -->
 
-  <hr class="style" class="featurette-divider" />
+          <!-- Carousel -->
+          <div class="container-fluid pt-2 pb-2">
+            {% include "home/carousel.html" %}
+          </div>
+        </div>
+
+        <!-- Second Column (3 columns wide on extra-large screens, 12 columns on smaller screens) -->
+        <div class="col-lg-4 col-md-12">
+          <!-- Content for the second column goes here -->
+          <div class="row">
+
+            {% include "home/mission.html" %}
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </header>
 
   <main>
 
-    <div class="container-fluid">
+    <!-- <div class="container-fluid"> -->
 
-      <div class="container-fluid border border-1 mb-2 " style="border-radius: 10px; background-color: #D1E7DD;">
-        <!-- Notices and Governing -->
-        <div class="row mt-1">
-          <!-- Notices -->
-          <div class="col-lg-8 col-md-6 col-12 border-end">
-            <!-- Your notices content here -->
-            {% include "home/notice.html" %}
-          </div>
+    <div class="accordion mb-2" id="accordionExample">
+      <div class="accordion-item">
+        <h2 class="accordion-header">
+          <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne"
+            aria-expanded="true" aria-controls="collapseOne">
+            <span class="fw-bold">
+              Notice and Governing Body
+            </span>
+          </button>
+        </h2>
+        <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+          <div class="accordion-body bg-success-subtle">
 
-          <!-- Governing -->
-          <div class="col-lg-4 col-md-6 col-12">
-            <!-- Your governing content here -->
-            {% include "home/governing.html" %}
+            <!-- <div class="container-fluid border border-1 mb-2 "
+                style="border-radius: 10px; background-color: #D1E7DD;"> -->
+            <!-- Notices and Governing -->
+            <div class="row mt-1">
+              <!-- Notices -->
+              <div class="col-lg-8 col-md-6 col-12 border-end">
+                <!-- Your notices content here -->
+                {% include "home/notice.html" %}
+              </div>
+
+              <!-- Governing -->
+              <div class="col-lg-4 col-md-6 col-12">
+                <!-- Your governing content here -->
+                {% include "home/governing.html" %}
+              </div>
+            </div>
+            <!-- </div> -->
+
           </div>
         </div>
       </div>
-
-      <!-- contact and location info -->
-      {% include "home/contact.html" %}
-
-      <!-- gallery -->
-      {% include "home/gallery.html" %}
-
-      <!-- statistics  -->
-      {% include "home/stat.html" %}
-
-      <!-- whats happening and login section  -->
-      {% include "home/whatsup.html" %}
-
-
     </div>
+
+    <!-- contact and location info -->
+    {% include "home/contact.html" %}
+
+    <!-- gallery -->
+    {% include "home/gallery.html" %}
+
+    <!-- statistics  -->
+    {% include "home/stat.html" %}
+
+    <!-- whats happening and login section  -->
+    {% include "home/whatsup.html" %}
+
+
+    <!-- </div> -->
 
 
   </main>

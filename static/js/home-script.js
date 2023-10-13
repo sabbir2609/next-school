@@ -33,7 +33,7 @@ window.addEventListener('scroll', function () {
 
 function changeLanguage(language) {
     const translatedText = {
-        'Bangla': 'বিশ্বাস করুন, স্কুলের জন্য একটি স্মার্ট সমাধান',
+        'Bangla': 'স্কুলের জন্য একটি স্মার্ট সমাধানে বিশ্বাস করুন !',
         'English': 'Believe in a smart solution for school'
     };
 
