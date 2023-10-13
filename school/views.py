@@ -96,9 +96,9 @@ class StudentUpdateView(UpdateView):
         if not form.has_changed():
             messages.warning(self.request, "Nothing to update")
             return super().form_invalid(form)
-        else:
-            messages.success(self.request, "Student profile updated successfully")
-            return super().form_valid(form)
+        
+        messages.success(self.request, "Student profile updated successfully")
+        return super().form_valid(form)
 
 
 class StudentDeleteView(SuccessMessageMixin, DeleteView):
@@ -121,7 +121,6 @@ class TeacherListView(ListView):
     model = Teacher
     context_object_name = "teachers"
     template_name = "school/teacher_list.html"
-    pass
 
 
 # TODO: TeacherDetailView urls and templates
@@ -152,9 +151,8 @@ class SectionDetailView(DetailView):
             section=self.object
         ).select_related("student")
 
-        # get total students of this section
-        total_students = context["students"].count()
-        context["total_students"] = total_students
+        # total students of this section.
+        context["total_students"] = context["students"].count()
 
         # get all subjects of this section
         context["subjects"] = SectionSubject.objects.filter(section_id=self.object.id)
