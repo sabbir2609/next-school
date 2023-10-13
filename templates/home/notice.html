@@ -10,7 +10,6 @@
             <tr>
                 <th scope="col">Date</th>
                 <th scope="col">Notice</th>
-                <th scope="col">View</th>
             </tr>
         </thead>
         <tbody style="background-color: #FFF3CD;">
@@ -21,8 +20,14 @@
                         {{ "2023-01-01"|random_date:"2023-12-31" }}
                     </div>
                 </th>
-                <td>{% lorem 20 w %}</td>
-                <td><a href="#" class="btn btn-primary">View</a></td>
+                <td>
+                    <a href="#"
+                        class="link-success link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">
+                        {% lorem 20 w %}
+                        <i class="fa-solid fa-arrow-up-right-from-square px-2"></i>
+                    </a>
+                </td>
+
             </tr>
             {% endfor %}
         </tbody>

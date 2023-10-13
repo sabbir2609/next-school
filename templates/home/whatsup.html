@@ -4,7 +4,7 @@
 
 <!-- whatsup and login section -->
 
-<div class="container-fluid bg-white border border-1" style="border-radius: 10px;">
+<div class="container-fluid bg-white border border-1 bg-info-subtle" style="border-radius: 10px;">
     <div class="row mt-1">
         <!-- First Column (col-lg-9) -->
         <div class="col-lg-9 border-end">
@@ -57,10 +57,11 @@
                         <img src="{% static 'images/login/admin.png' %}" class="card-img-top mx-2 " alt="student login">
                         <div class="card-body">
                             <h5 class="">Admin Login</h5>
-                            <a href="#" class="btn btn-sm btn-outline-info ">
+                            <button type="button" class="btn btn-sm btn-outline-info" data-bs-toggle="modal"
+                                data-bs-target="#adminLoginModal">
                                 Login
                                 <i class="fa-solid fa-right-to-bracket"></i>
-                            </a>
+                            </button>
                         </div>
                     </div>
 
@@ -72,10 +73,11 @@
                             alt="student login">
                         <div class="card-body">
                             <h5 class="">Teacher Login</h5>
-                            <a href="#" class="btn btn-sm btn-outline-info ">
+                            <button type="button" class="btn btn-sm btn-outline-info" data-bs-toggle="modal"
+                                data-bs-target="#teacherLoginModal">
                                 Login
                                 <i class="fa-solid fa-right-to-bracket"></i>
-                            </a>
+                            </button>
                         </div>
                     </div>
 
@@ -87,10 +89,11 @@
                             alt="student login">
                         <div class="card-body">
                             <h5 class="">Student Login</h5>
-                            <a href="#" class="btn btn-sm btn-outline-info ">
+                            <button type="button" class="btn btn-sm btn-outline-info" data-bs-toggle="modal"
+                                data-bs-target="#studentLoginModal">
                                 Login
                                 <i class="fa-solid fa-right-to-bracket"></i>
-                            </a>
+                            </button>
                         </div>
                     </div>
 
