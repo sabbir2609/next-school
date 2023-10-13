@@ -1,5 +1,6 @@
 import os
 import json
+
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from django.db.models import Q
@@ -76,8 +77,9 @@ class StudentCreateView(SuccessMessageMixin, CreateView):
     fields = ["student_id", "name_en", "birth_certificate_no", "image"]
 
     def get_success_url(self):
-        pk = self.object.pk
-        return reverse_lazy("school:student_detail", kwargs={"pk": pk})
+        return reverse_lazy(
+            "school:student_detail", kwargs={"pk": self.object.pk}
+        )
 
     def get_success_message(self, cleaned_data):
         return "Student profile created successfully"
@@ -89,8 +91,9 @@ class StudentUpdateView(UpdateView):
     form_class = StudentForm
 
     def get_success_url(self):
-        pk = self.kwargs["pk"]
-        return reverse_lazy("school:student_detail", kwargs={"pk": pk})
+        return reverse_lazy(
+            "school:student_detail", kwargs={"pk": self.kwargs["pk"]}
+        )
 
     def form_valid(self, form):
         if not form.has_changed():
