@@ -242,6 +242,37 @@ a.email-address {
   align-items: center;
 }
 
+.stat-card {
+  background-image: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  text-align: center;
+  transition: background 1s, transform 1s;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.stat-card h3 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+.stat-card p.count {
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.stat-card:hover {
+  background-image: linear-gradient(-225deg, #FFFEFF 0%, #D7FFFE 100%);
+  transform: scale(1.05);
+}
+
+.stat-card i {
+  font-size: 3rem;
+  margin-top: 10px;
+}
+
 /* =================================== */
 
 /* hr style  */
