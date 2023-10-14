@@ -57,7 +57,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     # My Apps
     "school.apps.SchoolConfig",
-    "landing.apps.LandingConfig",
+    "homepage.apps.HomepageConfig",
     # Third Party Apps
     "crispy_forms",
     "crispy_bootstrap5",

@@ -6,7 +6,7 @@ from django.conf.urls.static import static
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("homepage/", include("school.urls", "school"), name="school"),
-    path("", include("landing.urls", "landing"), name="landing"),
+    path("", include("homepage.urls", "homepage"), name="homepage"),
 ]
 
 # Admin Site Config
