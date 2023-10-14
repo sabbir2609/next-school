@@ -5,7 +5,8 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("", include("school.urls", "school"), name="school"),
+    path("homepage/", include("school.urls", "school"), name="school"),
+    path("", include("landing.urls", "landing"), name="landing"),
 ]
 
 # Admin Site Config

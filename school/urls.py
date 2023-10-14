@@ -3,7 +3,6 @@ from django.urls import include, path
 from .views import (
     AttendanceCreateView,
     AttendanceReportView,
-    HomeView,
     SectionDetailView,
     SectionListView,
     StudentAssignView,
@@ -24,7 +23,6 @@ app_name = "school"
 
 
 urlpatterns = [
-    path("", HomeView.as_view(), name="hello"),
     # Student URLs
     path("students/", StudentListView.as_view(), name="student_list"),
     path("students/<int:pk>/", StudentDetailView.as_view(), name="student_detail"),
