@@ -54,3 +54,63 @@ imageGalleryContainer.addEventListener("wheel", (event) => {
         });
     }
 });
+
+
+var multipleCardCarousel = document.querySelector("#customCarousel");
+
+if (window.matchMedia("(min-width: 576px)").matches) {
+    var carousel = new bootstrap.Carousel(multipleCardCarousel, {
+        interval: false
+    });
+    var carouselInner = multipleCardCarousel.querySelector(".carousel-inner");
+    var carouselWidth = carouselInner.scrollWidth;
+    var cardWidth = multipleCardCarousel.querySelector(".carousel-item").offsetWidth;
+    var scrollPosition = 0;
+    var animationFrameId;
+    var animationDuration = 600; // Animation duration in milliseconds
+    var reachedEnd = false;
+
+    multipleCardCarousel.querySelector(".carousel-control-next").addEventListener("click", function () {
+        if (reachedEnd) {
+            scrollPosition = -250; // If at the end, scroll back to the start
+            reachedEnd = false;
+        } else {
+            var remainingWidth = carouselWidth - scrollPosition;
+            var targetScrollPosition = scrollPosition + Math.min(300, remainingWidth);
+            if (targetScrollPosition >= carouselWidth - cardWidth * 2) {
+                reachedEnd = true;
+            }
+            animateScroll(targetScrollPosition);
+        }
+    });
+
+    multipleCardCarousel.querySelector(".carousel-control-prev").addEventListener("click", function () {
+        var targetScrollPosition = Math.max(0, scrollPosition - 300);
+        animateScroll(targetScrollPosition);
+    });
+
+    function animateScroll(targetPosition) {
+        var startTime;
+
+        function step(currentTime) {
+            if (!startTime) startTime = currentTime;
+            var progress = (currentTime - startTime) / animationDuration;
+            if (progress < 1) {
+                scrollPosition = scrollPosition + (targetPosition - scrollPosition) * progress;
+                carouselInner.scrollLeft = scrollPosition;
+                animationFrameId = requestAnimationFrame(step);
+            } else {
+                scrollPosition = targetPosition;
+                carouselInner.scrollLeft = scrollPosition;
+            }
+        }
+
+        if (animationFrameId) {
+            cancelAnimationFrame(animationFrameId);
+        }
+
+        requestAnimationFrame(step);
+    }
+} else {
+    multipleCardCarousel.classList.add("slide");
+}
