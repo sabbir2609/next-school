@@ -76,59 +76,61 @@
 
   <main>
 
-    <!-- <div class="container-fluid"> -->
+    <div class="container-fluid">
 
-    <div class="accordion mb-2" id="accordionExample">
-      <div class="accordion-item">
-        <h2 class="accordion-header">
-          <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne"
-            aria-expanded="true" aria-controls="collapseOne">
-            <span class="fw-bold">
-              Notice and Governing Body
-            </span>
-          </button>
-        </h2>
-        <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
-          <div class="accordion-body bg-success-subtle">
+      <div class="accordion mb-2" id="accordionExampleFour">
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour"
+              aria-expanded="true" aria-controls="collapseFour">
+              <span class="fw-bold">
+                Notice and Governing Body
+              </span>
+            </button>
+          </h2>
+          <div id="collapseFour" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+            <div class="accordion-body bg-success-subtle">
 
-            <!-- <div class="container-fluid border border-1 mb-2 "
+              <!-- <div class="container-fluid border border-1 mb-2 "
                 style="border-radius: 10px; background-color: #D1E7DD;"> -->
-            <!-- Notices and Governing -->
-            <div class="row mt-1">
-              <!-- Notices -->
-              <div class="col-lg-8 col-md-6 col-12 border-end">
-                <!-- Your notices content here -->
-                {% include "home/notice.html" %}
-              </div>
+              <!-- Notices and Governing -->
+              <div class="row mt-1">
+                <!-- Notices -->
+                <div class="col-lg-8 col-md-6 col-12 border-end">
+                  <!-- Your notices content here -->
+                  {% include "home/notice.html" %}
+                </div>
 
-              <!-- Governing -->
-              <div class="col-lg-4 col-md-6 col-12">
-                <!-- Your governing content here -->
-                {% include "home/governing.html" %}
+                <!-- Governing -->
+                <div class="col-lg-4 col-md-6 col-12">
+                  <!-- Your governing content here -->
+                  {% include "home/governing.html" %}
+                </div>
               </div>
+              <!-- </div> -->
+
             </div>
-            <!-- </div> -->
-
           </div>
         </div>
       </div>
+
+      <!-- contact and location info -->
+      {% include "home/contact.html" %}
+
+      <!-- gallery -->
+      {% include "home/gallery.html" %}
+
+      <!-- statistics  -->
+      {% include "home/stat.html" %}
+
+      <!-- whats happening and login section  -->
+      {% include "home/whatsup.html" %}
+
+      <!-- org and achievements section  -->
+      {% include "home/achievement.html" %}
+
+
     </div>
-
-    <!-- contact and location info -->
-    {% include "home/contact.html" %}
-
-    <!-- gallery -->
-    {% include "home/gallery.html" %}
-
-    <!-- statistics  -->
-    {% include "home/stat.html" %}
-
-    <!-- whats happening and login section  -->
-    {% include "home/whatsup.html" %}
-
-
-    <!-- </div> -->
-
 
   </main>
 
@@ -167,6 +169,8 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
     crossorigin="anonymous"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 
   <script src="https://cdn.jsdelivr.net/npm/bs5-lightbox@1.8.3/dist/index.bundle.min.js"></script>
 

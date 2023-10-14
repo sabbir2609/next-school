@@ -44,6 +44,7 @@ class HomeView(TemplateView):
         context["img_data"] = data["images"]
         context["useful_links"] = data["useful_links"]
         context["whatsHappening"] = data["whatsHappening"]
+        context["star_student"] = data["star_student"]
         context["data"] = [i for i in range(1, 20)]
         return context
 

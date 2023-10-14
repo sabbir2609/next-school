@@ -180,5 +180,38 @@
             "description": "Your description goes here. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
             "url": "#"
         }
+    ],
+    "star_student": [
+        {
+            "id": 1,
+            "img": "https://codingyaar.com/wp-content/uploads/headshot-1-scaled.jpg",
+            "title": "Some Name of Student",
+            "text": "Some quick example text to build on the card title and make up the bulk of the card's content.",
+            "status": "active"
+        },
+        {
+            "id": 2,
+            "img": "https://codingyaar.com/wp-content/uploads/headshot-2-scaled.jpg",
+            "title": "Some Name of Student",
+            "text": "Some quick example text to build on the card title and make up the bulk of the card's content."
+        },
+        {
+            "id": 3,
+            "img": "https://codingyaar.com/wp-content/uploads/headshot-3-scaled.jpg",
+            "title": "Some Name of Student",
+            "text": "Some quick example text to build on the card title and make up the bulk of the card's content."
+        },
+        {
+            "id": 4,
+            "img": "https://codingyaar.com/wp-content/uploads/headshot-3-scaled.jpg",
+            "title": "Some Name of Student",
+            "text": "Some quick example text to build on the card title and make up the bulk of the card's content."
+        },
+        {
+            "id": 5,
+            "img": "https://codingyaar.com/wp-content/uploads/headshot-6-scaled.jpg",
+            "title": "Some Name of Student",
+            "text": "Some quick example text to build on the card title and make up the bulk of the card's content."
+        }
     ]
 }
