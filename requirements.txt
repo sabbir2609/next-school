@@ -8,6 +8,7 @@ django-browser-reload==1.11.0
 django-crispy-forms==2.0
 django-dbml==0.6.0
 django-debug-toolbar==4.2.0
+django-tinymce==3.6.1
 Faker==19.3.0
 idna==3.4
 Pillow==10.0.0

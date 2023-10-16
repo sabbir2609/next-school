@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.db import models
 from .models import (
     Notice,
     GovernanceBody,
@@ -12,6 +13,7 @@ from .models import (
     DropdownNavigation,
     DropdownNavigationItem,
 )
+from tinymce.widgets import TinyMCE
 
 
 class DropdownNavigationItemInline(admin.TabularInline):
@@ -31,6 +33,7 @@ class DropdownNavigationAdmin(admin.ModelAdmin):
 @admin.register(Notice)
 class NoticeAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("title",)}
+    formfield_overrides = {models.TextField: {"widget": TinyMCE()}}
 
 
 @admin.register(GovernanceBody)
