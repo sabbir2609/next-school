@@ -35,7 +35,7 @@
 
         </div>
 
-        <div class="col-lg-8 mb-2 ">
+        <div class="col-lg-8 mb-2">
             <!-- Content for the second column (8 units) goes here -->
             <div class="star-slider">
                 <div id="customCarousel" class="carousel carousel-dark">
@@ -71,10 +71,8 @@
                                     <div class="carousel-item star-carousel-item {{ item.status }}">
 
                                         <div class="card star-card mb-2 ">
-                                            <div class="img-wrapper">
-                                                <img src="{{ item.img}}" class="d-block w-100 mx-auto rounded "
-                                                    alt="{{ item.title }} image">
-                                            </div>
+                                            <img src="{{ item.img}}" class="d-block w-100 mx-auto rounded"
+                                                alt="{{ item.title }} image">
                                             <div class="card-body">
                                                 <h5 class="card-title">{{ item.title }}</h5>
                                                 <p class="card-text overflow-hidden">{{ item.text }}</p>

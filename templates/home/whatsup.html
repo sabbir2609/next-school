@@ -17,18 +17,18 @@
             <div class="row g-2">
 
                 {% for item in whatsHappening %}
-                <!-- Sub-column {{ item.id }} -->
                 <div class="col-lg-3 col-md-6 col-sm-6">
 
-                    <div class="card mb-2" style="height: 308px;">
-                        <img src="{{ item.image }}" class="card-img-top card-img-custom" alt="Image">
+                    <div class="card mb-2">
+                        <img src="{{ item.image }}" class=" img-fluid d-block w-100 mx-auto rounded" alt="Image"
+                            style="aspect-ratio: 16/9;">
                         <div class="card-body">
                             <p class="card-text">
                                 {{ item.description }}
                             </p>
                         </div>
                         <div class="text-end">
-                            <a href="{{ item.url }}" class="btn btn-link custom-link p-3" target=”_blank”>
+                            <a href="{{ item.url }}" class="btn btn-link custom-link" target=”_blank”>
                                 See More
                                 <i class="fa-solid fa-arrow-up-right-from-square"></i>
                             </a>
@@ -44,20 +44,20 @@
 
         <!-- Second Column (col-lg-3) -->
 
-        <div class="col-lg-3 pb-2 ">
+        <div class="col-lg-3">
 
             <div class="h4 pb-2 mb-2 fw-semibold border-bottom border-1 ">
                 Login
             </div>
 
-            <div class="row g-2">
+            <div class="row g-2 pb-2 ">
 
                 <div class="col-lg-12 col-md-4">
 
                     <div class="card login-card">
-                        <img src="{% static 'images/login/admin.png' %}" class="card-img-top mx-2 " alt="student login">
+                        <img src="{% static 'images/login/admin.png' %}" class="card-img-top mx-2" alt="student login">
                         <div class="card-body">
-                            <h5 class="">Admin Login</h5>
+                            <h6 class="card-title">Admin Login</h6>
                             <button type="button" class="btn btn-sm btn-outline-info" data-bs-toggle="modal"
                                 data-bs-target="#adminLoginModal">
                                 Login
@@ -67,13 +67,14 @@
                     </div>
 
                 </div>
+
                 <div class="col-lg-12 col-md-4">
 
                     <div class="card login-card">
                         <img src="{% static 'images/login/teacher.png' %}" class="card-img-top mx-2 "
                             alt="student login">
                         <div class="card-body">
-                            <h5 class="">Teacher Login</h5>
+                            <h6 class="card-title">Teacher Login</h6>
                             <button type="button" class="btn btn-sm btn-outline-info" data-bs-toggle="modal"
                                 data-bs-target="#teacherLoginModal">
                                 Login
@@ -83,13 +84,14 @@
                     </div>
 
                 </div>
+
                 <div class="col-lg-12 col-md-4">
 
                     <div class="card login-card">
                         <img src="{% static 'images/login/student.png' %}" class="card-img-top mx-2 "
                             alt="student login">
                         <div class="card-body">
-                            <h5 class="">Student Login</h5>
+                            <h6 class="card-title">Student Login</h6>
                             <button type="button" class="btn btn-sm btn-outline-info" data-bs-toggle="modal"
                                 data-bs-target="#studentLoginModal">
                                 Login
@@ -99,6 +101,7 @@
                     </div>
 
                 </div>
+
             </div>
         </div>
     </div>

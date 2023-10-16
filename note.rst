@@ -1,4 +1,4 @@
-django template tag for get a random unsplash image
+.. django template tag for get a random unsplash image
 
 import os
 import requests
@@ -29,3 +29,27 @@ def random_unsplash_image(width, height):
         image_url = ""  # Provide a default image URL or handle the error as needed
 
     return image_url
+
+
+
+.. homepage outline 
+
+
+
+notice
+
+Governance Bodies
+
+contact
+
+useful links
+
+image gallery
+
+stat 
+
+what's happening 
+
+CO-CURRICULAR 
+
+Our Bright Students!

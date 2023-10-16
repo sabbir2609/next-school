@@ -207,11 +207,6 @@ a.email-address {
 /* whatsup page css  */
 
 /* Custom CSS for responsive image */
-.card-img-custom {
-  object-fit: cover;
-  height: 45%;
-  width: 100%;
-}
 
 .card:hover {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
@@ -220,7 +215,7 @@ a.email-address {
 
 .login-card {
   flex-direction: row;
-  /* border: 0; */
+  height: auto;
 }
 
 .login-card:hover {
@@ -229,19 +224,17 @@ a.email-address {
 }
 
 .login-card img {
-  max-width: 25%;
+  max-width: 20%;
   margin: auto;
-  padding: 0.8em;
-  border: 1px solid rgba(106, 115, 199, 0.726);
   border-radius: 50%;
 
 }
 
-.login-card-body {
+/* .login-card-body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-}
+} */
 
 /* stat css  */
 
