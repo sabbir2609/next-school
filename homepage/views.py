@@ -28,6 +28,7 @@ class HomePageView(TemplateView):
         # Fetch data from your models and pass it to the template
         context["dropdowns"] = DropdownNavigation.objects.all()
         context["notices"] = Notice.objects.all()
+        context["important"] = Notice.objects.filter(tags__name__in=["important"])
         context["governance_bodies"] = GovernanceBody.objects.all()
         context["contacts"] = Contact.objects.all()
         context["useful_links"] = UsefulLink.objects.all()

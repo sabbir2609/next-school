@@ -1,14 +1,15 @@
 <div class="d-flex justify-content-between align-items-center breaking-news bg-success-subtle mb-1">
     <div
         class="d-flex flex-row flex-grow-1 flex-fill justify-content-center bg-danger py-2 text-white fw-bold px-1 news">
-        <span class="d-flex align-items-center">Importanat</span>
+        <span class="d-flex align-items-center">Important</span>
     </div>
     <marquee class="news-scroll" behavior="scroll" direction="left" onmouseover="this.stop();"
         onmouseout="this.start();">
-        {% for notice in notices %}
-        <a href="{{ notice.link }}">{{ notice.title}}</a>
+        {% for notice in important %}
 
+        <a href="{% url 'homepage:notice_detail' notice.slug %}">{{ notice.title}}</a>
         <span class="dot"></span>
+
         {% endfor %}
 
     </marquee>

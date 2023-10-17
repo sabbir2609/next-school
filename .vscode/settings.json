@@ -15,5 +15,30 @@
     "cSpell.words": [
         "Bangla",
         "tinymce"
-    ]
+    ],
+    "todo-tree.highlights.customHighlight": {
+        "NOTE": {
+            "icon": "book",
+            "type": "text-and-comment",
+            "foreground": "#F99417"
+        },
+        "BUG": {
+            "icon": "bug"
+        },
+        "HACK": {
+            "icon": "tools"
+        },
+        "FIXME": {
+            "icon": "flame"
+        },
+        "XXX": {
+            "icon": "x"
+        },
+        "[ ]": {
+            "icon": "issue-draft"
+        },
+        "[x]": {
+            "icon": "issue-closed"
+        }
+    }
 }

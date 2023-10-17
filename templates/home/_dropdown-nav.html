@@ -18,6 +18,7 @@
                         {{ dropdown.name }}
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown1">
+                        <!-- NOTE: Do this for tabular data  -->
                         {% for item in dropdown.items.all %}
                         <li><a class="dropdown-item" href="{{ item.slug }}">{{ item.name }}</a></li>
                         {% endfor %}
