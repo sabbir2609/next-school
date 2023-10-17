@@ -35,6 +35,10 @@ class NoticeAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("title",)}
     formfield_overrides = {models.TextField: {"widget": TinyMCE()}}
 
+    list_display = ("title", "date")
+
+    ordering = ("-date",)
+
 
 @admin.register(GovernanceBody)
 class GovernanceBodyAdmin(admin.ModelAdmin):

@@ -1,0 +1,21 @@
+{% extends 'base/base.html' %}
+
+
+{% block content %}
+<div class="container ">
+    <div class="h2">
+        Notice : {{ notice.title }}
+    </div>
+    <div class="fw-lighter ">
+        Date : {{ notice.date }}
+    </div>
+    <div class="bg-info-subtle ">
+        {{ notice.description }}
+    </div>
+    <hr>
+    <div class="">
+        Attachments: {{ notice.attachment }}
+        <a class="btn btn-link " href="{{ notice.attachment.url }}"> Download </a>
+    </div>
+</div>
+{% endblock %}

@@ -1,5 +1,9 @@
 from django.db import models
+from django.urls import reverse, reverse_lazy
 from django.utils.text import slugify
+from django.core.validators import FileExtensionValidator
+
+from taggit.managers import TaggableManager
 
 
 class DropdownNavigation(models.Model):
@@ -27,13 +31,26 @@ class DropdownNavigationItem(models.Model):
 
 class Notice(models.Model):
     title = models.CharField(max_length=200)
-    slug = models.SlugField()
+    slug = models.SlugField(blank=True, null=True)
+    date = models.DateField()
     description = models.TextField()
-    attachment = models.FileField(upload_to="notices/")
-    date = models.DateField(auto_now_add=True)
+    attachment = models.FileField(
+        upload_to="notices/",
+        validators=[FileExtensionValidator(allowed_extensions=["pdf", "docx"])],
+        blank=True,
+        null=True,
+        help_text="Upload Your Notice PDF or Docs",
+    )
+    tag = TaggableManager()
+    created_at = models.DateField(auto_now_add=True)
 
     def __str__(self):
         return self.title
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.title)
+        super(Notice, self).save(*args, **kwargs)
 
     class Meta:
         verbose_name_plural = "Notices"

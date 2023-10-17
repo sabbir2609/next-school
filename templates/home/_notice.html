@@ -1,0 +1,36 @@
+{% load random_date %}
+
+<div class="h4 fw-semibold border-bottom border-end border-1 d-flex justify-content-center">
+    Latest Notice
+</div>
+
+<div class="table-container position-relative mb-2 rounded">
+    <table class="table">
+        <thead class="sticky-top bg-body ">
+            <tr>
+                <th scope="col">Date</th>
+                <th scope="col">Notice</th>
+            </tr>
+        </thead>
+        <tbody style="background-color: #FFF3CD;">
+            {% for notice in notices %}
+            <tr>
+                <th scope="row">
+                    <div class="text-nowrap">
+                        {{ notice.date }}
+                    </div>
+                </th>
+                <td>
+                    <a href="{% url 'homepage:notice_detail' notice.slug %}"
+                        class="link-success link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">
+                        {{ notice.title }}
+                        <i class="fa-solid fa-arrow-up-right-from-square px-2"></i>
+                    </a>
+                </td>
+
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a class="btn btn-info d-block justify-content-end fw-bolder " href="notices/"> See All Notice </a>
+</div>

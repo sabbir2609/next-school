@@ -1,31 +1,10 @@
-# import json
-# import os
-# from django.shortcuts import render
-# from django.views.generic import TemplateView
-
-
-# class HomePageView(TemplateView):
-#     template_name = "home/homepage.html"
-
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
-
-#         # using temporary data for dev purpose
-#         json_file_path = os.path.join(os.path.dirname(__file__), "data/data.json")
-#         with open(json_file_path, "r") as json_file:
-#             data = json.load(json_file)
-
-#         context["dropdowns"] = data["dropdowns"]
-#         context["notices"] = data["notices"]
-#         context["img_data"] = data["images"]
-#         context["useful_links"] = data["useful_links"]
-#         context["whatsHappening"] = data["whatsHappening"]
-#         context["star_student"] = data["star_student"]
-#         context["data"] = [i for i in range(1, 20)]
-#         return context
-
-
 from django.views.generic import TemplateView
+from django.views.generic.detail import DetailView
+from django.shortcuts import render, redirect
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from django.http import HttpResponse
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView
+from .models import Notice
 from .models import (
     DropdownNavigation,
     Notice,
@@ -59,3 +38,48 @@ class HomePageView(TemplateView):
         context["bright_students"] = BrightStudent.objects.all()
 
         return context
+
+
+# Notice CRUD
+
+
+class NoticeListView(ListView):
+    model = Notice
+    context_object_name = "notices"
+    paginate_by = 15
+    template_name = "home/notices/notice_list.html"
+
+    def get_context_data(self, **kwargs):
+        context = super(NoticeListView, self).get_context_data(**kwargs)
+        notices = self.get_queryset()
+        page = self.request.GET.get("page")
+        paginator = Paginator(notices, self.paginate_by)
+        try:
+            notices = paginator.page(page)
+        except PageNotAnInteger:
+            notices = paginator.page(1)
+        except EmptyPage:
+            notices = paginator.page(paginator.num_pages)
+        context["notices"] = notices
+        return context
+
+
+class NoticeDetailView(DetailView):
+    model = Notice
+    context_object_name = "notice"
+    template_name = "home/notices/notice_detail.html"
+
+
+class NoticeCreateView(CreateView):
+    model = Notice
+    fields = ["title", "slug", "description", "attachment"]
+
+
+class NoticeUpdateView(UpdateView):
+    model = Notice
+    fields = ["title", "slug", "description", "attachment"]
+
+
+class NoticeDeleteView(DeleteView):
+    model = Notice
+    success_url = "/notices/"

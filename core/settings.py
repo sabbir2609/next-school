@@ -59,6 +59,7 @@ INSTALLED_APPS = [
     "school.apps.SchoolConfig",
     "homepage.apps.HomepageConfig",
     # Third Party Apps
+    "taggit",
     "crispy_forms",
     "crispy_bootstrap5",
     "tinymce",
