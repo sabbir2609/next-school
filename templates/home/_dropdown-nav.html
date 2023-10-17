@@ -18,8 +18,8 @@
                         {{ dropdown.name }}
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown1">
-                        {% for item in dropdown.items %}
-                        <li><a class="dropdown-item" href="#">{{ item }}</a></li>
+                        {% for item in dropdown.items.all %}
+                        <li><a class="dropdown-item" href="{{ item.slug }}">{{ item.name }}</a></li>
                         {% endfor %}
                     </ul>
                 </li>

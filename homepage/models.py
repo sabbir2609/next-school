@@ -41,7 +41,7 @@ class Notice(models.Model):
         null=True,
         help_text="Upload Your Notice PDF or Docs",
     )
-    tag = TaggableManager()
+    tag = TaggableManager(blank=True)
     created_at = models.DateField(auto_now_add=True)
 
     def __str__(self):

@@ -4,7 +4,7 @@ from django.shortcuts import render, redirect
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.http import HttpResponse
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
-from .models import Notice
+from django.urls import reverse_lazy
 from .models import (
     DropdownNavigation,
     Notice,
@@ -73,11 +73,19 @@ class NoticeDetailView(DetailView):
 class NoticeCreateView(CreateView):
     model = Notice
     fields = ["title", "slug", "description", "attachment"]
+    template_name = "home/notices/notice_create.html"
 
 
 class NoticeUpdateView(UpdateView):
     model = Notice
     fields = ["title", "slug", "description", "attachment"]
+    template_name = "home/notices/notice_update.html"
+
+    def get_success_url(self):
+        return reverse_lazy("homepage:notice_detail", kwargs={"slug": self.object.slug})
+
+    def get_success_message(self, cleaned_data):
+        return "Notice updated successfully"
 
 
 class NoticeDeleteView(DeleteView):
