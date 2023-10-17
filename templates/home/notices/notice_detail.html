@@ -13,9 +13,13 @@
         {{ notice.description }}
     </div>
     <hr>
-    <div class="">
+    <div class="bg-danger-subtle rounded p-3">
+        {% if notice.attachment %}
         Attachments: {{ notice.attachment }}
         <a class="btn btn-link " href="{{ notice.attachment.url }}"> Download </a>
+        {% else %}
+        <p><em> This notice has no <strong>Attachments</strong></em></p>
+        {% endif %}
     </div>
 </div>
 {% endblock %}
