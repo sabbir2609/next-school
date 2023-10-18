@@ -1,3 +1,5 @@
+from typing import Any
+from django.db.models.query import QuerySet
 from django.views.generic import TemplateView
 from django.views.generic.detail import DetailView
 from django.shortcuts import render, redirect
@@ -17,6 +19,8 @@ from .models import (
     CoCurricular,
     BrightStudent,
 )
+
+from .forms import NoticeForm
 
 
 class HomePageView(TemplateView):
@@ -41,7 +45,7 @@ class HomePageView(TemplateView):
         return context
 
 
-# Notice CRUD
+# ================= Notice CRUD ====================== #
 
 
 class NoticeListView(ListView):
@@ -49,6 +53,13 @@ class NoticeListView(ListView):
     context_object_name = "notices"
     paginate_by = 15
     template_name = "home/notices/notice_list.html"
+
+    def get_queryset(self):
+        filter_value = self.request.GET.get("filter")
+        if filter_value:
+            return Notice.objects.filter(tags__name__in=[filter_value])
+        else:
+            return Notice.objects.all()
 
     def get_context_data(self, **kwargs):
         context = super(NoticeListView, self).get_context_data(**kwargs)
@@ -78,8 +89,8 @@ class NoticeCreateView(CreateView):
 
 
 class NoticeUpdateView(UpdateView):
+    form_class = NoticeForm
     model = Notice
-    fields = ["title", "slug", "description", "attachment"]
     template_name = "home/notices/notice_update.html"
 
     def get_success_url(self):
@@ -92,6 +103,9 @@ class NoticeUpdateView(UpdateView):
 class NoticeDeleteView(DeleteView):
     model = Notice
     success_url = "/notices/"
+
+
+# ================= Notice CRUD Ends ====================== #
 
 
 class GovernanceBodyDetailView(DetailView):

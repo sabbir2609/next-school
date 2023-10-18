@@ -2,6 +2,8 @@
 
 {% block title %} Notice Update {% endblock %}
 
+{% load crispy_forms_tags %}
+
 {% block content %}
 
 <div class="container">
@@ -9,7 +11,7 @@
     <form method="POST" autocomplete="off">
         {% csrf_token %}
 
-        {{ form.as_p }}
+        {{ form | crispy }}
 
         <button type="submit" class="btn btn-primary">Update</button>
     </form>

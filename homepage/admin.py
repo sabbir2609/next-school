@@ -38,10 +38,10 @@ class DropdownNavigationAdmin(admin.ModelAdmin):
 class NoticeAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("title",)}
     formfield_overrides = {models.TextField: {"widget": CKEditorWidget}}
-
     list_display = ("title", "date")
-
     ordering = ("-date",)
+    search_fields = ("title", "description")
+    list_filter = ("tags",)
 
 
 @admin.register(GovernanceBody)

@@ -22,6 +22,17 @@
         {% endif %}
     </div>
     <hr>
+    {%if notice.tags %}
+    <div class="row mb-2 ">
+        <div class="col">
+            Tags:
+            {%for notice_tag in notice.tags.all %}
+            <a href="{% url 'homepage:notice_list' %}?filter={{notice_tag}}"
+                class="btn btn-sm btn-outline-warning ">{{notice_tag}}</a>
+            {% endfor %}
+        </div>
+    </div>
+    {%endif%}
     <a href="{% url 'homepage:notice_update' notice.slug %}" class="btn btn-warning ">Update</a>
 </div>
 {% endblock %}
