@@ -6,11 +6,12 @@ defusedxml==0.7.1
 Django==4.2.4
 django-autocomplete-light==3.9.7
 django-browser-reload==1.11.0
+django-ckeditor==6.7.0
 django-crispy-forms==2.0
 django-dbml==0.6.0
 django-debug-toolbar==4.2.0
+django-js-asset==2.1.0
 django-taggit==4.0.0
-django-tinymce==3.6.1
 Faker==19.3.0
 fonttools==4.43.1
 fpdf2==2.7.6
