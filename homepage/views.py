@@ -92,3 +92,9 @@ class NoticeUpdateView(UpdateView):
 class NoticeDeleteView(DeleteView):
     model = Notice
     success_url = "/notices/"
+
+
+class GovernanceBodyDetailView(DetailView):
+    model = GovernanceBody
+    context_object_name = "governance_body"
+    template_name = "home/governance_body/governance_body_detail.html"

@@ -3,13 +3,13 @@
 
 {% block content %}
 <div class="container ">
-    <div class="h2">
+    <div class="h2 mt-2 ">
         Notice : {{ notice.title }}
     </div>
     <div class="fw-lighter ">
         Date : {{ notice.date }}
     </div>
-    <div class="bg-info-subtle ">
+    <div class="p-2 border rounded ">
         {{ notice.description }}
     </div>
     <hr>
@@ -21,6 +21,7 @@
         <p><em> This notice has no <strong>Attachments</strong></em></p>
         {% endif %}
     </div>
-    <a href="{% url 'homepage:notice_update' notice.slug %}" class="btn btn-warning">Update</a>
+    <hr>
+    <a href="{% url 'homepage:notice_update' notice.slug %}" class="btn btn-warning ">Update</a>
 </div>
 {% endblock %}

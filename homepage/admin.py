@@ -44,6 +44,8 @@ class NoticeAdmin(admin.ModelAdmin):
 class GovernanceBodyAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("name",)}
 
+    list_display = ("name", "designation")
+
 
 @admin.register(Contact)
 class ContactAdmin(admin.ModelAdmin):

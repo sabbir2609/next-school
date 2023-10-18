@@ -36,7 +36,7 @@ class Notice(models.Model):
     description = models.TextField()
     attachment = models.FileField(
         upload_to="notices/",
-        validators=[FileExtensionValidator(allowed_extensions=["pdf", "docx"])],
+        validators=[FileExtensionValidator(allowed_extensions=["pdf", "docx", "doc"])],
         blank=True,
         null=True,
         help_text="Upload Your Notice PDF or Docs",
@@ -58,11 +58,19 @@ class Notice(models.Model):
 
 class GovernanceBody(models.Model):
     name = models.CharField(max_length=200)
+    designation = models.CharField(max_length=200, default="Member")
     slug = models.SlugField()
-    description = models.TextField()
-    speech_text = models.TextField()
-    speech_file = models.FileField(upload_to="governance_bodies/")
     image = models.ImageField(upload_to="governance_bodies/")
+    description = models.TextField(null=True, blank=True)
+
+    speech_text = models.TextField(null=True, blank=True)
+    speech_file = models.FileField(
+        upload_to="governance_bodies/",
+        validators=[FileExtensionValidator(allowed_extensions=["pdf", "docx", "doc"])],
+        blank=True,
+        null=True,
+        help_text="Upload Speech PDF or Docs",
+    )
 
     def __str__(self):
         return self.name
