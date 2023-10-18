@@ -1,9 +1,13 @@
 from django.contrib import admin
 from django.db import models
+
+from homepage.forms import ContactForm
 from .models import (
+    EmailAddress,
     Notice,
     GovernanceBody,
     Contact,
+    PhoneNumber,
     UsefulLink,
     ImageGallery,
     Stat,
@@ -47,14 +51,28 @@ class GovernanceBodyAdmin(admin.ModelAdmin):
     list_display = ("name", "designation")
 
 
+class PhoneNumberInline(admin.TabularInline):
+    model = PhoneNumber
+    extra = 1
+
+
+class EmailAddressInline(admin.TabularInline):
+    model = EmailAddress
+    extra = 1
+
+
 @admin.register(Contact)
 class ContactAdmin(admin.ModelAdmin):
-    pass
+    form = ContactForm
+    inlines = [PhoneNumberInline, EmailAddressInline]
 
 
 @admin.register(UsefulLink)
 class UsefulLinkAdmin(admin.ModelAdmin):
-    prepopulated_fields = {"slug": ("title",)}
+    list_display = (
+        "site",
+        "url",
+    )
 
 
 @admin.register(ImageGallery)

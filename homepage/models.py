@@ -80,25 +80,39 @@ class GovernanceBody(models.Model):
 
 
 class Contact(models.Model):
-    email = models.EmailField()
-    phone = models.CharField(max_length=20)
     address = models.TextField()
+    map = models.TextField(
+        help_text="Copy and Paste the `src` value of google map's iframe tag"
+    )
 
     def __str__(self):
-        return f"Contact: {self.email}"
+        return self.address
 
-    class Meta:
-        verbose_name_plural = "Contacts"
+
+class PhoneNumber(models.Model):
+    contact = models.ForeignKey(Contact, on_delete=models.CASCADE)
+    name = models.CharField(max_length=200, blank=True, null=True)
+    number = models.CharField(max_length=20)
+
+    def __str__(self):
+        return self.number
+
+
+class EmailAddress(models.Model):
+    contact = models.ForeignKey(Contact, on_delete=models.CASCADE)
+    name = models.CharField(max_length=200, blank=True, null=True)
+    email = models.EmailField()
+
+    def __str__(self):
+        return self.email
 
 
 class UsefulLink(models.Model):
-    title = models.CharField(max_length=200)
-    slug = models.SlugField()
+    site = models.CharField(max_length=200)
     url = models.URLField()
-    description = models.TextField()
 
     def __str__(self):
-        return f"Useful Link: {self.title}"
+        return f"Useful Link: {self.site}"
 
     class Meta:
         verbose_name_plural = "Useful Links"

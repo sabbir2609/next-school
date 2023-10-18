@@ -1,0 +1,80 @@
+<div class="container-fluid bg-white border border-1 mb-2 bg-primary-subtle shadow-sm rounded ">
+
+  <div class="row g-2">
+
+    <!-- col-1  -->
+    <div class="col-lg-6">
+
+      <!-- col-1 header  -->
+      <div class="d-flex h4 p-2 fw-semibold justify-content-center ">
+        Map
+      </div>
+
+      <!-- col-1 content (map) -->
+      <div class="container-fluid responsive-map">
+        {% for contact in contacts %}
+
+        <iframe src="{{ contact.map }}" width="600" height="450" style="border: 0" allowfullscreen="" loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade" class="pb-1"></iframe>
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- col-2  -->
+    <div class="col-lg-4 col-md-6">
+
+      <div class="d-flex h4 p-2 fw-semibold justify-content-center">
+        Contact
+      </div>
+
+      <div class="d-grid gap-2 fw-semibold">
+        <div class="container">
+          {% for contact in contacts %}
+          <div class="d-block p-2">
+            <i class="fas fa-map-marker-alt"></i> Location: {{contact.address}}
+          </div>
+
+
+          {% for phone in contact.phonenumber_set.all %}
+          <div class="d-block p-2">
+            <i class="fas fa-phone"></i> {{phone.name}} : {{phone.number}}
+          </div>
+          {% endfor %}
+
+
+          {% for email in contact.emailaddress_set.all %}
+          <div class="d-block p-2">
+            <i class="fas fa-envelope"></i> {{email.name}} : {{email.email}}
+          </div>
+          {% endfor %}
+
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+
+    <!-- col-3  -->
+    <div class="col-lg-2 col-md-6">
+
+      <!-- col-3 header  -->
+      <div class="d-flex h4 p-2 fw-semibold justify-content-center">
+        Useful Links
+      </div>
+
+      <!-- col-3 content (Useful Links) -->
+      <div class="container">
+        <div class="d-grid gap-2 fw-semibold">
+          {% for link in useful_links %}
+          <div class="d-block">
+            <i class="fa-solid fa-link text-primary"></i> <a href="{{ link.url }}" target="_blank">
+              {{ link.site }}
+            </a>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
