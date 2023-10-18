@@ -1,7 +1,8 @@
 from django.db import models
-from django.urls import reverse, reverse_lazy
 from django.utils.text import slugify
 from django.core.validators import FileExtensionValidator
+from ckeditor_uploader.fields import RichTextUploadingField
+
 
 from taggit.managers import TaggableManager
 
@@ -33,7 +34,7 @@ class Notice(models.Model):
     title = models.CharField(max_length=200)
     slug = models.SlugField(blank=True, null=True)
     date = models.DateField()
-    description = models.TextField()
+    description = RichTextUploadingField()
     attachment = models.FileField(
         upload_to="notices/",
         validators=[FileExtensionValidator(allowed_extensions=["pdf", "docx", "doc"])],
@@ -54,6 +55,7 @@ class Notice(models.Model):
 
     class Meta:
         verbose_name_plural = "Notices"
+        ordering = ["-date"]
 
 
 class GovernanceBody(models.Model):
@@ -82,7 +84,7 @@ class GovernanceBody(models.Model):
 class Contact(models.Model):
     address = models.TextField()
     map = models.TextField(
-        help_text="Copy and Paste the `src` value of google map's iframe tag"
+        help_text="<b style='color: red'> Copy and Paste google map's <em> iframe </em> tag here </b>"
     )
 
     def __str__(self):

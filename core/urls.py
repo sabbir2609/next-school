@@ -10,6 +10,13 @@ urlpatterns = [
     path("tinymce/", include("tinymce.urls")),
 ]
 
+urlpatterns.extend(
+    [
+        path("ckeditor/", include("ckeditor_uploader.urls")),
+    ]
+)
+
+
 # Admin Site Config
 admin.site.site_header = "PB School Management System"
 admin.site.site_title = "School Management System"

@@ -14,8 +14,8 @@
       <div class="container-fluid responsive-map">
         {% for contact in contacts %}
 
-        <iframe src="{{ contact.map }}" width="600" height="450" style="border: 0" allowfullscreen="" loading="lazy"
-          referrerpolicy="no-referrer-when-downgrade" class="pb-1"></iframe>
+        {{ contact.map | safe }}
+
         {% endfor %}
       </div>
     </div>

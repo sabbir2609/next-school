@@ -1,5 +1,6 @@
 from django.contrib import admin
 from django.db import models
+from ckeditor.widgets import CKEditorWidget
 
 from homepage.forms import ContactForm
 from .models import (
@@ -17,7 +18,6 @@ from .models import (
     DropdownNavigation,
     DropdownNavigationItem,
 )
-from tinymce.widgets import TinyMCE
 
 
 class DropdownNavigationItemInline(admin.TabularInline):
@@ -37,7 +37,7 @@ class DropdownNavigationAdmin(admin.ModelAdmin):
 @admin.register(Notice)
 class NoticeAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("title",)}
-    formfield_overrides = {models.TextField: {"widget": TinyMCE()}}
+    formfield_overrides = {models.TextField: {"widget": CKEditorWidget}}
 
     list_display = ("title", "date")
 
@@ -65,6 +65,13 @@ class EmailAddressInline(admin.TabularInline):
 class ContactAdmin(admin.ModelAdmin):
     form = ContactForm
     inlines = [PhoneNumberInline, EmailAddressInline]
+
+    def has_add_permission(self, request):
+        num_objects = self.model.objects.count()
+        if num_objects >= 1:
+            return False
+        else:
+            return True
 
 
 @admin.register(UsefulLink)

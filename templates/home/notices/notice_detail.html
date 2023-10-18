@@ -10,7 +10,7 @@
         Date : {{ notice.date }}
     </div>
     <div class="p-2 border rounded ">
-        {{ notice.description }}
+        {{ notice.description | safe }}
     </div>
     <hr>
     <div class="bg-danger-subtle rounded p-3">
