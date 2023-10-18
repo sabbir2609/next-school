@@ -26,10 +26,15 @@
                             class="link-success link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">
                             {{ notice.title }}
                             <!-- TODO: compare important tag to show it -->
-                            {% if 'important' == notice.tags %}
+                            {% if notice.tags %}
+                            {% for tag in notice.tags.all %}
+                            {% if 'important' == tag %}
                             <span class="badge text-bg-warning">Important</span>
                             {% endif %}
+                            {% endfor %}
+                            {% endif %}
                             <i class="fa-solid fa-arrow-up-right-from-square px-2"></i>
+
                         </a>
                     </td>
 

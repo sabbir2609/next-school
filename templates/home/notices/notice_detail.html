@@ -22,7 +22,7 @@
         {% endif %}
     </div>
     <hr>
-    {%if notice.tags %}
+    {% if notice.tags %}
     <div class="row mb-2 ">
         <div class="col">
             Tags:
@@ -32,7 +32,7 @@
             {% endfor %}
         </div>
     </div>
-    {%endif%}
+    {% endif %}
     <a href="{% url 'homepage:notice_update' notice.slug %}" class="btn btn-warning ">Update</a>
 </div>
 {% endblock %}

@@ -58,8 +58,7 @@ class NoticeListView(ListView):
         filter_value = self.request.GET.get("filter")
         if filter_value:
             return Notice.objects.filter(tags__name__in=[filter_value])
-        else:
-            return Notice.objects.all()
+        return Notice.objects.all()
 
     def get_context_data(self, **kwargs):
         context = super(NoticeListView, self).get_context_data(**kwargs)
