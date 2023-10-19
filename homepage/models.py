@@ -2,8 +2,6 @@ from django.db import models
 from django.utils.text import slugify
 from django.core.validators import FileExtensionValidator
 from ckeditor_uploader.fields import RichTextUploadingField
-
-
 from taggit.managers import TaggableManager
 
 

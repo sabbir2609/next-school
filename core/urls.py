@@ -7,6 +7,7 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include("school.urls", "school"), name="school"),
     path("", include("homepage.urls", "homepage"), name="homepage"),
+    path("", include("user.urls", "user"), name="user"),
 ]
 
 urlpatterns.extend(
