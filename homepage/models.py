@@ -112,20 +112,20 @@ class UsefulLink(models.Model):
     url = models.URLField()
 
     def __str__(self):
-        return f"Useful Link: {self.site}"
+        return self.site
 
     class Meta:
         verbose_name_plural = "Useful Links"
 
 
 class ImageGallery(models.Model):
+    image = models.ImageField(upload_to="image_gallery/")
     title = models.CharField(max_length=200)
     slug = models.SlugField()
-    images = models.ImageField(upload_to="image_gallery/")
     description = models.TextField()
 
     def __str__(self):
-        return f"Image Gallery: {self.title}"
+        return self.title
 
     class Meta:
         verbose_name_plural = "Image Gallery"
@@ -134,10 +134,10 @@ class ImageGallery(models.Model):
 class Stat(models.Model):
     title = models.CharField(max_length=200)
     count = models.IntegerField()
-    description = models.TextField()
+    icon = models.CharField(max_length=200, blank=True, null=True, help_text="<em> Add font-awesome icon tag </em>")
 
     def __str__(self):
-        return f"Stat: {self.title}"
+        return self.title
 
     class Meta:
         verbose_name_plural = "Stats"
@@ -176,7 +176,7 @@ class BrightStudent(models.Model):
     image = models.ImageField(upload_to="bright_students/")
 
     def __str__(self):
-        return f"Bright Student: {self.name}"
+        return self.name
 
     class Meta:
         verbose_name_plural = "Bright Students"

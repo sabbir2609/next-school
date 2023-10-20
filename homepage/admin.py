@@ -89,7 +89,17 @@ class ImageGalleryAdmin(admin.ModelAdmin):
 
 @admin.register(Stat)
 class StatAdmin(admin.ModelAdmin):
-    pass
+    list_display = (
+        "title",
+        "count",
+    )
+
+    def has_add_permission(self, request):
+        num_objects = self.model.objects.count()
+        if num_objects >= 4:
+            return False
+        else:
+            return True
 
 
 @admin.register(WhatsHappening)

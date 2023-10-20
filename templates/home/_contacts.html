@@ -1,4 +1,4 @@
-<div class="container-fluid bg-white border border-1 mb-2 bg-primary-subtle shadow-sm rounded ">
+<div class="container-fluid mb-2 bg-primary-subtle shadow-sm rounded">
 
   <div class="row g-2">
 
@@ -6,12 +6,12 @@
     <div class="col-lg-6">
 
       <!-- col-1 header  -->
-      <div class="d-flex h4 p-2 fw-semibold justify-content-center ">
+      <div class="d-flex h4 fw-semibold justify-content-center ">
         Map
       </div>
 
       <!-- col-1 content (map) -->
-      <div class="container-fluid responsive-map">
+      <div class="container-fluid responsive-map mb-2 rounded">
         {% for contact in contacts %}
 
         {{ contact.map | safe }}
@@ -23,7 +23,7 @@
     <!-- col-2  -->
     <div class="col-lg-4 col-md-6">
 
-      <div class="d-flex h4 p-2 fw-semibold justify-content-center">
+      <div class="d-flex h4 fw-semibold justify-content-center">
         Contact
       </div>
 

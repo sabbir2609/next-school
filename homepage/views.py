@@ -36,7 +36,7 @@ class HomePageView(TemplateView):
         context["governance_bodies"] = GovernanceBody.objects.all()
         context["contacts"] = Contact.objects.all()
         context["useful_links"] = UsefulLink.objects.all()
-        context["image_galleries"] = ImageGallery.objects.all()
+        context["gallery_images"] = ImageGallery.objects.all()
         context["stats"] = Stat.objects.all()
         context["whats_happening"] = WhatsHappening.objects.all()
         context["co_curricular"] = CoCurricular.objects.all()

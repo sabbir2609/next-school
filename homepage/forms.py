@@ -3,6 +3,7 @@ from .models import Contact
 from django.forms import inlineformset_factory
 from .models import Contact, PhoneNumber, EmailAddress, Notice
 from taggit.forms import TagWidget
+from ckeditor.widgets import CKEditorWidget
 
 
 class ContactForm(forms.ModelForm):
@@ -28,16 +29,18 @@ class NoticeForm(forms.ModelForm):
         fields = "__all__"
 
         widgets = {
-            "title": forms.TextInput(attrs={"class": "form-control w-75"}),
+            "title": forms.TextInput(attrs={"class": "form-control "}),
             "slug": forms.TextInput(
-                attrs={"class": "form-control w-75", "id": "disabled"}
+                attrs={"class": "form-control ", "id": "disabled"}
             ),
             "date": forms.DateInput(
-                attrs={"class": "form-control w-75", "type": "date"}
+                attrs={"class": "form-control ", "type": "date"}
             ),
-            "description": forms.Textarea(attrs={"class": "form-control w-full"}),
+            "description": forms.Textarea(
+                attrs={"class": "form-control "}
+            ),
             "attachment": forms.FileInput(
-                attrs={"class": "form-control w-75", "type": "file"}
+                attrs={"class": "form-control ", "type": "file"}
             ),
-            "tags": TagWidget(attrs={"class": "w-75", "data-role": "tagsinput"}),
+            "tags": TagWidget(attrs={"class": "", "data-role": "tagsinput"}), # TODO: make it nice
         }

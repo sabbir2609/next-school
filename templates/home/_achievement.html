@@ -67,19 +67,57 @@
 
                                 <div class="carousel-inner star-carousel-inner">
 
-                                    {% for item in star_student %}
-                                    <div class="carousel-item star-carousel-item {{ item.status }}">
+                                    {% for item in bright_students %}
+                                    <div
+                                        class="carousel-item star-carousel-item {% if item.id == 1 %}active{% endif %} ">
 
-                                        <div class="card star-card mb-2 ">
-                                            <img src="{{ item.img}}" class="d-block w-100 mx-auto rounded"
-                                                alt="{{ item.title }} image">
+                                        <div class="card star-card mb-2" style="height: 360px;">
+                                            <img src="{{ item.image.url }}" class="d-block w-100 mx-auto rounded"
+                                                alt="{{ item.title }}" style="height: 200px; object-fit: cover;">
                                             <div class="card-body">
-                                                <h5 class="card-title">{{ item.title }}</h5>
-                                                <p class="card-text overflow-hidden">{{ item.text }}</p>
+                                                <h5 class="card-title">{{ item.name }}</h5>
+                                                <p class="card-text">
+                                                    {{ item.description | truncatewords:12 }}
+                                                    <a href="#" data-bs-toggle="modal"
+                                                        data-bs-target="#brightModal{{item.id}}">More...</a>
+                                                </p>
                                             </div>
                                         </div>
 
                                     </div>
+
+                                    <!-- start modal  -->
+
+                                    <div class="modal fade" id="brightModal{{item.id}}" tabindex="-1"
+                                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable ">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h1 class="modal-title fs-5" id="exampleModalLabel"> Star Student
+                                                    </h1>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <h4>{{ item.name }}</h4>
+                                                    <img src="{{ item.image.url }}"
+                                                        class="d-block w-100 mx-auto rounded" alt="{{ item.title }}"
+                                                        style=" height: 350px; object-fit: contain;">
+                                                    <p>
+                                                        {{ item.description }}
+                                                    </p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                        data-bs-dismiss="modal">Close</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- end modal  -->
+
+
                                     {% endfor %}
 
                                 </div>
@@ -89,11 +127,6 @@
                     </div>
                 </div>
             </div>
-
-
-            <script type="module">
-
-            </script>
 
         </div>
 

@@ -13,27 +13,33 @@
   <meta property="og:title" content="Turbo School">
   <meta property="og:description" content="A brief description of Turbo School">
   <meta property="og:url" content="#">
-  <meta property="og:image"
-    content="https://lh3.googleusercontent.com/pw/ADCreHfpFEy3td8h5kV7HW_4w12x0lu3mEJFqq-1E0ACYm6aOjsYBwhPZs4Xs75XNR_Ne3L5fiaBrUR-wxZ1ubUlYvZdbcTCdk_bqhtWmqubzoNkdIJzTZxD2xi96VvUUsjeqosdqEp2_zxd9RlyNfYwHBg3Ow=w500-h500-s-no?authuser=0">
+  <meta property="og:image" content="https://sorsauth.sirv.com/next-school/logo.png">
   <meta property="og:site_name" content="Turbo School">
   <meta property="og:locale" content="en_US">
 
   <link rel="icon" type="image/x-icon" href="{% static 'favicon.ico' %}">
 
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;500;700&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
     integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
+
+
   <link rel="stylesheet" href="{% static 'css/home-style.css' %}" />
 </head>
 
-<body>
+<body data-bs-theme="dark">
 
   <header>
     <!-- Top Bar -->
-    {% include "home/topbar.html" %}
+    {% include "home/_topbar.html" %}
 
     <!-- Banner -->
     <img src="{% static 'assets/banner-sm.png' %}" class="d-block d-sm-none img-fluid" alt="Small Screen Banner">
@@ -79,7 +85,7 @@
 
     <div class="container-fluid">
 
-      <div class="accordion mb-2" id="accordionExampleFour">
+      <div class="accordion mb-3" id="accordionExampleFour">
         <div class="accordion-item">
           <h2 class="accordion-header">
             <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour"
@@ -111,20 +117,21 @@
         </div>
       </div>
 
+
       <!-- contact and location info -->
       {% include "home/_contacts.html" %}
 
       <!-- gallery -->
-      {% include "home/gallery.html" %}
+      {% include "home/_gallery.html" %}
 
       <!-- statistics  -->
-      {% include "home/stat.html" %}
+      {% include "home/_stat.html" %}
 
       <!-- whats happening and login section  -->
-      {% include "home/whatsup.html" %}
+      {% include "home/_whatsup.html" %}
 
       <!-- org and achievements section  -->
-      {% include "home/achievement.html" %}
+      {% include "home/_achievement.html" %}
 
 
     </div>
@@ -132,7 +139,7 @@
   </main>
 
   <!-- footer  -->
-  {% include "home/footer.html" %}
+  {% include "home/_footer.html" %}
 
   <!-- Scroll-to-top button -->
   <button id="scrollToTopBtn" class="btn btn-primary" title="Go to top">

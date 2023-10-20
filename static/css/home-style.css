@@ -1,6 +1,7 @@
 body {
-  background-color: mintcream;
+  font-family: 'Roboto Slab', serif !important;
 }
+
 
 /* * {
   outline: 1px solid #f00 !important;
@@ -117,7 +118,6 @@ body {
   height: 100%;
   width: 100%;
   position: absolute;
-  border-radius: 20px;
 }
 
 /* Styling for the image gallery */
