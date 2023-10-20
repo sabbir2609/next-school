@@ -6,6 +6,7 @@ from homepage.forms import ContactForm
 from .models import (
     EmailAddress,
     Notice,
+    BannerImage,
     GovernanceBody,
     Contact,
     PhoneNumber,
@@ -32,6 +33,20 @@ class DropdownNavigationItemInline(admin.TabularInline):
 @admin.register(DropdownNavigation)
 class DropdownNavigationAdmin(admin.ModelAdmin):
     inlines = [DropdownNavigationItemInline]
+
+
+@admin.register(BannerImage)
+class BannerImageAdmin(admin.ModelAdmin):
+    list_display = ("caption", "image")
+    ordering = ("-id",)
+    prepopulated_fields = {"alt_text": ("caption",)}
+
+    def has_add_permission(self, request):
+        num_objects = self.model.objects.count()
+        if num_objects >= 5:
+            return False
+        else:
+            return True
 
 
 @admin.register(Notice)

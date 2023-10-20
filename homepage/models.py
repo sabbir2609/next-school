@@ -17,7 +17,7 @@ class DropdownNavigationItem(models.Model):
         DropdownNavigation, on_delete=models.CASCADE, related_name="items"
     )
     name = models.CharField(max_length=200)
-    slug = models.SlugField()
+    slug = models.CharField(max_length=200, blank=True, null=True)
 
     def __str__(self):
         return self.name
@@ -26,6 +26,19 @@ class DropdownNavigationItem(models.Model):
         if not self.slug:
             self.slug = slugify(self.name)
         super(DropdownNavigationItem, self).save(*args, **kwargs)
+
+
+class BannerImage(models.Model):
+    image = models.ImageField(upload_to="banners/")
+
+    caption = models.CharField(max_length=200)
+    alt_text = models.CharField(max_length=200)
+
+    created_at = models.DateField(auto_now_add=True)
+    updated_at = models.DateField(auto_now=True)
+
+    def __str__(self):
+        return self.caption
 
 
 class Notice(models.Model):
