@@ -19,11 +19,15 @@ class Subject(models.Model):
         verbose_name_plural = "Subjects"
 
 
+from django.core.exceptions import ValidationError
+from django.db import models
+
+
 class Class(models.Model):
     CLASS_CHOICES = (
         ("Six", "Six"),
         ("Seven", "Seven"),
-        ("Eignt", "Eight"),
+        ("Eight", "Eight"),
         ("Nine", "Nine"),
         ("Ten", "Ten"),
     )
@@ -47,17 +51,27 @@ class Class(models.Model):
         ordering = ("slug",)
 
 
+# TODO: IMPORTANAT Work on this section
+# FIX:  after assigning class 9,10 to section arts , commerce or science section then the class nine section science needs to be assigned to section a,b or c . how can I gain that functionality
+
+
 class Section(models.Model):
-    SECTION_CHOICES = (
+    SECTION_CHOICES_CLASS_6_7_8 = [
         ("A", "Section A"),
         ("B", "Section B"),
         ("C", "Section C"),
+    ]
+
+    SECTION_CHOICES_CLASS_9_10 = [
         ("Sc", "Science"),
         ("Co", "Commerce"),
         ("Ar", "Arts"),
-    )
+    ]
+
     name = models.CharField(
-        max_length=2, choices=SECTION_CHOICES, verbose_name="Section"
+        max_length=2,
+        verbose_name="Section",
+        choices=SECTION_CHOICES_CLASS_6_7_8 + SECTION_CHOICES_CLASS_9_10,
     )
     description = models.TextField(
         null=True,
@@ -65,7 +79,10 @@ class Section(models.Model):
         help_text="Section Description, e.g. 'Section A of Class 6, total 30 students'",
     )
     class_name = models.ForeignKey(
-        Class, on_delete=models.CASCADE, help_text="Class", verbose_name="Class"
+        Class,
+        on_delete=models.CASCADE,
+        help_text="Class",
+        verbose_name="Class",
     )
 
     section_teacher = models.OneToOneField(
@@ -77,6 +94,20 @@ class Section(models.Model):
     )
     seat = models.PositiveIntegerField(default=0)
     subjects = models.ManyToManyField(Subject, through="SectionSubject")
+
+    def save(self, *args, **kwargs):
+        if self.name in ["Ar", "Co", "Sc"] and self.class_name.title not in [
+            "Nine",
+            "Ten",
+        ]:
+            raise ValidationError(
+                f"'{self.name}' can only be applied to classes 'Nine' and 'Ten'"
+            )
+        if self.name in ["A", "B", "C"] and self.class_name.title in ["Nine", "Ten"]:
+            raise ValidationError(
+                f"'{self.name}' can only be applied to classes 'Six', 'Seven', and 'Eight'"
+            )
+        super(Section, self).save(*args, **kwargs)
 
     def __str__(self):
         return f"{self.class_name} - Section {self.name}"
