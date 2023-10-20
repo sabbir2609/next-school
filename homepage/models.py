@@ -134,7 +134,12 @@ class ImageGallery(models.Model):
 class Stat(models.Model):
     title = models.CharField(max_length=200)
     count = models.IntegerField()
-    icon = models.CharField(max_length=200, blank=True, null=True, help_text="<em> Add font-awesome icon tag </em>")
+    icon = models.CharField(
+        max_length=200,
+        blank=True,
+        null=True,
+        help_text="<em> Add font-awesome icon tag </em>",
+    )
 
     def __str__(self):
         return self.title
@@ -148,10 +153,10 @@ class WhatsHappening(models.Model):
     slug = models.SlugField()
     description = models.TextField()
     image = models.ImageField(upload_to="whats_happening/")
-    url = models.URLField()
+    date = models.DateField(null=True, blank=True)
 
     def __str__(self):
-        return f"What's Happening: {self.title}"
+        return self.title
 
     class Meta:
         verbose_name_plural = "What's Happening"

@@ -36,10 +36,15 @@ class HomePageView(TemplateView):
         context["governance_bodies"] = GovernanceBody.objects.all()
         context["contacts"] = Contact.objects.all()
         context["useful_links"] = UsefulLink.objects.all()
-        context["gallery_images"] = ImageGallery.objects.all()
+        context["gallery_images"] = ImageGallery.objects.order_by("id")[
+            :10
+        ]  # will show recent 10 items
         context["stats"] = Stat.objects.all()
-        context["whats_happening"] = WhatsHappening.objects.all()
+        context["whats_happening"] = WhatsHappening.objects.order_by("-date")[
+            :4
+        ]  # will show recent 4 items
         context["co_curricular"] = CoCurricular.objects.all()
+
         context["bright_students"] = BrightStudent.objects.all()
 
         return context
