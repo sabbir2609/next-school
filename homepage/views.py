@@ -35,7 +35,7 @@ class HomePageView(TemplateView):
         context["dropdowns"] = DropdownNavigation.objects.all()
         context["banner_images"] = BannerImage.objects.all()
         context["history_and_mission"] = HistoryAndMission.objects.all()
-        context["notices"] = Notice.objects.all()
+        context["notices"] = Notice.objects.all()[:20]
         context["important"] = Notice.objects.filter(tags__name__in=["important"])
         context["governance_bodies"] = GovernanceBody.objects.all()
         context["contacts"] = Contact.objects.all()

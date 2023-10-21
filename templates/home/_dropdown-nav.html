@@ -1,4 +1,4 @@
-<nav class="navbar navbar-dark navbar-expand-lg" style="background-color:#1d2951;">
+<nav class="navbar navbar-expand-lg">
     <form class="d-flex px-2" role="search">
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
         <button class="btn btn-primary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
@@ -12,7 +12,7 @@
             <ul class="navbar-nav mx-auto">
                 {% for dropdown in dropdowns %}
                 <li class="nav-item dropdown dropdown-hov">
-                    <a class="nav-link dropdown-toggle text-white fw-bold" href="#" id="navbarDropdown1" role="button"
+                    <a class="nav-link dropdown-toggle fw-bold" href="#" id="navbarDropdown1" role="button"
                         data-bs-toggle="dropdown" aria-expanded="false">
                         {{ dropdown.name }}
                     </a>

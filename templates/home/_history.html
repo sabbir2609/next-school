@@ -12,14 +12,14 @@
             <div class="accordion-body">
                 {{ item.description | safe | truncatewords:40 }}
                 <button class="btn btn-link" data-bs-toggle="modal"
-                    data-bs-target="#brightModal{{item.id}}">More...</button>
+                    data-bs-target="#historyModal{{item.id}}">More...</button>
             </div>
         </div>
     </div>
 
     <!-- History and Mission modal start -->
 
-    <div class="modal fade" id="brightModal{{item.id}}" tabindex="-1" aria-labelledby="exampleModalLabel"
+    <div class="modal fade" id="historyModal{{item.id}}" tabindex="-1" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable ">
             <div class="modal-content">

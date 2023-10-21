@@ -1,0 +1,151 @@
+<!-- Floating Language Button -->
+
+
+<!-- <div class="floating-language-button">
+    <button class="btn btn-warning" data-bs-toggle="dropdown" aria-expanded="false">
+        <i class="fa-solid fa-globe"></i>
+    </button>
+    <ul class="dropdown-menu" aria-labelledby="languageDropdown">
+        <li>
+            <a class="dropdown-item" href="#" onclick="changeLanguage('Bangla')">
+                Bangla
+            </a>
+        </li>
+        <li>
+            <a class="dropdown-item" href="#" onclick="changeLanguage('English')">
+                English
+            </a>
+        </li>
+    </ul>
+</div> -->
+
+<!-- Scroll-to-top button -->
+<!-- <button id="scrollToTopBtn" class="btn btn-primary" title="Go to top">
+    <i class="fas fa-arrow-up"></i>
+</button> -->
+
+<style>
+    .fab-container {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+    }
+
+    .fab {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .fab-toggle {
+        cursor: pointer;
+        background: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 50%;
+        width: 45px;
+        height: 45px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .fab-options {
+        display: none;
+        flex-direction: column;
+        margin-top: 10px;
+    }
+
+    .fab-options.active {
+        display: flex;
+        z-index: 99;
+    }
+
+    .fab-button {
+        cursor: pointer;
+        background: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 50%;
+        width: 45px;
+        height: 45px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+</style>
+
+
+
+
+<div class="fab-container">
+    <div class="fab">
+
+        <div class="fab-toggle" onclick="toggleFabOptions()">
+            <i class="fas fa-plus"></i>
+        </div>
+
+        <div class="fab-options">
+            <button class="fab-button" onclick="changeLanguage()">
+                <i class="fas fa-globe"></i>
+            </button>
+
+            <button class="fab-button" onclick="toggleDarkMode()">
+                <i id="dark-mode-icon" class="fas fa-moon"></i>
+            </button>
+
+            <button class="fab-button" onclick="scrollToTop()">
+                <i class="fas fa-arrow-up"></i>
+            </button>
+
+        </div>
+    </div>
+</div>
+
+
+<script>
+
+    function toggleFabOptions() {
+        var fabOptions = document.querySelector(".fab-options");
+        fabOptions.classList.toggle("active");
+    }
+
+    function changeLanguage() {
+        // Add your code to change the language here
+    }
+
+    function scrollToTop() {
+        window.scrollTo(0, 0);
+    }
+
+    function toggleDarkMode() {
+        const body = document.querySelector("body");
+        const currentTheme = body.getAttribute("data-bs-theme");
+        const icon = document.getElementById("dark-mode-icon");
+
+        if (currentTheme === "light") {
+            // Switch to dark mode
+            body.setAttribute("data-bs-theme", "dark");
+            icon.classList.remove("fa-moon");
+            icon.classList.add("fa-sun");
+        } else {
+            // Switch to light mode
+            body.setAttribute("data-bs-theme", "light");
+            icon.classList.remove("fa-sun");
+            icon.classList.add("fa-moon");
+        }
+    }
+
+
+    // Add an event listener to close FAB options when clicking outside
+    document.body.addEventListener("click", function (event) {
+        var fabOptions = document.querySelector(".fab-options");
+        if (fabOptions.classList.contains("active") && !event.target.closest(".fab-container")) {
+            fabOptions.classList.remove("active");
+        }
+    });
+
+
+
+</script>
