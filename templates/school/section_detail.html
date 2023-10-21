@@ -6,7 +6,7 @@
 <div class="container">
     <h1>Section Details</h1>
     <hr>
-    <div class="card bg-info bg-gradient">
+    <div class="card">
         <div class="card-header">
             <h4>Section Information</h4>
         </div>
@@ -19,7 +19,7 @@
         </div>
     </div>
     <hr>
-    <div class="card mt-3 bg-warning bg-gradient">
+    <div class="card mt-3">
         <div class="card-header">
             <h4>Periods</h4>
         </div>
@@ -51,7 +51,7 @@
         </div>
     </div>
 
-    <div class="card mt-3 bg-danger bg-gradient">
+    <div class="card mt-3">
         <div class="card-header">
             <h4>Students</h4>
         </div>
@@ -72,7 +72,7 @@
                         <td>{{ student.student }}</td>
                         <td>{{ student.class_roll }}</td>
                         <td>
-                            <button type="button" class="btn bg-info bg-gradient"
+                            <button type="button" class="btn "
                                 onclick="window.location.href='{% url 'school:student_detail' student.student_id %}'">Detail</button>
                         </td>
                     </tr>

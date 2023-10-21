@@ -13,7 +13,7 @@
         {{ notice.description | safe }}
     </div>
     <hr>
-    <div class="bg-danger-subtle rounded p-3">
+    <div class="rounded p-3">
         {% if notice.attachment.name %}
         Attachments: {{ notice.attachment }}
         <a class="btn btn-link " href="{{ notice.attachment.url }}"> Download </a>
