@@ -1,24 +1,24 @@
 <div class="h4 fw-semibold d-flex justify-content-center">
-    Latest Notice
+    Notice
 </div>
 
 <div class="table-container position-relative mb-2 rounded">
     <table class="table">
         <thead>
             <tr>
-                <th scope="col">Date</th>
-                <th scope="col">Notice</th>
+                <th scope="col" class="bg-info-subtle">Date</th>
+                <th scope="col" class="bg-info-subtle">Notice</th>
             </tr>
         </thead>
         <tbody>
             {% for notice in notices %}
             <tr>
-                <th scope="row">
+                <th scope="row" class="bg-info-subtle">
                     <div class="text-nowrap">
                         {{ notice.date }}
                     </div>
                 </th>
-                <td>
+                <td class="bg-info-subtle">
                     <a href="{% url 'homepage:notice_detail' notice.slug %}"
                         class="link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">
                         {{ notice.title }}

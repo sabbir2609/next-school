@@ -1,6 +1,6 @@
-<div class="container-fluid mb-2 shadow-sm rounded">
+<div class="container-fluid mb-2 pt-2 border  shadow-sm rounded bg-success-subtle ">
 
-  <div class="row g-2">
+  <div class="row g-lg-2">
 
     <!-- col-1  -->
     <div class="col-lg-6">
@@ -11,7 +11,7 @@
       </div>
 
       <!-- col-1 content (map) -->
-      <div class="container-fluid responsive-map mb-2 rounded">
+      <div class="container-fluid responsive-map mb-2 rounded border border-1 border-opacity-50 border-primary ">
         {% for contact in contacts %}
 
         {{ contact.map | safe }}
@@ -27,7 +27,8 @@
         Contact
       </div>
 
-      <div class="d-grid gap-2 fw-semibold">
+      <div
+        class="d-grid gap-2 fw-semibold bg-primary-subtle rounded mb-2 border border border-1 border-opacity-50 border-primary">
         <div class="container">
           {% for contact in contacts %}
           <div class="d-block p-2">
@@ -56,14 +57,13 @@
     <!-- col-3  -->
     <div class="col-lg-2 col-md-6">
 
-      <!-- col-3 header  -->
-      <div class="d-flex h4 p-2 fw-semibold justify-content-center">
+      <div class="d-flex h4 fw-semibold justify-content-center">
         Useful Links
       </div>
 
       <!-- col-3 content (Useful Links) -->
       <div class="container">
-        <div class="d-grid gap-2 fw-semibold">
+        <div class="d-grid fw-semibold mb-2">
           {% for link in useful_links %}
           <div class="d-block">
             <i class="fa-solid fa-link text-primary"></i> <a href="{{ link.url }}" target="_blank">

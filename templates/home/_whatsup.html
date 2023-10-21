@@ -4,23 +4,23 @@
 
 <!-- whatsup and login section -->
 
-<div class="container-fluid border border-1 rounded">
+<div class="container-fluid border border-1 rounded bg-primary-subtle pt-2">
 
     <div class="row mt-1">
         <!-- First Column (col-lg-9) -->
-        <div class="col-lg-9 border-end">
+        <div class="col-lg-9">
 
-            <div class="h4 pb-2 mb-2 fw-semibold border-bottom border-end border-1">
-                What's happening :
+            <div class="h4 mb-2 fw-semibold ">
+                What's happening
             </div>
 
-            <div class="row g-2">
+            <div class="row g-lg-2">
 
                 {% for item in whats_happening %}
                 <div class="col-lg-3 col-md-6 col-sm-6">
 
                     <div class="card mb-2" style="height: 350px;">
-                        <img src="{{ item.image.url }}" class="d-block w-100 mx-auto rounded" alt="{{ item.title }}"
+                        <img src="{{ item.image.url }}" class="d-block w-100 mx-auto rounded-top" alt="{{ item.title }}"
                             style="height: 200px; object-fit: cover;">
                         <div class="card-body">
                             <div class="card-title fw-bold">{{ item.title }}</div>
@@ -45,7 +45,7 @@
 
         <div class="col-lg-3">
 
-            <div class="h4 pb-2 mb-2 fw-semibold border-bottom border-1 ">
+            <div class="h4 mb-2 fw-semibold">
                 Login
             </div>
 
@@ -53,11 +53,11 @@
 
                 <div class="col-lg-12 col-md-4">
 
-                    <div class="card login-card">
+                    <div class="card login-card bg-success-subtle border-dark border-1  ">
                         <img src="{% static 'images/login/admin.png' %}" class="card-img-top mx-2" alt="student login">
                         <div class="card-body">
-                            <h6 class="card-title">Admin Login</h6>
-                            <button type="button" class="btn btn-sm btn-outline-info" data-bs-toggle="modal"
+                            <h6 class="card-title fw-semibold ">Admin Login</h6>
+                            <button type="button" class="btn btn-sm fw-semibold" data-bs-toggle="modal"
                                 data-bs-target="#adminLoginModal">
                                 Login
                                 <i class="fa-solid fa-right-to-bracket"></i>
@@ -69,12 +69,12 @@
 
                 <div class="col-lg-12 col-md-4">
 
-                    <div class="card login-card">
+                    <div class="card login-card bg-info-subtle border-dark border-1 ">
                         <img src="{% static 'images/login/teacher.png' %}" class="card-img-top mx-2 "
                             alt="student login">
                         <div class="card-body">
-                            <h6 class="card-title">Teacher Login</h6>
-                            <button type="button" class="btn btn-sm btn-outline-info" data-bs-toggle="modal"
+                            <h6 class="card-title fw-semibold ">Teacher Login</h6>
+                            <button type="button" class="btn btn-sm fw-semibold" data-bs-toggle="modal"
                                 data-bs-target="#teacherLoginModal">
                                 Login
                                 <i class="fa-solid fa-right-to-bracket"></i>
@@ -86,12 +86,12 @@
 
                 <div class="col-lg-12 col-md-4">
 
-                    <div class="card login-card">
+                    <div class="card login-card bg-danger-subtle border-dark border-1 ">
                         <img src="{% static 'images/login/student.png' %}" class="card-img-top mx-2 "
                             alt="student login">
                         <div class="card-body">
-                            <h6 class="card-title">Student Login</h6>
-                            <button type="button" class="btn btn-sm btn-outline-info" data-bs-toggle="modal"
+                            <h6 class="card-title fw-semibold ">Student Login</h6>
+                            <button type="button" class="btn btn-sm fw-semibold" data-bs-toggle="modal"
                                 data-bs-target="#studentLoginModal">
                                 Login
                                 <i class="fa-solid fa-right-to-bracket"></i>

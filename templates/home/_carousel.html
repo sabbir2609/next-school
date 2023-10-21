@@ -3,8 +3,8 @@
         {% for item in banner_images %}
         <div class="carousel-item {% if forloop.first %} active {% endif %}">
 
-            <img src="{{ item.image.url }}" class="d-block w-100" alt="{{ item.alt_text }}"
-                style="height: 370px; object-fit: cover;">
+            <img src="{{ item.image.url }}" class="d-block w-100 rounded-1 border border-opacity-50 border-primary"
+                alt="{{ item.alt_text }}" style="height: 370px; object-fit: cover;">
 
         </div>
         {% endfor %}
