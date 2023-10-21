@@ -14,7 +14,7 @@
             <h4 class="fw-semibold">Designation: {{ governance_body.designation }}</h4>
             <p class="h6"> <em class="fw-bold ">Description:</em> {{ governance_body.description }}</p>
             <div class="h5 fw-bold  ">Speech:</div>
-            <p class="fw-light">{{ governance_body.speech_text }}</p>
+            <p class="fw-light">{{ governance_body.speech_text | safe }}</p>
         </div>
     </div>
 

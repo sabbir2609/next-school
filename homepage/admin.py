@@ -18,6 +18,7 @@ from .models import (
     BrightStudent,
     DropdownNavigation,
     DropdownNavigationItem,
+    HistoryAndMission,
 )
 
 
@@ -44,6 +45,22 @@ class BannerImageAdmin(admin.ModelAdmin):
     def has_add_permission(self, request):
         num_objects = self.model.objects.count()
         if num_objects >= 5:
+            return False
+        else:
+            return True
+
+
+@admin.register(HistoryAndMission)
+class HistoryAdmin(admin.ModelAdmin):
+    prepopulated_fields = {"slug": ("title",)}
+    formfield_overrides = {models.TextField: {"widget": CKEditorWidget}}
+    list_display = ("title", "created_at")
+
+    fieldsets = ((None, {"fields": ("title", "slug", "description")}),)
+
+    def has_add_permission(self, request):
+        num_objects = self.model.objects.count()
+        if num_objects >= 2:
             return False
         else:
             return True

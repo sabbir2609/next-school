@@ -41,6 +41,21 @@ class BannerImage(models.Model):
         return self.caption
 
 
+class HistoryAndMission(models.Model):
+    title = models.CharField(max_length=200)
+    description = RichTextUploadingField()
+    slug = models.SlugField()
+
+    created_at = models.DateField(auto_now_add=True)
+    updated_at = models.DateField(auto_now=True)
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name_plural = "History and Mission"
+
+
 class Notice(models.Model):
     title = models.CharField(max_length=200)
     slug = models.SlugField(blank=True, null=True)
@@ -74,9 +89,11 @@ class GovernanceBody(models.Model):
     designation = models.CharField(max_length=200, default="Member")
     slug = models.SlugField()
     image = models.ImageField(upload_to="governance_bodies/")
-    description = models.TextField(null=True, blank=True)
+    description = models.CharField(
+        max_length=500, null=True, blank=True, help_text="15 words max"
+    )
 
-    speech_text = models.TextField(null=True, blank=True)
+    speech_text = RichTextUploadingField()
     speech_file = models.FileField(
         upload_to="governance_bodies/",
         validators=[FileExtensionValidator(allowed_extensions=["pdf", "docx", "doc"])],
@@ -90,6 +107,7 @@ class GovernanceBody(models.Model):
 
     class Meta:
         verbose_name_plural = "Governance Bodies"
+        ordering = ["-id"]
 
 
 class Contact(models.Model):
@@ -129,6 +147,7 @@ class UsefulLink(models.Model):
 
     class Meta:
         verbose_name_plural = "Useful Links"
+        ordering = ["-id"]
 
 
 class ImageGallery(models.Model):
@@ -136,12 +155,14 @@ class ImageGallery(models.Model):
     title = models.CharField(max_length=200)
     slug = models.SlugField()
     description = models.TextField()
+    created_at = models.DateField(auto_now_add=True)
 
     def __str__(self):
         return self.title
 
     class Meta:
         verbose_name_plural = "Image Gallery"
+        ordering = ["-created_at"]
 
 
 class Stat(models.Model):
@@ -173,18 +194,22 @@ class WhatsHappening(models.Model):
 
     class Meta:
         verbose_name_plural = "What's Happening"
+        ordering = ["-date"]
 
 
 class CoCurricular(models.Model):
     title = models.CharField(max_length=200)
     slug = models.SlugField()
-    description = models.TextField()
+    description = models.TextField(blank=True, null=True)
+    image = models.ImageField(upload_to="co_curricular/")
+    created_at = models.DateField(auto_now_add=True)
 
     def __str__(self):
-        return f"Co-Curricular: {self.title}"
+        return self.title
 
     class Meta:
         verbose_name_plural = "Co-Curricular"
+        ordering = ["-created_at"]
 
 
 class BrightStudent(models.Model):
@@ -192,9 +217,11 @@ class BrightStudent(models.Model):
     slug = models.SlugField()
     description = models.TextField()
     image = models.ImageField(upload_to="bright_students/")
+    created_at = models.DateField(auto_now_add=True)
 
     def __str__(self):
         return self.name
 
     class Meta:
         verbose_name_plural = "Bright Students"
+        ordering = ["-created_at"]
