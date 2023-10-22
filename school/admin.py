@@ -85,7 +85,7 @@ class StudentAdmin(admin.ModelAdmin):
     readonly_fields = ["thumbnail"]
 
     def thumbnail(self, instance):
-        if instance.image.name != "":
+        if instance.image.name:
             return format_html(
                 f'<img src="{instance.image.url}" height="100px" width="100px" />'
             )
