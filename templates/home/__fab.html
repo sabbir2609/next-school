@@ -1,33 +1,7 @@
-<!-- Floating Language Button -->
-
-
-<!-- <div class="floating-language-button">
-    <button class="btn btn-warning" data-bs-toggle="dropdown" aria-expanded="false">
-        <i class="fa-solid fa-globe"></i>
-    </button>
-    <ul class="dropdown-menu" aria-labelledby="languageDropdown">
-        <li>
-            <a class="dropdown-item" href="#" onclick="changeLanguage('Bangla')">
-                Bangla
-            </a>
-        </li>
-        <li>
-            <a class="dropdown-item" href="#" onclick="changeLanguage('English')">
-                English
-            </a>
-        </li>
-    </ul>
-</div> -->
-
-<!-- Scroll-to-top button -->
-<!-- <button id="scrollToTopBtn" class="btn btn-primary" title="Go to top">
-    <i class="fas fa-arrow-up"></i>
-</button> -->
-
 <style>
     .fab-container {
         position: fixed;
-        bottom: 20px;
+        bottom: 65px;
         right: 20px;
     }
 
@@ -38,8 +12,11 @@
     }
 
     .fab-toggle {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
         cursor: pointer;
-        background: #007bff;
+        background: #8b069c;
         color: #fff;
         border: none;
         border-radius: 50%;
@@ -51,19 +28,28 @@
     }
 
     .fab-options {
-        display: none;
         flex-direction: column;
         margin-top: 10px;
+        opacity: 0;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease, opacity 0.3s ease;
     }
 
     .fab-options.active {
         display: flex;
-        z-index: 99;
+        opacity: 1;
+        max-height: 200px;
+    }
+
+    .fab-toggle.active {
+        background-color: rgb(118, 92, 235);
+        transform: rotate(45deg);
     }
 
     .fab-button {
         cursor: pointer;
-        background: #007bff;
+        background: #f30590;
         color: #fff;
         border: none;
         border-radius: 50%;
@@ -83,10 +69,11 @@
     <div class="fab">
 
         <div class="fab-toggle" onclick="toggleFabOptions()">
-            <i class="fas fa-plus"></i>
+            <i class="fas fa-gear"></i>
         </div>
 
         <div class="fab-options">
+
             <button class="fab-button" onclick="changeLanguage()">
                 <i class="fas fa-globe"></i>
             </button>
@@ -107,7 +94,10 @@
 <script>
 
     function toggleFabOptions() {
+        var fabToggle = document.querySelector(".fab-toggle");
         var fabOptions = document.querySelector(".fab-options");
+
+        fabToggle.classList.toggle("active");
         fabOptions.classList.toggle("active");
     }
 
@@ -141,8 +131,10 @@
     // Add an event listener to close FAB options when clicking outside
     document.body.addEventListener("click", function (event) {
         var fabOptions = document.querySelector(".fab-options");
+        var fabToggle = document.querySelector(".fab-toggle");
         if (fabOptions.classList.contains("active") && !event.target.closest(".fab-container")) {
             fabOptions.classList.remove("active");
+            fabToggle.classList.remove("active");
         }
     });
 
