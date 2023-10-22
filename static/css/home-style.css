@@ -1,6 +1,6 @@
-/* body {
+body {
   font-family: 'Roboto Slab', serif !important;
-} */
+}
 
 
 /* * {
@@ -333,7 +333,6 @@ a.email-address {
   }
 }
 
-
 /* =================================== */
 
 /* hr style  */
@@ -380,4 +379,69 @@ hr.style {
 /* Style for the scrollbar track (the non-draggable part) in WebKit-based browsers */
 *::-webkit-scrollbar-track {
   background: transparent;
+}
+
+
+/* fab css  */
+
+.fab-container {
+  position: fixed;
+  bottom: 65px;
+  right: 20px;
+}
+
+.fab {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.fab-toggle {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  cursor: pointer;
+  background: #8b069c;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 45px;
+  height: 45px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.fab-options {
+  flex-direction: column;
+  margin-top: 10px;
+  opacity: 0;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease, opacity 0.3s ease;
+}
+
+.fab-options.active {
+  display: flex;
+  opacity: 1;
+  max-height: 200px;
+}
+
+.fab-toggle.active {
+  background-color: rgb(118, 92, 235);
+  transform: rotate(45deg);
+}
+
+.fab-button {
+  cursor: pointer;
+  background: #f30590;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 45px;
+  height: 45px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
 }

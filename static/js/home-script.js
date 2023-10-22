@@ -1,48 +1,65 @@
-// JavaScript for the scroll-to-top button
-// const scrollToTopBtn = document.getElementById("scrollToTopBtn");
+window.addEventListener("DOMContentLoaded", () => {
+    const savedTheme = localStorage.getItem("data-bs-theme");
+    const body = document.querySelector("body");
+    const icon = document.getElementById("dark-mode-icon");
 
-// Show or hide the button based on scroll position
-// window.addEventListener("scroll", () => {
-//     if (window.scrollY > 100) {
-//         scrollToTopBtn.style.display = "block";
-//     } else {
-//         scrollToTopBtn.style.display = "none";
-//     }
-// });
+    if (savedTheme === "dark") {
+        body.setAttribute("data-bs-theme", "dark");
+        icon.classList.remove("fa-moon");
+        icon.classList.add("fa-sun");
+    } else {
+        body.setAttribute("data-bs-theme", "light");
+        icon.classList.remove("fa-sun");
+        icon.classList.add("fa-moon");
+    }
+});
 
-// Scroll to the top when the button is clicked
-// scrollToTopBtn.addEventListener("click", () => {
-//     window.scrollTo({
-//         top: 0,
-//         behavior: "smooth", // Smooth scrolling animation
-//     });
-// });
+function toggleDarkMode() {
+    const body = document.querySelector("body");
+    const currentTheme = body.getAttribute("data-bs-theme");
+    const icon = document.getElementById("dark-mode-icon");
+
+    if (currentTheme === "light") {
+        // Switch to dark mode
+        body.setAttribute("data-bs-theme", "dark");
+        icon.classList.remove("fa-moon");
+        icon.classList.add("fa-sun");
+        localStorage.setItem("data-bs-theme", "dark");
+    } else {
+        // Switch to light mode
+        body.setAttribute("data-bs-theme", "light");
+        icon.classList.remove("fa-sun");
+        icon.classList.add("fa-moon");
+        localStorage.setItem("data-bs-theme", "light");
+    }
+}
 
 
-// Function to show the floating button when scrolling down
-// window.addEventListener('scroll', function () {
-//     const floatingButton = document.querySelector('.floating-language-button');
-//     if (window.scrollY > 100) {
-//         floatingButton.style.display = 'block';
-//     } else {
-//         floatingButton.style.display = 'none';
-//     }
-// });
+// Scroll to top button
+function scrollToTop() {
+    window.scrollTo(0, 0);
 
-// <!-- Custom JavaScript to change language -->
+}
 
-// function changeLanguage(language) {
-//     const translatedText = {
-//         'Bangla': 'স্কুলের জন্য একটি স্মার্ট সমাধানে বিশ্বাস করুন !',
-//         'English': 'Believe in a smart solution for school'
-//     };
 
-//     document.getElementById('translatedText').innerText = translatedText[language];
-//     document.querySelector('.language-picker button').innerHTML = `${language}`;
+// FAB options
+function toggleFabOptions() {
+    var fabToggle = document.querySelector(".fab-toggle");
+    var fabOptions = document.querySelector(".fab-options");
 
-//     event.preventDefault();
-// }
+    fabToggle.classList.toggle("active");
+    fabOptions.classList.toggle("active");
+}
 
+// Add an event listener to close FAB options when clicking outside
+document.body.addEventListener("click", function (event) {
+    var fabOptions = document.querySelector(".fab-options");
+    var fabToggle = document.querySelector(".fab-toggle");
+    if (fabOptions.classList.contains("active") && !event.target.closest(".fab-container")) {
+        fabOptions.classList.remove("active");
+        fabToggle.classList.remove("active");
+    }
+});
 
 // Add scroll event listener to the gallery container
 const imageGalleryContainer = document.getElementById("imageGalleryContainer");
