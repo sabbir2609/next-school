@@ -18,7 +18,6 @@ ALLOWED_HOSTS = ["*"]
 INTERNAL_IPS = [
     "127.0.0.1",
     "localhost",
-    "172.21.102.113",
 ]
 
 # CORS_ALLOWED_ORIGINS = [
@@ -48,6 +47,7 @@ INSTALLED_APPS = [
     "school.apps.SchoolConfig",
     "homepage.apps.HomepageConfig",
     "user.apps.UserConfig",
+    "dashboard.apps.DashboardConfig",
     # Third Party Apps
     "taggit",
     "crispy_forms",
@@ -66,6 +66,9 @@ CRISPY_TEMPLATE_PACK = "bootstrap5"
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    # whitenoise middleware
+    "whitenoise.middleware.WhiteNoiseMiddleware",
+    # ...
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -145,6 +148,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+
 STATIC_URL = "static/"
 STATICFILES_DIRS = [BASE_DIR / "static"]
 STATIC_ROOT = BASE_DIR / "staticfiles"
@@ -157,13 +162,13 @@ MEDIA_ROOT = BASE_DIR / "media"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-#====================================================#
+# ====================================================#
 # custom user model
 
-AUTH_USER_MODEL = 'user.CustomUser'
+AUTH_USER_MODEL = "user.CustomUser"
 
 
-#====================================================#
+# ====================================================#
 # ckeditor settings
 
 CKEDITOR_UPLOAD_PATH = "uploads/"

@@ -8,6 +8,7 @@ urlpatterns = [
     path("", include("school.urls", "school"), name="school"),
     path("", include("homepage.urls", "homepage"), name="homepage"),
     path("", include("user.urls", "user"), name="user"),
+    path("", include("dashboard.urls", "dashboard"), name="dashboard"),
 ]
 
 urlpatterns.extend(
@@ -18,9 +19,9 @@ urlpatterns.extend(
 
 
 # Admin Site Config
-admin.site.site_header = "PB School Management System"
-admin.site.site_title = "School Management System"
-admin.site.index_title = "Welcome to School Management System"
+admin.site.site_header = "Turbo School Management System"
+admin.site.site_title = "Turbo School Management System"
+admin.site.index_title = "Welcome to Turbo School Management System"
 
 
 if settings.DEBUG:
