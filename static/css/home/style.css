@@ -429,7 +429,7 @@ hr.style {
 
 .fab-toggle.active {
   background-color: rgb(118, 92, 235);
-  transform: rotate(45deg);
+  transform: rotate(90deg);
 }
 
 .fab-button {
