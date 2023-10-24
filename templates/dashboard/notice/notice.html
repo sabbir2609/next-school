@@ -1,0 +1,10 @@
+{% extends 'dashboard/dashboard.html' %}
+
+{% block title %} All Notice {% endblock %}
+
+{% block content %}
+
+
+<button hx-get="{% url 'homepage:notice_list' %}"> Load Notices </button>
+
+{% endblock %}

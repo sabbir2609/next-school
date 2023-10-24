@@ -1,7 +1,9 @@
 {
     "cSpell.words": [
         "iframe",
+        "offcanvas",
         "taggit",
         "whitenoise"
-    ]
+    ],
+    "editor.linkedEditing": true
 }
