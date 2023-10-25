@@ -1,2 +1,2 @@
-TODO: Add gallery
-TODO: Setup push notifications -> Web, app, sms, mail
+- [x] Add gallery
+- [ ] Setup push notifications -> Web, app, sms, mail

@@ -14,10 +14,10 @@
     }
 }
 
-.sidebar {
+/* .sidebar {
     min-height: 100vh;
     overflow-y: hidden;
-}
+} */
 
 .sidebar .nav-link {
     font-size: 1rem;

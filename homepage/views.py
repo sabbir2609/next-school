@@ -90,29 +90,6 @@ class NoticeDetailView(DetailView):
     template_name = "home/notices/notice_detail.html"
 
 
-class NoticeCreateView(CreateView):
-    model = Notice
-    fields = ["title", "slug", "description", "attachment"]
-    template_name = "home/notices/notice_create.html"
-
-
-class NoticeUpdateView(UpdateView):
-    form_class = NoticeForm
-    model = Notice
-    template_name = "home/notices/notice_update.html"
-
-    def get_success_url(self):
-        return reverse_lazy("homepage:notice_detail", kwargs={"slug": self.object.slug})
-
-    def get_success_message(self, cleaned_data):
-        return "Notice updated successfully"
-
-
-class NoticeDeleteView(DeleteView):
-    model = Notice
-    success_url = "/notices/"
-
-
 # ================= Notice CRUD Ends ====================== #
 
 

@@ -10,7 +10,8 @@
             <ul class="nav flex-column">
 
                 <li class="nav-item">
-                    <a class="nav-link d-flex align-items-center gap-2 active" aria-current="page" href="#">
+                    <a class="nav-link d-flex align-items-center gap-2 active" aria-current="page"
+                        href="{% url 'dashboard:dashboard' %}">
                         <i class="fa-solid fa-house"></i>
                         Dashboard
                     </a>
@@ -18,18 +19,18 @@
 
                 <!-- add more item  -->
                 <li class="nav-item">
-                    <a href="#demo" data-bs-toggle="collapse" class="nav-link d-flex align-items-center gap-2">
+                    <a href="#notice" data-bs-toggle="collapse" class="nav-link d-flex align-items-center gap-2">
                         <i class="far fa-sticky-note"></i> Notice <i class="fas fa-chevron-down"></i>
                     </a>
-                    <ul id="demo" class="collapse ms-3">
+                    <ul id="notice" class="collapse ms-3">
 
                         <div class="d-grid">
 
-                            <a href="{% url 'homepage:notice_list' %}" class="text-decoration-none ">
+                            <a href="{% url 'dashboard:notice_list' %}" class="text-decoration-none ">
                                 <i class="fa-regular fa-circle-dot"></i> All Notice
                             </a>
 
-                            <a href="#" class="text-decoration-none ">
+                            <a href="{% url 'dashboard:notice_create' %}" class="text-decoration-none ">
                                 <i class="fa-regular fa-circle-dot"></i> New Notice
                             </a>
 

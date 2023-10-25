@@ -7,7 +7,7 @@
     <h1>All Notice: </h1>
     <div class="table-container position-relative mb-2 rounded">
         <table class="table">
-            <thead class="sticky-top">
+            <thead>
                 <tr>
                     <th scope="col">Date</th>
                     <th scope="col">Notice</th>
@@ -25,15 +25,11 @@
                         <a href="{% url 'homepage:notice_detail' notice.slug %}"
                             class="link-success link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">
                             {{ notice.title }}
-                            <!-- TODO: compare important tag to show it -->
-                            {% if notice.tags %}
-                            {% for tag in notice.tags.all %}
-                            {% if 'important' == tag %}
-                            <span class="badge">Important</span>
-                            {% endif %}
-                            {% endfor %}
-                            {% endif %}
                             <i class="fa-solid fa-arrow-up-right-from-square px-2"></i>
+
+                            <!-- <span class="badge bg-danger">Important</span> -->
+
+
 
                         </a>
                     </td>

@@ -1,13 +1,13 @@
-{% extends 'base/base.html' %}
+{% extends "dashboard/dashboard.html" %}
 
-{% block title %} Notice Update {% endblock %}
+{% block title %} New Notice {% endblock %}
 
 {% load crispy_forms_tags %}
 
 {% block content %}
 
-<div class="container d-flex justify-content-center ">
-    <h2>Update notice</h2>
+<div class="container-flex">
+    <h2>Add a new notice</h2>
     <form method="POST" autocomplete="off">
         {% csrf_token %}
 
@@ -15,7 +15,7 @@
 
         {{ form | crispy }}
 
-        <button type="submit" class="btn btn-primary">Update</button>
+        <button type="submit" class="btn btn-primary">Publish</button>
     </form>
 </div>
 
