@@ -1,5 +1,4 @@
 from django.db import models
-from django.utils.text import slugify
 from django.core.validators import FileExtensionValidator
 from ckeditor_uploader.fields import RichTextUploadingField
 from taggit.managers import TaggableManager
@@ -58,8 +57,8 @@ class HistoryAndMission(models.Model):
 
 class Notice(models.Model):
     title = models.CharField(max_length=200)
-    slug = models.SlugField(blank=True, null=True)
     date = models.DateField()
+    slug = models.SlugField(unique=True, blank=True, null=True)
     description = RichTextUploadingField()
     attachment = models.FileField(
         upload_to="notices/",
@@ -73,11 +72,6 @@ class Notice(models.Model):
 
     def __str__(self):
         return self.title
-
-    def save(self, *args, **kwargs):
-        if not self.slug:
-            self.slug = slugify(self.title)
-        super(Notice, self).save(*args, **kwargs)
 
     class Meta:
         verbose_name_plural = "Notices"

@@ -44,11 +44,15 @@
                     </td>
 
                     <th scope="row">
+                        <div class="btn-group" role="group" aria-label="View and Update button">
 
-                        <a href="{% url 'dashboard:notice_detail' notice.slug %}" class="btn btn-primary ">View</a>
+                            <a href="{% url 'dashboard:notice_detail' notice.slug %}"
+                                class="btn btn-sm btn-primary ">View</a>
 
-                        <a href="{% url 'dashboard:notice_update' notice.slug %}" class="btn btn-warning ">Update</a>
+                            <a href="{% url 'dashboard:notice_update' notice.slug %}"
+                                class="btn btn-sm btn-warning ">Update</a>
 
+                        </div>
                     </th>
 
                 </tr>

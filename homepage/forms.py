@@ -25,18 +25,17 @@ EmailAddressFormSet = inlineformset_factory(
 class NoticeForm(forms.ModelForm):
     class Meta:
         model = Notice
-        fields = "__all__"
+        fields = ["title", "date", "description", "attachment", "tags"]
 
         widgets = {
             "title": forms.TextInput(attrs={"class": "form-control "}),
-            "slug": forms.TextInput(
-                attrs={
-                    "class": "form-control ",
-                    "id": "disabled",
-                    "readonly": "readonly",
-                    "disabled": "disabled",
-                }
-            ),
+            # "slug": forms.TextInput(
+            #     attrs={
+            #         "class": "form-control, shadow-none",
+            #         "readonly": "readonly",
+            #         # "disabled": "disabled",
+            #     }
+            # ),
             "date": forms.DateInput(attrs={"class": "form-control ", "type": "date"}),
             "description": forms.Textarea(attrs={"class": "form-control "}),
             "attachment": forms.FileInput(

@@ -1,3 +1,7 @@
+from django.contrib import messages
+from django.db import IntegrityError
+from django.utils.text import slugify
+from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse_lazy
 from django.views.generic import (
     TemplateView,
@@ -24,7 +28,7 @@ class DashboardNoticeDetailView(NoticeDetailView):
     template_name = "dashboard/notice/notice_detail.html"
 
 
-class NoticeCreateView(CreateView):
+class NoticeCreateView(SuccessMessageMixin, CreateView):
     form_class = NoticeForm
     model = Notice
     template_name = "dashboard/notice/notice_create.html"
@@ -34,24 +38,48 @@ class NoticeCreateView(CreateView):
             "dashboard:notice_detail", kwargs={"slug": self.object.slug}
         )
 
-    def get_success_message(self, cleaned_data):
-        return "Notice created successfully"
+    def form_valid(self, form):
+        notice = form.save(commit=False)
+        notice.slug = slugify(f"{notice.title} {notice.date}")
+
+        try:
+            notice.save()
+        except IntegrityError as e:
+            messages.error(
+                self.request,
+                "A notice with this title and date already exists! Change the title or contact the administrator.",
+            )
+            return self.form_invalid(form)
+
+        messages.success(self.request, "Notice created successfully!")
+        return super().form_valid(form)
 
 
 class NoticeUpdateView(UpdateView):
-    form_class = NoticeForm
     model = Notice
     template_name = "dashboard/notice/notice_update.html"
+    form_class = NoticeForm
+
+    def form_valid(self, form):
+        print(form.changed_data)
+        if not form.has_changed():
+            messages.warning(self.request, "Nothing to update")
+            return super().form_invalid(form)
+
+        messages.success(self.request, "Notice updated successfully")
+        return super().form_valid(form)
 
     def get_success_url(self):
         return reverse_lazy(
             "dashboard:notice_detail", kwargs={"slug": self.object.slug}
         )
 
-    def get_success_message(self, cleaned_data):
-        return "Notice updated successfully"
 
-
-class NoticeDeleteView(DeleteView):
+class NoticeDeleteView(SuccessMessageMixin, DeleteView):
     model = Notice
-    success_url = "/notices/"
+
+    def get_success_url(self):
+        return reverse_lazy("dashboard:notice_list")
+
+    def get_success_message(self, cleaned_data):
+        return "Notice deleted successfully"

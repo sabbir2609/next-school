@@ -68,7 +68,28 @@ class HistoryAdmin(admin.ModelAdmin):
 
 @admin.register(Notice)
 class NoticeAdmin(admin.ModelAdmin):
-    prepopulated_fields = {"slug": ("title",)}
+    fieldsets = [
+        (
+            "Post Information",
+            {
+                "fields": ("title", "date", "slug", "description"),
+            },
+        ),
+        (
+            "Tags and Attachment",
+            {
+                "fields": ("tags", "attachment"),
+            },
+        ),
+    ]
+
+    prepopulated_fields = {
+        "slug": (
+            "title",
+            "date",
+        )
+    }
+
     formfield_overrides = {models.TextField: {"widget": CKEditorWidget}}
     list_display = ("title", "date")
     ordering = ("-date",)
