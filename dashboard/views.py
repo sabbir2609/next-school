@@ -19,6 +19,8 @@ from dal import autocomplete
 
 from taggit.models import Tag
 
+from django.contrib.contenttypes.models import ContentType
+
 
 class DashboardView(TemplateView):
     template_name = "dashboard/dashboard.html"
@@ -29,19 +31,22 @@ class DashboardNoticeListView(NoticeListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["tag_list"] = Tag.objects.all()
+        context["tag_list"] = set(Tag.objects.filter(notice__isnull=False))  # there should be more efficient way 
         return context
 
 
 
-# TODO : Fix the tag query  
+# TODO : Fix the tag query  and add tags from form
 
 class NoticeTagAutocomplete(autocomplete.Select2QuerySetView):
     def get_queryset(self):
         qs = Tag.objects.all()
         if self.q:
-            qs = qs.filter(tags__name__icontains=self.q)
+            qs = qs.filter(name__istartswith=self.q)
         return qs
+    
+    def get_create_option(self, context, q):
+        return []
 
 class DashboardNoticeDetailView(NoticeDetailView):
     template_name = "dashboard/notice/notice_detail.html"
