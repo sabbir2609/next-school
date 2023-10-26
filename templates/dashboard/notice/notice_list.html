@@ -13,8 +13,8 @@
         </button>
         <ul class="dropdown-menu">
             <!-- TODO: fix this  -->
-            {% for tag in notice.tags %}
-            <li><a class="dropdown-item" href="{% url 'dashboard:notice_list' %}?filter={{ tag }}">Important</a>
+            {% for tag in tag_list %}
+            <li><a class="dropdown-item" href="{% url 'dashboard:notice_list' %}?filter={{ tag }}">{{ tag }}</a>
             </li>
             {% endfor %}
 

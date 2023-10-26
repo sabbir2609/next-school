@@ -1,8 +1,8 @@
 from django import forms
-from .models import Contact
+
 from django.forms import inlineformset_factory
-from .models import Contact, PhoneNumber, EmailAddress, Notice
-from taggit.forms import TagWidget
+
+from .models import Contact, PhoneNumber, EmailAddress
 
 
 class ContactForm(forms.ModelForm):
@@ -20,32 +20,3 @@ PhoneNumberFormSet = inlineformset_factory(
 EmailAddressFormSet = inlineformset_factory(
     Contact, EmailAddress, fields=("email",), extra=1, can_delete=True
 )
-
-
-class NoticeForm(forms.ModelForm):
-    class Meta:
-        model = Notice
-        fields = ["title", "date", "description", "attachment", "tags"]
-
-        widgets = {
-            "title": forms.TextInput(attrs={"class": "form-control "}),
-            # "slug": forms.TextInput(
-            #     attrs={
-            #         "class": "form-control, shadow-none",
-            #         "readonly": "readonly",
-            #         # "disabled": "disabled",
-            #     }
-            # ),
-            "date": forms.DateInput(attrs={"class": "form-control ", "type": "date"}),
-            "description": forms.Textarea(attrs={"class": "form-control "}),
-            "attachment": forms.FileInput(
-                attrs={
-                    "class": "form-control ",
-                    "type": "file",
-                    "accept": ".doc,.docx,.pdf",
-                }
-            ),
-            "tags": TagWidget(
-                attrs={"class": "", "data-role": "tagsinput"}
-            ),  # TODO: make it nice
-        }

@@ -10,10 +10,14 @@ from django.views.generic import (
     UpdateView,
     DeleteView,
 )
-from homepage.forms import NoticeForm
+from .forms import NoticeForm
 
 from homepage.models import Notice
 from homepage.views import NoticeListView, NoticeDetailView
+
+from dal import autocomplete
+
+from taggit.models import Tag
 
 
 class DashboardView(TemplateView):
@@ -23,6 +27,21 @@ class DashboardView(TemplateView):
 class DashboardNoticeListView(NoticeListView):
     template_name = "dashboard/notice/notice_list.html"
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["tag_list"] = Tag.objects.all()
+        return context
+
+
+
+# TODO : Fix the tag query  
+
+class NoticeTagAutocomplete(autocomplete.Select2QuerySetView):
+    def get_queryset(self):
+        qs = Tag.objects.all()
+        if self.q:
+            qs = qs.filter(tags__name__icontains=self.q)
+        return qs
 
 class DashboardNoticeDetailView(NoticeDetailView):
     template_name = "dashboard/notice/notice_detail.html"
@@ -51,7 +70,7 @@ class NoticeCreateView(SuccessMessageMixin, CreateView):
             )
             return self.form_invalid(form)
 
-        messages.success(self.request, "Notice created successfully!")
+        messages.success(self.request, f"Notice <em class='text-black'> {form.cleaned_data["title"]} </em> created successfully")
         return super().form_valid(form)
 
 
@@ -61,12 +80,11 @@ class NoticeUpdateView(UpdateView):
     form_class = NoticeForm
 
     def form_valid(self, form):
-        print(form.changed_data)
         if not form.has_changed():
             messages.warning(self.request, "Nothing to update")
             return super().form_invalid(form)
 
-        messages.success(self.request, "Notice updated successfully")
+        messages.success(self.request, f"Notice <em class='text-black'> {form.cleaned_data["title"]} </em> updated successfully")
         return super().form_valid(form)
 
     def get_success_url(self):

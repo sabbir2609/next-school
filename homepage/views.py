@@ -1,12 +1,7 @@
-from typing import Any
-from django.db.models.query import QuerySet
 from django.views.generic import TemplateView
 from django.views.generic.detail import DetailView
-from django.shortcuts import render, redirect
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
-from django.http import HttpResponse
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView
-from django.urls import reverse_lazy
+from django.views.generic import ListView
 from .models import (
     DropdownNavigation,
     HistoryAndMission,
@@ -21,8 +16,6 @@ from .models import (
     BrightStudent,
     BannerImage,
 )
-
-from .forms import NoticeForm
 
 
 class HomePageView(TemplateView):
