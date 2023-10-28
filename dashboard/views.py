@@ -79,7 +79,7 @@ class NoticeCreateView(SuccessMessageMixin, CreateView):
             )
             return self.form_invalid(form)
 
-        messages.success(self.request, f"Notice <em class='text-black'> {form.cleaned_data["title"]} </em> created successfully")
+        messages.success(self.request, f"Notice <em class='text-black'> {form.cleaned_data['title']} </em> created successfully")
         return super().form_valid(form)
 
 
@@ -93,7 +93,7 @@ class NoticeUpdateView(UpdateView):
             messages.warning(self.request, "Nothing to update")
             return super().form_invalid(form)
 
-        messages.success(self.request, f"Notice <em class='text-black'> {form.cleaned_data["title"]} </em> updated successfully")
+        messages.success(self.request, f"Notice <em class='text-black'> {form.cleaned_data['title']} </em> updated successfully")
         return super().form_valid(form)
 
     def get_success_url(self):
