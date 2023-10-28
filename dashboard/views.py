@@ -40,13 +40,17 @@ class DashboardNoticeListView(NoticeListView):
 
 class NoticeTagAutocomplete(autocomplete.Select2QuerySetView):
     def get_queryset(self):
+        if not self.request.user.is_authenticated:
+            return Tag.objects.none()
+        
         qs = Tag.objects.all()
+
+        print(qs.query)
+
         if self.q:
             qs = qs.filter(name__istartswith=self.q)
+
         return qs
-    
-    def get_create_option(self, context, q):
-        return []
 
 class DashboardNoticeDetailView(NoticeDetailView):
     template_name = "dashboard/notice/notice_detail.html"
