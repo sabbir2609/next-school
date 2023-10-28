@@ -153,6 +153,7 @@ class StudentAssignView(SuccessMessageMixin, CreateView):
 class StudentAutocompleteView(autocomplete.Select2QuerySetView):
     def get_queryset(self):
         qs = StudentAssign.objects.all()
+
         if self.q:
             qs = qs.filter(student__name_en__istartswith=self.q)
         return qs

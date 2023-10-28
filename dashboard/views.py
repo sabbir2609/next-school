@@ -21,6 +21,10 @@ from taggit.models import Tag
 
 from django.contrib.contenttypes.models import ContentType
 
+import logging
+
+logger = logging.getLogger(__name__)
+
 
 class DashboardView(TemplateView):
     template_name = "dashboard/dashboard.html"
@@ -31,26 +35,35 @@ class DashboardNoticeListView(NoticeListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["tag_list"] = set(Tag.objects.filter(notice__isnull=False))  # there should be more efficient way 
+        context["tag_list"] = set(
+            Tag.objects.filter(notice__isnull=False)
+        )  # there should be more efficient way
         return context
 
 
+class NoticeTagAutoComplete(autocomplete.Select2QuerySetView):
+    paginate_by = 10
 
-# TODO : Fix the tag query  and add tags from form
-
-class NoticeTagAutocomplete(autocomplete.Select2QuerySetView):
     def get_queryset(self):
-        if not self.request.user.is_authenticated:
-            return Tag.objects.none()
-        
-        qs = Tag.objects.all()
+        # Don't forget to filter out results depending on the visitor !
+        # if not self.request.user.is_authenticated():
+        #     return Tag.objects.none()
 
-        print(qs.query)
+        qs = Tag.objects.filter(
+            taggit_taggeditem_items__content_type=ContentType.objects.get_for_model(
+                Notice
+            )
+        ).distinct()
 
         if self.q:
             qs = qs.filter(name__istartswith=self.q)
+            print(qs)
 
         return qs
+
+    def get_create_option(self, context, q):
+        return []
+
 
 class DashboardNoticeDetailView(NoticeDetailView):
     template_name = "dashboard/notice/notice_detail.html"
@@ -79,7 +92,10 @@ class NoticeCreateView(SuccessMessageMixin, CreateView):
             )
             return self.form_invalid(form)
 
-        messages.success(self.request, f"Notice <em class='text-black'> {form.cleaned_data['title']} </em> created successfully")
+        messages.success(
+            self.request,
+            f"Notice <em class='text-black'> {form.cleaned_data['title']} </em> created successfully",
+        )
         return super().form_valid(form)
 
 
@@ -93,7 +109,10 @@ class NoticeUpdateView(UpdateView):
             messages.warning(self.request, "Nothing to update")
             return super().form_invalid(form)
 
-        messages.success(self.request, f"Notice <em class='text-black'> {form.cleaned_data['title']} </em> updated successfully")
+        messages.success(
+            self.request,
+            f"Notice <em class='text-black'> {form.cleaned_data['title']} </em> updated successfully",
+        )
         return super().form_valid(form)
 
     def get_success_url(self):

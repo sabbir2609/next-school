@@ -11,13 +11,6 @@ class NoticeForm(forms.ModelForm):
 
         widgets = {
             "title": forms.TextInput(attrs={"class": "form-control "}),
-            # "slug": forms.TextInput(
-            #     attrs={
-            #         "class": "form-control, shadow-none",
-            #         "readonly": "readonly",
-            #         # "disabled": "disabled",
-            #     }
-            # ),
             "date": forms.DateInput(attrs={"class": "form-control ", "type": "date"}),
             "description": forms.Textarea(attrs={"class": "form-control "}),
             "attachment": forms.FileInput(

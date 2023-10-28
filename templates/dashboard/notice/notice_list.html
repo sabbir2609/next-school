@@ -1,6 +1,7 @@
 {% extends 'dashboard/dashboard.html' %}
 
-{% block title %} All Notice {% endblock %}
+{% block title %}
+{% endblock %}
 
 {% block content %}
 <div class="container">
@@ -12,7 +13,6 @@
             Filter
         </button>
         <ul class="dropdown-menu">
-            <!-- TODO: fix this  -->
             {% for tag in tag_list %}
             <li><a class="dropdown-item" href="{% url 'dashboard:notice_list' %}?filter={{ tag }}">{{ tag }}</a>
             </li>
