@@ -1,10 +1,11 @@
 {% load static %}
 
 <!doctype html>
-<html lang="en">
+<html lang="en" data-bs-theme="light">
 
 <head>
     <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{% block title %} Dashboard {% endblock %}</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -21,36 +22,51 @@
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 
-    <header>
-        {% include 'dashboard/components/_navbar.html' %}
-    </header>
-
+    <!-- ======== Main wrapper for dashboard =========== -->
     {% include 'dashboard/components/_notification.html' %}
 
-    <div class="container-fluid">
+    <div class="wrapper">
 
-        <div class="row">
+        <!-- =========== Sidebar for admin dashboard =========== -->
+        {% include 'dashboard/components/_sidebar.html' %}
 
-            {% include 'dashboard/components/_sidebar.html' %}
+        <!-- ========= Main section of dashboard ======= -->
+        <div class="main">
 
-            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-                <div class="p-3">
+            <!-- ========= Main navbar section of dashboard ======= -->
+            {% include 'dashboard/components/_navbar.html' %}
 
-                    {% block content %}
-                    {% endblock %}
+            <!-- ========= Main content section of dashboard ======= -->
+            <main class="content">
 
+                <div class="container-fluid">
+                    <div class="mb-3">
+
+
+                        {% block content %}
+                        {% endblock %}
+
+                    </div>
                 </div>
+
             </main>
+
+            <!-- ========= light and dark mode toggle button ======= -->
+            <a href="#" class="theme-toggle">
+                <i class="fa-regular fa-moon"></i>
+                <i class="fa-regular fa-sun"></i>
+            </a>
+
+            <!-- ========= footer section of dashboard ======= -->
+            {% include 'dashboard/components/_footer.html' %}
 
         </div>
 
-    </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://unpkg.com/htmx.org@1.9.6"
-        integrity="sha384-FhXw7b6AlE/jyjlZH5iHa/tTe9EpJ1Y55RjcgPbjeWMskSxZt1v9qkxLJWNJaGni"
-        crossorigin="anonymous"></script>
-    <script src="{% static 'js/dashboard/script.js' %}"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="https://unpkg.com/htmx.org@1.9.6"
+            integrity="sha384-FhXw7b6AlE/jyjlZH5iHa/tTe9EpJ1Y55RjcgPbjeWMskSxZt1v9qkxLJWNJaGni"
+            crossorigin="anonymous"></script>
+        <script src="{% static 'js/dashboard/script.js' %}"></script>
 </body>
 
 </html>
