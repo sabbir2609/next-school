@@ -20,5 +20,8 @@ class NoticeForm(forms.ModelForm):
                     "accept": ".doc,.docx,.pdf",
                 }
             ),
-            "tags": autocomplete.TaggitSelect2(url="dashboard:notice_tag_autocomplete"),
+            "tags": autocomplete.TaggitSelect2(
+                url="dashboard:notice_tag_autocomplete",
+                attrs={"class": "form-control "},
+            ),
         }

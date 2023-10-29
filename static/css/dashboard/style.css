@@ -27,7 +27,6 @@ li {
 h4 {
     font-family: 'Poppins', sans-serif;
     font-size: 1.275rem;
-    color: var(--bs-emphasis-color);
 }
 
 /* Layout for admin dashboard skeleton */
@@ -41,7 +40,6 @@ h4 {
 #sidebar {
     max-width: 264px;
     min-width: 264px;
-    background: var(--bs-dark);
     transition: all 0.35s ease-in-out;
 }
 
@@ -53,7 +51,6 @@ h4 {
     overflow: hidden;
     transition: all 0.35s ease-in-out;
     width: 100%;
-    background: var(--bs-dark-bg-subtle);
 }
 
 
@@ -65,7 +62,6 @@ h4 {
 }
 
 .sidebar-logo a {
-    color: #e9ecef;
     font-size: 1.15rem;
     font-weight: 600;
 }
@@ -79,14 +75,12 @@ h4 {
 }
 
 .sidebar-header {
-    color: #e9ecef;
     font-size: 0.75rem;
     padding: 1.5rem 1.5rem 0.37rem;
 }
 
 a.sidebar-link {
     padding: 0.625rem 1.625rem;
-    color: #e9ecef;
     position: relative;
     display: block;
     font-size: 0.875rem;
@@ -114,6 +108,7 @@ a.sidebar-link {
 .avatar {
     height: 40px;
     width: 40px;
+    border-radius: 50%;
 }
 
 .navbar-expand .navbar-nav {
@@ -125,7 +120,6 @@ a.sidebar-link {
 @media only screen and (max-width: 682px) {
     #sidebar {
         margin-left: -264px;
-        position: absolute;
         min-height: 100vh;
         z-index: 1;
 
@@ -144,13 +138,35 @@ a.sidebar-link {
     }
 }
 
-@media only screen and (min-width: 768px) {
+@media only screen and (min-width: 683px) {
     #sidebar.toggle {
         margin-left: -264px;
     }
 }
 
 /* Footer and Nav */
+
+/* Footer Styles */
+.footer {
+    padding: 15px 0;
+}
+
+.footer a {
+    color: #6c757d;
+    text-decoration: none;
+}
+
+.footer a:hover {
+    text-decoration: underline;
+}
+
+.footer p {
+    margin-bottom: 0;
+}
+
+.footer strong {
+    font-size: 1.1em;
+}
 
 @media (max-width:767.98px) {
 
@@ -180,7 +196,6 @@ html[data-bs-theme="light"] .theme-toggle .fa-moon {
     padding: 10px;
     display: block;
     font-size: 1.25rem;
-    color: #FFF;
 }
 
 html[data-bs-theme="dark"] .theme-toggle .fa-moon {

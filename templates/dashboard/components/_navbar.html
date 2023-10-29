@@ -1,16 +1,16 @@
 {% load static %}
 
 
-<nav class="navbar navbar-expand px-3 border-bottom">
-    <button class="btn" id="sidebar-toggle" type="button">
-        <span class="navbar-toggler-icon "></span>
+<nav class="navbar navbar-expand px-3 shadow-sm bg-body-tertiary">
+    <button class="btn border" id="sidebar-toggle" type="button">
+        <i class="bi bi-layout-sidebar-inset-reverse"></i>
     </button>
 
     <div class="navbar-collapse navabar">
         <ul class="navbar-nav">
             <li class="nav-item dropdown">
                 <a href="#" data-bs-toggle="dropdown" class="nav-icon pe-md-0 ">
-                    <img src="{% static 'assets\images\default-male.jpg' %}" class="avatar img-fluid rounded" alt=""
+                    <img src="{% static 'assets\images\profile.jpg' %}" class="avatar img-fluid" alt="profile pic"
                         srcset="">
                 </a>
                 <div class="dropdown-menu dropdown-menu-end">
