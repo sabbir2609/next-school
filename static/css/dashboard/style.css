@@ -41,6 +41,7 @@ h4 {
     max-width: 264px;
     min-width: 264px;
     transition: all 0.35s ease-in-out;
+    overflow: hidden;
 }
 
 .main {
@@ -52,8 +53,6 @@ h4 {
     transition: all 0.35s ease-in-out;
     width: 100%;
 }
-
-
 
 /* Sidebar Elements Style */
 
@@ -168,14 +167,6 @@ a.sidebar-link {
     font-size: 1.1em;
 }
 
-@media (max-width:767.98px) {
-
-    .navbar,
-    footer {
-        width: 100vw;
-    }
-}
-
 /* Theme Toggler */
 
 .theme-toggle {
@@ -204,4 +195,39 @@ html[data-bs-theme="dark"] .theme-toggle .fa-moon {
 
 html[data-bs-theme="light"] .theme-toggle .fa-sun {
     display: none;
+}
+
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    background-color: #d60404;
+    display: flex;
+}
+
+/* Adjust the navbar width when the sidebar is toggled */
+@media only screen and (min-width: 992px) {
+    #sidebar ~ .main .navbar {
+        width: calc(100% - 264px);
+        transition: all 0.3s ease; 
+    }
+}
+
+@media only screen and (min-width: 683px) {
+    #sidebar.toggle ~ .main .navbar {
+        width: 100%;
+        transition: all 0.3s ease; 
+    }
+}
+
+@media only screen and (min-width: 683px) {
+    #sidebar ~ .main .navbar {
+        width: calc(100% - 264px);
+        transition: all 0.3s ease; 
+    }
+}
+
+.content {
+    margin-top: 4rem;
 }
