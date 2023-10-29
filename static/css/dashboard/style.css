@@ -122,10 +122,33 @@ a.sidebar-link {
 
 /* Sidebar Toggle */
 
-#sidebar.collapsed {
-    margin-left: -264px;
+@media only screen and (max-width: 682px) {
+    #sidebar {
+        margin-left: -264px;
+        position: absolute;
+        min-height: 100vh;
+        z-index: 1;
+
+    }
+
+
+    #sidebar.toggle {
+        margin-left: 0px;
+
+    }
 }
 
+@media only screen and (min-width: 992px) {
+    #sidebar.toggle {
+        margin-left: -264px;
+    }
+}
+
+@media only screen and (min-width: 768px) {
+    #sidebar.toggle {
+        margin-left: -264px;
+    }
+}
 
 /* Footer and Nav */
 

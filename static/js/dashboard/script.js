@@ -24,10 +24,24 @@ toastElList.forEach(function (toastEl, index) {
 // Sidebar toggle
 
 
-const sidebarToggle = document.getElementById('sidebar-toggle');
-sidebarToggle.addEventListener("click", function () {
-    document.getElementById("sidebar").classList.toggle("collapsed");
+const sidebar = document.getElementById('sidebar');
+
+// Function to handle clicks outside the sidebar
+document.addEventListener('click', function (event) {
+    const isClickInside = sidebar.contains(event.target);
+    const isClickOnSidebarToggle = event.target.closest('#sidebar-toggle');
+
+    if (!isClickInside && !isClickOnSidebarToggle && window.innerWidth <= 682) {
+        sidebar.classList.remove('toggle');
+    }
 });
+
+// Sidebar toggle button functionality
+const sidebarToggle = document.getElementById('sidebar-toggle');
+sidebarToggle.addEventListener('click', function () {
+    sidebar.classList.toggle('toggle');
+});
+
 
 
 // theme toggle
