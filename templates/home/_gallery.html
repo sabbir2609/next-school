@@ -6,7 +6,7 @@
         {% for image in gallery_images %}
         <div>
             <a href="{{ image.image.url }}" data-toggle="lightbox" data-gallery="mixedgallery">
-                <img src="{{ image.image.url }}" alt="{{ image.title }}">
+                <img src="{{ image.image.url }}" alt="{{ image.title }}" loading="lazy">
             </a>
         </div>
         {% endfor %}

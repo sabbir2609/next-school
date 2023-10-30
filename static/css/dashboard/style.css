@@ -38,11 +38,12 @@ h4 {
 }
 
 #sidebar {
-    max-width: 264px;
-    min-width: 264px;
+    min-width: 245px;
     transition: all 0.35s ease-in-out;
-    overflow: hidden;
+    max-height: 100vh;
+    overflow-y: auto;
 }
+
 
 .main {
     display: flex;
@@ -96,12 +97,12 @@ a.sidebar-link {
     right: 1.5rem;
     top: 1.4rem;
     transform: rotate(-135deg);
-    transition: all 0.2s ease-out;
+    transition: all 0.3s ease-out;
 }
 
 .sidebar-link[data-bs-toggle="collapse"].collapsed::after {
     transform: rotate(45deg);
-    transition: all 0.2 ease-out;
+    transition: all 0.3 ease-out;
 }
 
 .avatar {
@@ -114,13 +115,18 @@ a.sidebar-link {
     margin-left: auto;
 }
 
+.nav-logo {
+    width: 245px;
+}
+
 /* Sidebar Toggle */
 
 @media only screen and (max-width: 682px) {
     #sidebar {
-        margin-left: -264px;
+        margin-left: -245px;
         min-height: 100vh;
-        z-index: 1;
+        z-index: 9999;
+        position: fixed;
 
     }
 
@@ -132,14 +138,95 @@ a.sidebar-link {
 }
 
 @media only screen and (min-width: 992px) {
+
+    #sidebar {
+        margin-left: 0px;
+        min-height: 100vh;
+        z-index: 999;
+        position: fixed;
+        overflow: hidden;
+        overflow-y: auto;
+        margin-top: 3rem;
+
+    }
+
+    .content {
+        margin-left: 245px;
+    }
+
+    .footer {
+        margin-left: 245px;
+    }
+
     #sidebar.toggle {
-        margin-left: -264px;
+        margin-left: 245px;
+    }
+
+    #sidebar.toggle~.main .content {
+        margin-left: 0;
+        width: 100%;
+        transition: all 0.3s ease-in;
+    }
+
+    #sidebar.toggle~.main .footer {
+        margin-left: 0;
+        width: 100%;
+        transition: all 0.3s ease-in;
+    }
+
+    #sidebar~.main .content {
+        transition: all 0.3s ease-out;
+    }
+
+    #sidebar~.main .footer {
+        transition: all 0.3s ease-out;
     }
 }
 
 @media only screen and (min-width: 683px) {
+    #sidebar {
+        margin-left: 0px;
+        min-height: 100vh;
+        z-index: 999;
+        position: fixed;
+        overflow: hidden;
+        overflow-y: auto;
+        margin-top: 3rem;
+
+    }
+
+    .content {
+        margin-left: 245px;
+    }
+
+    .footer {
+        margin-left: 245px;
+    }
+
     #sidebar.toggle {
-        margin-left: -264px;
+        margin-left: -245px;
+    }
+
+    #sidebar.toggle~.main .content {
+        margin-left: 0;
+        width: 100%;
+        transition: all 0.3s ease-in;
+    }
+
+    #sidebar.toggle~.main .footer {
+        margin-left: 0;
+        width: 100%;
+        transition: all 0.3s ease-in;
+    }
+
+    #sidebar~.main .content {
+
+        transition: all 0.3s ease-out;
+    }
+
+    #sidebar~.main .footer {
+
+        transition: all 0.3s ease-out;
     }
 }
 
@@ -206,28 +293,41 @@ html[data-bs-theme="light"] .theme-toggle .fa-sun {
     display: flex;
 }
 
-/* Adjust the navbar width when the sidebar is toggled */
-@media only screen and (min-width: 992px) {
-    #sidebar ~ .main .navbar {
-        width: calc(100% - 264px);
-        transition: all 0.3s ease; 
-    }
-}
-
-@media only screen and (min-width: 683px) {
-    #sidebar.toggle ~ .main .navbar {
-        width: 100%;
-        transition: all 0.3s ease; 
-    }
-}
-
-@media only screen and (min-width: 683px) {
-    #sidebar ~ .main .navbar {
-        width: calc(100% - 264px);
-        transition: all 0.3s ease; 
-    }
-}
-
 .content {
     margin-top: 4rem;
+}
+
+
+
+
+
+
+
+
+/* For Chrome, Safari, and newer versions of Edge */
+/* Modify the scrollbar width, track, and thumb appearance as desired */
+::-webkit-scrollbar {
+    width: 6px;
+    /* Width of the scrollbar */
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    /* Track color */
+}
+
+::-webkit-scrollbar-thumb {
+    background: #888;
+    /* Thumb color */
+    border-radius: 3px;
+    /* Rounded corners for the thumb */
+}
+
+/* For Firefox */
+/* Firefox uses a different syntax for scrollbar styling */
+/* Modify the scrollbar width, track, and thumb appearance as desired */
+/* Please note that not all properties are supported in Firefox */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: #888 #f1f1f1;
 }

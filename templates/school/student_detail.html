@@ -28,13 +28,13 @@
                 <div class="col-md-6">
                     {% if student.image %}
                     <img src="{{ student.image.url }}" alt="Profile Picture" class="img-fluid"
-                        style="height: 200px; width: 200px;">
+                        style="height: 200px; width: 200px;" loading="lazy">
                     {% elif student.gender == 'M' %}
                     <img src="{% static 'assets/images/default-male.jpg' %}" alt="Profile Picture" class="img-fluid"
-                        style="height: 200px; width: 200px;">
+                        style="height: 200px; width: 200px;" loading="lazy">
                     {% else %}
                     <img src="{% static 'assets/images/default-female.jpg' %}" alt="Profile Picture" class="img-fluid"
-                        style="height: 200px; width: 200px;">
+                        style="height: 200px; width: 200px;" loading="lazy">
                     {% endif %}
                 </div>
             </div>

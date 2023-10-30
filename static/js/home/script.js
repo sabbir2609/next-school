@@ -62,15 +62,14 @@ document.body.addEventListener("click", function (event) {
 });
 
 // Add scroll event listener to the gallery container
-const imageGalleryContainer = document.getElementById("imageGalleryContainer");
-imageGalleryContainer.addEventListener("wheel", (event) => {
-    if (event.deltaY !== 0) {
-        event.preventDefault();
-        imageGalleryContainer.scrollBy({
-            left: event.deltaY,
-        });
-    }
-});
+// const imageGalleryContainer = document.getElementById("imageGalleryContainer");
+// imageGalleryContainer.addEventListener("wheel", (event) => {
+//     if (event.deltaY !== 0) {
+//         imageGalleryContainer.scrollBy({
+//             left: event.deltaY,
+//         });
+//     }
+// }, { passive: false });
 
 
 var multipleCardCarousel = document.querySelector("#customCarousel");

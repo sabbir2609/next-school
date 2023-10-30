@@ -4,7 +4,7 @@
         <div class="carousel-item {% if forloop.first %} active {% endif %}">
 
             <img src="{{ item.image.url }}" class="d-block w-100 rounded-1 border border-opacity-50 border-primary"
-                alt="{{ item.alt_text }}" style="height: 370px; object-fit: cover;">
+                alt="{{ item.alt_text }}" style="height: 370px; object-fit: cover;" loading="lazy">
 
         </div>
         {% endfor %}

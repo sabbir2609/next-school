@@ -38,6 +38,27 @@ class DashboardNoticeListView(NoticeListView):
         context["tag_list"] = set(
             Tag.objects.filter(notice__isnull=False)
         )  # there should be more efficient way
+        context["num"] = [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+        ]
         return context
 
 

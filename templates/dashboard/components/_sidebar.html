@@ -69,6 +69,20 @@
                 </ul>
             </li>
 
+            <li class="sidebar-header">
+                Others
+            </li>
+
+            {% for i in num %}
+            <li class="sidebar-item">
+                <a href="{% url 'dashboard:dashboard' %}" class="sidebar-link">
+                    <i class="fa-solid fa-list-ul"></i>
+                    Dashboard {{i}}
+                </a>
+            </li>
+
+            {% endfor %}
+
 
         </ul>
 
