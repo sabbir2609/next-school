@@ -4,7 +4,7 @@
     <div class="h-100">
 
         <div class="sidebar-logo">
-            <a href="#"> Turbo Admin </a>
+            <a href="#"> Turbo Admin Panel </a>
         </div>
 
         <ul class="sidebar-nav">
@@ -73,16 +73,45 @@
                 Others
             </li>
 
-            {% for i in num %}
-            <li class="sidebar-item">
-                <a href="{% url 'dashboard:dashboard' %}" class="sidebar-link">
-                    <i class="fa-solid fa-list-ul"></i>
-                    Dashboard {{i}}
-                </a>
-            </li>
 
-            {% endfor %}
+            <!-- <style>
+                .sidebar-end {
+                    position: absolute;
+                    width: 100%;
+                    height: 200px;
+                    bottom: 48px;
+                    background-color: var(--bg-dark-subtle)
+                }
+            </style>
 
+            <div class="sidebar-end">
+
+                <li class="sidebar-header">
+                    OPTIONS
+                </li>
+
+                <li class="sidebar-item">
+                    <a href="#" class="sidebar-link">
+                        <i class="fa-solid fa-list-ul"></i>
+                        Profile
+                    </a>
+                </li>
+
+                <li class="sidebar-item">
+                    <a href="#" class="sidebar-link">
+                        <i class="fa-solid fa-list-ul"></i>
+                        Settings
+                    </a>
+                </li>
+
+                <li class="sidebar-item">
+                    <a href="#" class="sidebar-link">
+                        <i class="fa-solid fa-list-ul"></i>
+                        Dark Mode
+                    </a>
+                </li>
+
+            </div> -->
 
         </ul>
 

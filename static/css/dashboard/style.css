@@ -58,7 +58,7 @@ h4 {
 /* Sidebar Elements Style */
 
 .sidebar-logo {
-    padding: 1.15rem;
+    padding: 1rem;
 }
 
 .sidebar-logo a {
@@ -75,8 +75,8 @@ h4 {
 }
 
 .sidebar-header {
-    font-size: 0.75rem;
-    padding: 1.5rem 1.5rem 0.37rem;
+    font-size: 0.85rem;
+    padding: 0.3rem 1.5rem 0.2rem;
 }
 
 a.sidebar-link {
@@ -125,7 +125,7 @@ a.sidebar-link {
     #sidebar {
         margin-left: -245px;
         min-height: 100vh;
-        z-index: 9999;
+        z-index: 2000;
         position: fixed;
 
     }
@@ -305,22 +305,18 @@ html[data-bs-theme="light"] .theme-toggle .fa-sun {
 
 
 /* For Chrome, Safari, and newer versions of Edge */
-/* Modify the scrollbar width, track, and thumb appearance as desired */
 ::-webkit-scrollbar {
-    width: 6px;
+    width: 2px;
     /* Width of the scrollbar */
 }
 
 ::-webkit-scrollbar-track {
     background: #f1f1f1;
-    /* Track color */
 }
 
 ::-webkit-scrollbar-thumb {
     background: #888;
-    /* Thumb color */
-    border-radius: 3px;
-    /* Rounded corners for the thumb */
+    border-radius: 1px;
 }
 
 /* For Firefox */
