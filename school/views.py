@@ -18,7 +18,6 @@ from .models import (
     Attendance,
     Section,
     SectionSubject,
-    Student,
     StudentAssign,
     Teacher,
     StudentResult,

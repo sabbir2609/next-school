@@ -17,7 +17,9 @@ class StudentForm(forms.ModelForm):
         ]
 
         widgets = {
-            "dob": forms.DateInput(attrs={"class": "form-control", "type": "date"}),
+            "date_of_birth": forms.DateInput(
+                attrs={"class": "form-control", "type": "date"}
+            ),
         }
 
 

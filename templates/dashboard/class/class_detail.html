@@ -1,0 +1,53 @@
+{% extends 'dashboard/dashboard.html' %}
+
+
+{% block content %}
+<div class="container">
+    <div class="h2 mt-2 ">
+        Class : {{ class.title }}
+    </div>
+
+    <div class="h2 mt-2 ">
+        Class : {{ class.teacher }}
+    </div>
+
+    <div class="h2 mt-2 ">
+        Class : {{ class.description }}
+    </div>
+
+
+    <a href="{% url 'dashboard:class_update' class.slug %}" class="btn btn-warning ">Update</a>
+
+
+    <!-- Button that opens a modal -->
+    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete_class">
+        Delete
+    </button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="delete_class" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="delete_item_label" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="delete_item_label">Delete {{ object }}?</h5>
+                </div>
+
+                <form action="{% url 'dashboard:class_delete' class.slug %}" method="post">
+                    {% csrf_token %}
+
+                    <div class="modal-body">
+                        <p>Are you sure you want to delete "{{ object }}"?</p>
+                        {{ form }}
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-danger" value="Confirm">Delete</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

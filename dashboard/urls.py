@@ -1,18 +1,27 @@
 from django.urls import path
 from .views import (
     DashboardView,
-    DashboardNoticeListView,
     NoticeTagAutoComplete,
+    # notice views
+    DashboardNoticeListView,
     DashboardNoticeDetailView,
     NoticeCreateView,
     NoticeDeleteView,
     NoticeUpdateView,
+    # student views
     StudentCreateView,
     StudentDeleteView,
     StudentDetailView,
     StudentListView,
     StudentUpdateView,
     StudentAssignView,
+    # class views
+    ClassListView,
+    ClassDetailView,
+    ClassCreateView,
+    ClassUpdateView,
+    ClassDeleteView,
+    # teacher views
 )
 
 app_name = "dashboard"
@@ -40,4 +49,15 @@ urlpatterns = [
     path("students/new/", StudentCreateView.as_view(), name="student_new"),
     # Student Assign URLs
     path("students/assign/", StudentAssignView.as_view(), name="student_assign"),
+    ################
+    # Class URLs #
+    ################
+    path("dashboard/classes/", ClassListView.as_view(), name="class_list"),
+    path("dashboard/classes/new/", ClassCreateView.as_view(), name="class_new"),
+    path("dashboard/classes/<str:slug>/", ClassDetailView.as_view(), name="class_detail"),
+    path("dashboard/classes/<str:slug>/update/", ClassUpdateView.as_view(), name="class_update"),
+    path("dashboard/classes/<str:slug>/delete/", ClassDeleteView.as_view(), name="class_delete"),
+    ################
+    # Teacher URLs #
+    ################
 ]

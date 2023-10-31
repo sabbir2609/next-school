@@ -1,0 +1,21 @@
+{% extends 'dashboard/dashboard.html' %}
+
+{% block title %} Class Update {% endblock %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<div class="container-fluid">
+    <h2>Update Class</h2>
+    {{ form.media }} {# for ckeditor to load #}
+    <form action="" method=POST enctype="multipart/form-data">
+        {% csrf_token %}
+
+        {{ form | crispy }}
+
+        <button type="submit" class="btn btn-primary">Update</button>
+    </form>
+</div>
+
+{% endblock %}

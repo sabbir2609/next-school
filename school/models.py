@@ -33,7 +33,7 @@ class Class(models.Model):
     )
     title = models.CharField(max_length=8, choices=CLASS_CHOICES, primary_key=True)
     slug = models.SlugField(unique=True, blank=True, null=True)
-    class_teacher = models.ForeignKey(
+    teacher = models.ForeignKey(
         "Teacher", on_delete=models.SET_NULL, null=True, blank=True
     )
     description = models.TextField(

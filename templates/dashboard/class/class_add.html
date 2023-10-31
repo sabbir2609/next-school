@@ -1,0 +1,20 @@
+{% extends "dashboard/dashboard.html" %}
+
+{% block title %} Add A Class {% endblock %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<div class="container-flex">
+    <h2>Add a new Class</h2>
+    <form method="POST" autocomplete="off">
+        {% csrf_token %}
+
+        {{ form | crispy }}
+
+        <button type="submit" class="btn btn-primary">Add</button>
+    </form>
+</div>
+
+{% endblock %}

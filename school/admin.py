@@ -52,7 +52,7 @@ class ClassAdmin(admin.ModelAdmin):
 
     list_display = (
         "get_class_name",
-        "class_teacher",
+        "teacher",
         "description",
         "slug",
     )

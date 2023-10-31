@@ -14,11 +14,11 @@ from django.views.generic import (
     DeleteView,
 )
 
+from school.models import Class, Student
 from school.forms import StudentAssignForm, StudentForm
 from .forms import NoticeForm
 
 from homepage.models import Notice
-from school.models import Student
 from homepage.views import NoticeListView, NoticeDetailView
 
 from dal import autocomplete
@@ -203,7 +203,6 @@ class StudentUpdateView(UpdateView):
 
 class StudentDeleteView(SuccessMessageMixin, DeleteView):
     model = Student
-    template_name = "school/student_confirm_delete.html"
     success_url = reverse_lazy("dashboard:student_list")
 
     def get_success_message(self, cleaned_data):
@@ -233,3 +232,71 @@ class StudentAssignView(SuccessMessageMixin, CreateView):
 
     def get_success_message(self, cleaned_data):
         return "Student assigned successfully"
+
+
+###############
+# class views #
+###############
+
+
+class ClassListView(ListView):
+    model = Class
+    context_object_name = "classes"
+    template_name = "dashboard/class/class_list.html"
+
+
+class ClassCreateView(SuccessMessageMixin, CreateView):
+    model = Class
+    fields = ["title", "teacher", "description"]
+    template_name = "dashboard/class/class_add.html"
+
+    def get_success_url(self):
+        return reverse_lazy("dashboard:class_detail", kwargs={"slug": self.object.slug})
+
+    def get_success_message(self, cleaned_data):
+        return "Class created successfully"
+
+    def form_valid(self, form):
+        title = form.save(commit=False)
+        title.slug = slugify("title.title")
+
+        try:
+            title.save()
+        except IntegrityError as e:
+            messages.error(
+                self.request,
+                "A Class with this title and date already exists! Change the title or contact the administrator.",
+            )
+            return self.form_invalid(form)
+
+        messages.success(
+            self.request,
+            f"Notice <em class='text-black'> {form.cleaned_data['title']} </em> created successfully",
+        )
+        return super().form_valid(form)
+
+
+class ClassDetailView(DetailView):
+    model = Class
+    template_name = "dashboard/class/class_detail.html"
+
+
+class ClassUpdateView(SuccessMessageMixin, UpdateView):
+    model = Class
+    template_name = "dashboard/class/class_update.html"
+    fields = "__all__"
+
+    def get_success_url(self):
+        return reverse_lazy("dashboard:class_detail", kwargs={"slug": self.object.slug})
+
+    def get_success_message(self, cleaned_data):
+        return "Class updated successfully"
+
+
+class ClassDeleteView(SuccessMessageMixin, DeleteView):
+    model = Class
+    template_name = "dashboard/class/class_confirm_delete.html"
+    success_url = reverse_lazy("dashboard:class_list")
+
+    def get_success_message(self, cleaned_data):
+        return "Class deleted successfully"

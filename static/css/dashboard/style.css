@@ -38,7 +38,7 @@ h4 {
 }
 
 #sidebar {
-    min-width: 245px;
+    min-width: 250px;
     transition: all 0.35s ease-in-out;
     max-height: 100vh;
     overflow-y: auto;
@@ -116,14 +116,14 @@ a.sidebar-link {
 }
 
 .nav-logo {
-    width: 245px;
+    width: 250px;
 }
 
 /* Sidebar Toggle */
 
 @media only screen and (max-width: 682px) {
     #sidebar {
-        margin-left: -245px;
+        margin-left: -250px;
         min-height: 100vh;
         z-index: 2000;
         position: fixed;
@@ -151,15 +151,15 @@ a.sidebar-link {
     }
 
     .content {
-        margin-left: 245px;
+        margin-left: 250px;
     }
 
     .footer {
-        margin-left: 245px;
+        margin-left: 250px;
     }
 
     #sidebar.toggle {
-        margin-left: 245px;
+        margin-left: 250px;
     }
 
     #sidebar.toggle~.main .content {
@@ -196,15 +196,15 @@ a.sidebar-link {
     }
 
     .content {
-        margin-left: 245px;
+        margin-left: 250px;
     }
 
     .footer {
-        margin-left: 245px;
+        margin-left: 250px;
     }
 
     #sidebar.toggle {
-        margin-left: -245px;
+        margin-left: -250px;
     }
 
     #sidebar.toggle~.main .content {

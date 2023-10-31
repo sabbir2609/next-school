@@ -3,9 +3,9 @@
     <!-- ======== Content For Sidebar ========-->
     <div class="h-100">
 
-        <div class="sidebar-logo">
+        <!-- <div class="sidebar-logo">
             <a href="#"> Turbo Admin Panel </a>
-        </div>
+        </div> -->
 
         <ul class="sidebar-nav">
 
@@ -43,17 +43,20 @@
             </li>
 
             <li class="sidebar-item">
+
                 <a href="#" class="sidebar-link collapsed" data-bs-toggle="collapse" data-bs-target="#student"
                     aria-expanded="false">
                     <i class="fa-solid fa-graduation-cap"></i> Student Management
                 </a>
 
                 <ul id="student" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+
                     <li class="sidebar-item">
                         <a href="{% url 'dashboard:student_list' %}" class="sidebar-link">
                             Student List
                         </a>
                     </li>
+
                     <li class="sidebar-item">
                         <a href="{% url 'dashboard:student_assign' %}" class="sidebar-link">
                             Student Assign
@@ -67,53 +70,95 @@
                     </li>
 
                 </ul>
+
+            </li>
+
+            <li class="sidebar-item">
+
+                <a href="#" class="sidebar-link collapsed" data-bs-toggle="collapse" data-bs-target="#classAndSection"
+                    aria-expanded="false">
+
+                    <i class="fa-solid fa-person-chalkboard"></i> Class And Section
+
+                </a>
+
+                <ul id="classAndSection" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+
+
+                    <li class="sidebar-item">
+
+                        <a href="#" class="sidebar-link collapsed" data-bs-toggle="collapse" data-bs-target="#class"
+                            aria-expanded="false">
+                            Class
+                        </a>
+
+                        <ul id="class" class="sidebar-dropdown list-unstyled collapse"
+                            data-bs-parent="#classAndSection">
+
+                            <li class="sidebar-item">
+                                <a href="{% url 'dashboard:class_list' %}" class="sidebar-link">
+                                    Class List
+                                </a>
+                            </li>
+
+                            <li class="sidebar-item">
+                                <a href="{% url 'dashboard:class_new' %}" class="sidebar-link">
+                                    Add Class
+                                </a>
+                            </li>
+
+                        </ul>
+
+                    </li>
+
+                    <li class="sidebar-item">
+
+                        <a href="#" class="sidebar-link collapsed" data-bs-toggle="collapse" data-bs-target="#section"
+                            aria-expanded="false">
+                            Section
+                        </a>
+
+                        <ul id="section" class="sidebar-dropdown list-unstyled collapse"
+                            data-bs-parent="#classAndSection">
+
+                            <li class="sidebar-item">
+                                <a href="{% url 'dashboard:student_new' %}" class="sidebar-link">
+                                    Section List
+                                </a>
+                            </li>
+
+                            <li class="sidebar-item">
+                                <a href="{% url 'dashboard:student_new' %}" class="sidebar-link">
+                                    Section Update
+                                </a>
+                            </li>
+
+                            <li class="sidebar-item">
+                                <a href="{% url 'dashboard:student_new' %}" class="sidebar-link">
+                                    Add Section
+                                </a>
+                            </li>
+
+                        </ul>
+
+                    </li>
+
+                </ul>
+
             </li>
 
             <li class="sidebar-header">
                 Others
             </li>
 
-
-            <!-- <style>
-                .sidebar-end {
-                    position: absolute;
-                    width: 100%;
-                    height: 200px;
-                    bottom: 48px;
-                    background-color: var(--bg-dark-subtle)
-                }
-            </style>
-
-            <div class="sidebar-end">
-
-                <li class="sidebar-header">
-                    OPTIONS
-                </li>
-
-                <li class="sidebar-item">
-                    <a href="#" class="sidebar-link">
-                        <i class="fa-solid fa-list-ul"></i>
-                        Profile
-                    </a>
-                </li>
-
-                <li class="sidebar-item">
-                    <a href="#" class="sidebar-link">
-                        <i class="fa-solid fa-list-ul"></i>
-                        Settings
-                    </a>
-                </li>
-
-                <li class="sidebar-item">
-                    <a href="#" class="sidebar-link">
-                        <i class="fa-solid fa-list-ul"></i>
-                        Dark Mode
-                    </a>
-                </li>
-
-            </div> -->
+            <li class="sidebar-item">
+                <a href="/admin" class="sidebar-link">
+                    <i class="fa-solid fa-user-gear"></i> Super Admin
+                </a>
+            </li>
 
         </ul>
 
     </div>
+
 </aside>
