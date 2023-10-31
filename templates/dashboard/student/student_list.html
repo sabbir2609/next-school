@@ -23,8 +23,8 @@
         <tr>
             <th scope="col">ID</th>
             <th scope="col">Name</th>
-            <th scope="col">Parent</th>
-            <th scope="col">B-ID</th>
+            <th scope="col">Gender</th>
+            <th scope="col">Birth Reg</th>
             <!-- <th scope="col">Action</th> -->
         </tr>
     </thead>
@@ -32,15 +32,17 @@
         {% for student in students %}
         <tr>
             <th scope="row">{{ student.student_id }}</th>
-            <td><a href="{{ student.student_id }}">{{ student.name_en }}</a></td>
-            <td>{{ student.fathers_name_en }}</td>
+            <td><a href="{% url 'dashboard:student_detail' student.student_id %}">{{ student.name_en }}</a></td>
+            <td>
+                {% if student.gender == 'M' %}
+                Male
+                {% elif student.gender == 'F' %}
+                Female
+                {% else %}
+                Unknown
+                {% endif %}
+            </td>
             <td>{{ student.birth_certificate_no }}</td>
-            <!-- <td>
-                <button type="button" class="btn btn-primary"
-                    onclick="window.location.href='{{ student.student_id }}/edit'">Edit</button>
-                <button type="button" class="btn btn-danger"
-                    onclick="window.location.href='{{ student.student_id }}/delete'">Delete</button>
-            </td> -->
         </tr>
         {% endfor %}
     </tbody>

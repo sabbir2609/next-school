@@ -1,0 +1,76 @@
+{% extends 'dashboard/dashboard.html' %}
+
+{% load static %}
+
+{% block title %} Teacher List {% endblock %}
+
+{% block content %}
+
+<div class="container-fluid">
+    <h1>Teacher Detail</h1>
+    <hr>
+
+    <div class="card">
+        <div class="card-header">
+            <h4>Personal Information</h4>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <p><strong>Name (English):</strong> {{ teacher.name_en }}</p>
+                    <p><strong>Name (Bangla):</strong> {{ teacher.name_bn }}</p>
+                    <p><strong>Date of Birth:</strong> {{ teacher.date_of_birth }}</p>
+                    <p><strong>Gender:</strong> {{ teacher.get_gender_display }}</p>
+                    <p><strong>Religion:</strong> {{ teacher.get_religion_display }}</p>
+                    <p><strong>Blood Group:</strong> {{ teacher.get_blood_group_display }}</p>
+                    <p><strong>Teacher ID:</strong> {{ teacher.teacher_id }}</p>
+                </div>
+                <div class="col-md-6 d-flex align-items-center justify-content-center">
+                    {% if teacher.photo %}
+                    <img src="{{ teacher.photo.url }}" alt="{{ teacher.name_en }} Profile Picture" class="img-fluid"
+                        style="height: 300px; width: auto;" loading="lazy">
+                    {% else %}
+                    <div class="text-center">
+                        <img src="{% static 'assets/images/teacher.jpg' %}" alt="Default Teacher Picture"
+                            class="img-fluid" style="height: 200px; width: 200px;" loading="lazy">
+                        <p>No Image Found</p>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card mt-3">
+        <div class="card-header">
+            <h4>Contact Information</h4>
+        </div>
+        <div class="card-body">
+            <p><strong>Phone:</strong> {{ teacher.phone }}</p>
+            <p><strong>Email:</strong> {{ teacher.email }}</p>
+            <p><strong>Present Address:</strong> {{ teacher.present_address }}</p>
+            <p><strong>Permanent Address:</strong> {{ teacher.permanent_address }}</p>
+        </div>
+    </div>
+
+    <!-- Father's Information, Mother's Information, Other Information cards... (adjust fields) -->
+
+    <div class="card mt-3">
+        <div class="card-header">
+            <h4>Action</h4>
+        </div>
+        <div class="card-body">
+            <div class="button-group float-right">
+                <a href="{% url 'dashboard:teacher_list' %}" class="btn btn-primary">Back</a>
+                <a href="{% url 'dashboard:teacher_update' teacher.teacher_id %}" class="btn btn-warning">Update</a>
+                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete_item">
+                    Delete
+                </button>
+                {% include 'dashboard/teacher/_modal.html' %}
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

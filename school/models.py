@@ -311,7 +311,12 @@ class Teacher(models.Model):
 
     # school info
     joining_date = models.DateField(null=True, blank=True)
-    photo = models.ImageField(upload_to="teacher_photo", null=True, blank=True)
+    photo = models.ImageField(
+        upload_to="teacher_photo",
+        null=True,
+        blank=True,
+        help_text="Recommended: Upload 1:1 ratio image",
+    )
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -322,6 +327,7 @@ class Teacher(models.Model):
     class Meta:
         verbose_name_plural = "Teachers"
         unique_together = ("teacher_id", "nid")
+        ordering = ("-created_at",)
 
 
 class SectionSubject(models.Model):

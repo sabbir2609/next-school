@@ -1,18 +1,17 @@
 {% extends 'dashboard/dashboard.html' %}
 
-{% block title %} Add Student {% endblock %}
+{% block title %} Update Teacher {% endblock %}
 
 {% load crispy_forms_tags %}
 
 {% block content %}
 
-<h1>Add A Student</h1>
-<div class="container">
+<h1>Update {{ teacher.name_en }}</h1>
+<div class="container-fluid">
     <form action="" method=POST enctype="multipart/form-data">
         {% csrf_token %}
         {{ form|crispy }}
-        <button class="btn btn-primary" type="submit">Add +</button>
+        <button class="btn btn-warning" type="submit">Update</button>
     </form>
 </div>
-
 {% endblock %}

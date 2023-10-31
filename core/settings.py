@@ -1,5 +1,12 @@
 from pathlib import Path
 
+# importing logger settings
+try:
+    from .logger_settings import *
+except Exception as e:
+    # in case of any error, pass silently.
+    pass
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -15,10 +22,10 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
-# INTERNAL_IPS = [
-#     "127.0.0.1",
-#     "localhost",
-# ]
+INTERNAL_IPS = [
+    "127.0.0.1",
+    "localhost",
+]
 
 # CORS_ALLOWED_ORIGINS = [
 #     "https://unsplash.it",

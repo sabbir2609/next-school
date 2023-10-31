@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import Attendance, Student, StudentAssign, StudentResult
+from .models import Teacher, Attendance, Student, StudentAssign, StudentResult
 
 from dal import autocomplete
 
@@ -15,6 +15,18 @@ class StudentForm(forms.ModelForm):
             "status",
             "admission_class",
         ]
+
+        widgets = {
+            "date_of_birth": forms.DateInput(
+                attrs={"class": "form-control", "type": "date"}
+            ),
+        }
+
+
+class TeacherForm(forms.ModelForm):
+    class Meta:
+        model = Teacher
+        fields = "__all__"
 
         widgets = {
             "date_of_birth": forms.DateInput(

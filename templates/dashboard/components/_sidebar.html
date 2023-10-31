@@ -75,6 +75,31 @@
 
             <li class="sidebar-item">
 
+                <a href="#" class="sidebar-link collapsed" data-bs-toggle="collapse" data-bs-target="#teacher"
+                    aria-expanded="false">
+                    <i class="fa-solid fa-graduation-cap"></i> Teacher Management
+                </a>
+
+                <ul id="teacher" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+
+                    <li class="sidebar-item">
+                        <a href="{% url 'dashboard:teacher_list' %}" class="sidebar-link">
+                            Teacher List
+                        </a>
+                    </li>
+
+                    <li class="sidebar-item">
+                        <a href="{% url 'dashboard:teacher_new' %}" class="sidebar-link">
+                            Add Teacher
+                        </a>
+                    </li>
+
+                </ul>
+
+            </li>
+
+            <li class="sidebar-item">
+
                 <a href="#" class="sidebar-link collapsed" data-bs-toggle="collapse" data-bs-target="#classAndSection"
                     aria-expanded="false">
 

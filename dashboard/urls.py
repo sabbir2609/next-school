@@ -22,6 +22,11 @@ from .views import (
     ClassUpdateView,
     ClassDeleteView,
     # teacher views
+    TeacherCreateView,
+    TeacherListView,
+    TeacherDetailView,
+    TeacherUpdateView,
+    TeacherDeleteView,
 )
 
 app_name = "dashboard"
@@ -44,11 +49,11 @@ urlpatterns = [
     ################
     path("dashboard/students/", StudentListView.as_view(), name="student_list"),
     path("dashboard/students/<int:pk>/", StudentDetailView.as_view(), name="student_detail"),
-    path("students/<int:pk>/update/", StudentUpdateView.as_view(), name="student_update"),
-    path("students/<int:pk>/delete/", StudentDeleteView.as_view(), name="student_delete"),
-    path("students/new/", StudentCreateView.as_view(), name="student_new"),
+    path("dashboard/students/new/", StudentCreateView.as_view(), name="student_new"),
+    path("dashboard/students/<int:pk>/update/", StudentUpdateView.as_view(), name="student_update"),
+    path("dashboard/students/<int:pk>/delete/", StudentDeleteView.as_view(), name="student_delete"),
     # Student Assign URLs
-    path("students/assign/", StudentAssignView.as_view(), name="student_assign"),
+    path("dashboard/students/assign/", StudentAssignView.as_view(), name="student_assign"),
     ################
     # Class URLs #
     ################
@@ -60,4 +65,13 @@ urlpatterns = [
     ################
     # Teacher URLs #
     ################
+    path("dashboard/teachers/", TeacherListView.as_view(), name="teacher_list"),
+    path("dashboard/teachers/new/", TeacherCreateView.as_view(), name="teacher_new"),
+    path("dashboard/teachers/<int:pk>/", TeacherDetailView.as_view(), name="teacher_detail"),
+    path("dashboard/teachers/<int:pk>/update/", TeacherUpdateView.as_view(), name="teacher_update"),
+    path("dashboard/teachers/<int:pk>/delete/", TeacherDeleteView.as_view(), name="teacher_delete"),
+    ################
+    # Other URLs #
+    ################
+
 ]

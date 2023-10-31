@@ -1,0 +1,64 @@
+{% extends 'dashboard/dashboard.html' %}
+
+{% load static %}
+
+{% block title %} Teacher List {% endblock %}
+
+{% block content %}
+
+{% if teachers.count != 0 %}
+
+<h2 class="text-center mt-3 mb-3">Teacher List</h2>
+
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Teacher ID</th>
+                <th>Name (English)</th>
+                <th>Phone</th>
+                <th>Photo</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for teacher in teachers %}
+            <tr>
+                <td>{{ teacher.teacher_id }}</td>
+                <td><a href="{% url 'dashboard:teacher_detail' teacher.teacher_id %}">{{ teacher.name_en }}</a></td>
+                <td>{{ teacher.phone }}</td>
+                <td class="d-flex align-items-center">
+                    {% if teacher.photo %}
+                    <img src="{{ teacher.photo.url }}" alt="{{ teacher.name_en }} Photo"
+                        style="width: 50px; height: auto;">
+                    {% else %}
+                    <div>
+                        <img src="{% static 'assets/images/teacher.jpg' %}" alt="Default Photo"
+                            style="width: 50px; height: auto;">
+                        <p class="mb-0">No photo available</p>
+                    </div>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% if is_paginated %}
+{% include 'dashboard/components/_pagination.html' %}
+{% endif %}
+
+{% else %}
+
+<div class="text-center mt-3 mb-3">
+    <h3>No Teacher Found</h3>
+    <h4>Try to search with a different name</h4>
+</div>
+
+{% endif %}
+
+<div class="mt-3">
+    <button type="button" class="btn btn-primary" onclick="window.location.href='new'">Add Teacher +</button>
+</div>
+
+{% endblock %}
