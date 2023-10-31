@@ -1,5 +1,13 @@
 import os
 
+# Directory path where logs will be stored
+log_directory = "logs"
+
+# Ensure the log directory exists, create it if it doesn't
+if not os.path.exists(log_directory):
+    os.makedirs(log_directory)
+
+# fmt: off
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
@@ -29,27 +37,31 @@ LOGGING = {
         },
     },
     "handlers": {
-        "colored_file": {
-            "level": "DEBUG",
+
+        "error_log": {
+            "level": "ERROR",
             "class": "logging.FileHandler",
-            "filename": os.path.join("logs", "error.log"),
+            "filename": os.path.join(log_directory, "error.log"),
             "formatter": "standard",
         },
-        "server_logs_file": {
+
+        "server_log": {
             "level": "DEBUG",
             "class": "logging.FileHandler",
-            "filename": os.path.join("logs", "server.log"),
+            "filename": os.path.join(log_directory, "server.log"),
             "formatter": "standard",
         },
+
         "console": {
             "level": "DEBUG",
             "class": "logging.StreamHandler",
             "formatter": "standard",
         },
     },
+    
     "loggers": {
         "": {
-            "handlers": ["colored_file", "server_logs_file", "console"],
+            "handlers": ["error_log", "server_log", "console"],
             "level": "DEBUG",
             "propagate": True,
         },
