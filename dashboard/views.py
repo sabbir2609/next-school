@@ -1,18 +1,24 @@
 from django.contrib import messages
 from django.db import IntegrityError
+from django.db.models import Q
 from django.utils.text import slugify
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse_lazy
 from django.views.generic import (
     TemplateView,
+    DetailView,
     CreateView,
     ListView,
     UpdateView,
     DeleteView,
 )
+
+from school.forms import StudentAssignForm, StudentForm
 from .forms import NoticeForm
 
 from homepage.models import Notice
+from school.models import Student
 from homepage.views import NoticeListView, NoticeDetailView
 
 from dal import autocomplete
@@ -30,6 +36,7 @@ class DashboardView(TemplateView):
     template_name = "dashboard/dashboard.html"
 
 
+# app: homepage views
 class DashboardNoticeListView(NoticeListView):
     template_name = "dashboard/notice/notice_list.html"
 
@@ -38,27 +45,6 @@ class DashboardNoticeListView(NoticeListView):
         context["tag_list"] = set(
             Tag.objects.filter(notice__isnull=False)
         )  # there should be more efficient way
-        context["num"] = [
-            1,
-            2,
-            3,
-            4,
-            5,
-            6,
-            7,
-            8,
-            9,
-            10,
-            11,
-            12,
-            13,
-            14,
-            15,
-            16,
-            17,
-            18,
-            19,
-        ]
         return context
 
 
@@ -150,3 +136,100 @@ class NoticeDeleteView(SuccessMessageMixin, DeleteView):
 
     def get_success_message(self, cleaned_data):
         return "Notice deleted successfully"
+
+
+#####################
+# app: school views #
+#####################
+
+
+class StudentListView(ListView):
+    model = Student
+    context_object_name = "students"
+    template_name = "dashboard/student/student_list.html"
+    paginate_by = 10
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        search_query = self.request.GET.get("q")
+        if search_query:
+            queryset = queryset.filter(
+                Q(name_en__icontains=search_query)
+                | Q(student_id__icontains=search_query)
+            )
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super(StudentListView, self).get_context_data(**kwargs)
+        students = self.get_queryset()
+        page = self.request.GET.get("page")
+        paginator = Paginator(students, self.paginate_by)
+        try:
+            students = paginator.page(page)
+        except PageNotAnInteger:
+            students = paginator.page(1)
+        except EmptyPage:
+            students = paginator.page(paginator.num_pages)
+        context["students"] = students
+        return context
+
+
+class StudentDetailView(DetailView):
+    model = Student
+    template_name = "dashboard/student/student_detail.html"
+
+
+class StudentUpdateView(UpdateView):
+    model = Student
+    template_name = "dashboard/student/student_update.html"
+    form_class = StudentForm
+
+    def get_success_url(self):
+        return reverse_lazy(
+            "dashboard:student_detail", kwargs={"pk": self.kwargs["pk"]}
+        )
+
+    def form_valid(self, form):
+        if not form.has_changed():
+            messages.warning(self.request, "Nothing to update")
+            return super().form_invalid(form)
+
+        messages.success(
+            self.request,
+            f" '{form.cleaned_data['name_en']}' profile updated successfully",
+        )
+        return super().form_valid(form)
+
+
+class StudentDeleteView(SuccessMessageMixin, DeleteView):
+    model = Student
+    template_name = "school/student_confirm_delete.html"
+    success_url = reverse_lazy("dashboard:student_list")
+
+    def get_success_message(self, cleaned_data):
+        return "Student deleted successfully"
+
+
+class StudentCreateView(SuccessMessageMixin, CreateView):
+    model = Student
+    template_name = "dashboard/student/student_add.html"
+    fields = ["student_id", "name_en", "birth_certificate_no", "image"]
+
+    def get_success_url(self):
+        return reverse_lazy("dashboard:student_detail", kwargs={"pk": self.object.pk})
+
+    def get_success_message(self, cleaned_data):
+        return "Student profile created successfully"
+
+
+class StudentAssignView(SuccessMessageMixin, CreateView):
+    template_name = "dashboard/student/student_assign.html"
+    form_class = StudentAssignForm
+
+    def get_success_url(self):
+        return reverse_lazy(
+            "school:section_detail", kwargs={"pk": self.object.section.id}
+        )
+
+    def get_success_message(self, cleaned_data):
+        return "Student assigned successfully"

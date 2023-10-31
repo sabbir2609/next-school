@@ -5,15 +5,9 @@ from .views import (
     AttendanceReportView,
     SectionDetailView,
     SectionListView,
-    StudentAssignView,
     StudentAttendanceCreateView,
     StudentAttendanceReportDetailView,
-    StudentCreateView,
-    StudentDeleteView,
-    StudentDetailView,
-    StudentListView,
     StudentResultAutocompleteView,
-    StudentUpdateView,
     StudentAutocompleteView,
     StudentResultCreateView,
     StudentResultDetailView,
@@ -24,14 +18,7 @@ app_name = "school"
 
 # fmt: off
 urlpatterns = [
-    # Student URLs
-    path("students/", StudentListView.as_view(), name="student_list"),
-    path("students/<int:pk>/", StudentDetailView.as_view(), name="student_detail"),
-    path("students/new/", StudentCreateView.as_view(), name="student_new"),
-    path("students/<int:pk>/edit/", StudentUpdateView.as_view(), name="student_edit"),
-    path("students/<int:pk>/delete/", StudentDeleteView.as_view(), name="student_delete"),
-    # Assign Student URLs
-    path("students/assign/", StudentAssignView.as_view(), name="student_assign"),
+
     # Student Autocomplete URLs for assigned students
     path("student-autocomplete/", StudentAutocompleteView.as_view(), name="student-autocomplete"),
     # Attendance URLs (Student)

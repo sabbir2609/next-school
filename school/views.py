@@ -1,6 +1,5 @@
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
-from django.db.models import Q
 from django.http import Http404
 from django.shortcuts import get_list_or_404, get_object_or_404, redirect
 from django.urls import reverse_lazy
@@ -24,66 +23,6 @@ from .models import (
     Teacher,
     StudentResult,
 )
-
-
-class StudentListView(ListView):
-    model = Student
-    context_object_name = "students"
-    template_name = "school/student_list.html"
-    paginate_by = 10
-
-    def get_queryset(self):
-        queryset = super().get_queryset()
-        search_query = self.request.GET.get("q")
-        if search_query:
-            queryset = queryset.filter(
-                Q(name_en__icontains=search_query)
-                | Q(student_id__icontains=search_query)
-            )
-        return queryset
-
-
-class StudentDetailView(DetailView):
-    model = Student
-    template_name = "school/student_detail.html"
-
-
-class StudentCreateView(SuccessMessageMixin, CreateView):
-    model = Student
-    template_name = "school/student_add.html"
-    fields = ["student_id", "name_en", "birth_certificate_no", "image"]
-
-    def get_success_url(self):
-        return reverse_lazy("school:student_detail", kwargs={"pk": self.object.pk})
-
-    def get_success_message(self, cleaned_data):
-        return "Student profile created successfully"
-
-
-class StudentUpdateView(UpdateView):
-    model = Student
-    template_name = "school/student_update.html"
-    form_class = StudentForm
-
-    def get_success_url(self):
-        return reverse_lazy("school:student_detail", kwargs={"pk": self.kwargs["pk"]})
-
-    def form_valid(self, form):
-        if not form.has_changed():
-            messages.warning(self.request, "Nothing to update")
-            return super().form_invalid(form)
-
-        messages.success(self.request, "Student profile updated successfully")
-        return super().form_valid(form)
-
-
-class StudentDeleteView(SuccessMessageMixin, DeleteView):
-    model = Student
-    template_name = "school/student_confirm_delete.html"
-    success_url = reverse_lazy("school:student_list")
-
-    def get_success_message(self, cleaned_data):
-        return "Student deleted successfully"
 
 
 class SectionListView(ListView):
@@ -134,19 +73,6 @@ class SectionDetailView(DetailView):
         context["subjects"] = SectionSubject.objects.filter(section_id=self.object.id)
 
         return context
-
-
-class StudentAssignView(SuccessMessageMixin, CreateView):
-    template_name = "school/assign_student.html"
-    form_class = StudentAssignForm
-
-    def get_success_url(self):
-        return reverse_lazy(
-            "school:section_detail", kwargs={"pk": self.object.section.id}
-        )
-
-    def get_success_message(self, cleaned_data):
-        return "Student assigned successfully"
 
 
 # student autocomplete view for student assign

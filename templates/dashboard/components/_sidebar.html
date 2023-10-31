@@ -43,26 +43,26 @@
             </li>
 
             <li class="sidebar-item">
-                <a href="#" class="sidebar-link collapsed" data-bs-toggle="collapse" data-bs-target="#menu2"
+                <a href="#" class="sidebar-link collapsed" data-bs-toggle="collapse" data-bs-target="#student"
                     aria-expanded="false">
-                    <i class="fa-regular fa-file-lines"></i> Menu
+                    <i class="fa-solid fa-graduation-cap"></i> Student Management
                 </a>
 
-                <ul id="menu2" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                <ul id="student" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
                     <li class="sidebar-item">
-                        <a href="#" class="sidebar-link">
-                            Option 1
+                        <a href="{% url 'dashboard:student_list' %}" class="sidebar-link">
+                            Student List
                         </a>
                     </li>
                     <li class="sidebar-item">
-                        <a href="#" class="sidebar-link">
-                            Option 2
+                        <a href="{% url 'dashboard:student_assign' %}" class="sidebar-link">
+                            Student Assign
                         </a>
                     </li>
 
                     <li class="sidebar-item">
-                        <a href="#" class="sidebar-link">
-                            Option 3
+                        <a href="{% url 'dashboard:student_new' %}" class="sidebar-link">
+                            Add Student
                         </a>
                     </li>
 

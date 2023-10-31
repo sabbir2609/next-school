@@ -45,5 +45,46 @@ sidebarToggle.addEventListener('click', function () {
 
 
 // theme toggle
+window.addEventListener("DOMContentLoaded", () => {
+    const savedTheme = localStorage.getItem("data-bs-theme");
+    const body = document.querySelector("body");
+    const icon = document.getElementById("dark-mode-icon");
 
+    if (savedTheme === "dark") {
+        body.setAttribute("data-bs-theme", "dark");
+        icon.classList.remove("fa-moon");
+        icon.classList.add("fa-sun");
+    } else {
+        body.setAttribute("data-bs-theme", "light");
+        icon.classList.remove("fa-sun");
+        icon.classList.add("fa-moon");
+    }
+});
+
+function toggleDarkMode() {
+    const body = document.querySelector("body");
+    const currentTheme = body.getAttribute("data-bs-theme");
+    const icon = document.getElementById("dark-mode-icon");
+
+    if (currentTheme === "light") {
+        // Switch to dark mode
+        body.setAttribute("data-bs-theme", "dark");
+        icon.classList.remove("fa-moon");
+        icon.classList.add("fa-sun");
+        localStorage.setItem("data-bs-theme", "dark");
+    } else {
+        // Switch to light mode
+        body.setAttribute("data-bs-theme", "light");
+        icon.classList.remove("fa-sun");
+        icon.classList.add("fa-moon");
+        localStorage.setItem("data-bs-theme", "light");
+    }
+}
+
+
+// Scroll to top button
+function scrollToTop() {
+    window.scrollTo(0, 0);
+
+}
 

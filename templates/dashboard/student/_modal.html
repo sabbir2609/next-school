@@ -1,0 +1,27 @@
+<!-- Student Delete Modal -->
+<div class="modal fade" id="delete_item" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="delete_item_label" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="delete_item_label">
+                    Delete <em>{{ object }}</em> ?
+                </h5>
+            </div>
+
+            <form action="{% url 'dashboard:student_delete' student.pk %}" method="post">
+                {% csrf_token %}
+
+                <div class="modal-body">
+                    <p>Are you sure you want to delete "{{ object }} - ID <b>{{ object.pk }}</b>" ?</p>
+                    {{ form }}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-danger" value="Confirm">Delete</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>

@@ -247,6 +247,7 @@ class Student(models.Model):
     class Meta:
         verbose_name_plural = "Students"
         unique_together = ("student_id", "birth_certificate_no")
+        ordering = ("-created_at",)
 
 
 class Teacher(models.Model):
