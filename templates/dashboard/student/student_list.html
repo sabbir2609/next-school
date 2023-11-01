@@ -1,10 +1,14 @@
 {% extends 'dashboard/dashboard.html' %}
 
+{% load static %}
+
 {% block title %} Student List {% endblock %}
 
 {% block content %}
 <br>
-<form action="" method=GET>
+
+<!-- Your search form -->
+<form action="" method="GET">
     {% csrf_token %}
     <div class="form-floating mb-3">
         <input name="q" type="text" class="form-control" id="floatingInput" placeholder="John Doe">
@@ -13,40 +17,61 @@
     <button class="btn btn-primary" type="submit">Search</button>
 </form>
 
+<!-- Check if search results are displayed, then show the "Go Back" button -->
+{% if search_results %}
+<a href="{% url 'dashboard:student_list' %}" class="btn btn-secondary">Go Back</a>
+{% endif %}
+
 <hr>
 
 {% if students.count != 0 %}
 
 <h2>Student List</h2>
-<table class="table">
-    <thead>
-        <tr>
-            <th scope="col">ID</th>
-            <th scope="col">Name</th>
-            <th scope="col">Gender</th>
-            <th scope="col">Birth Reg</th>
-            <!-- <th scope="col">Action</th> -->
-        </tr>
-    </thead>
-    <tbody>
-        {% for student in students %}
-        <tr>
-            <th scope="row">{{ student.student_id }}</th>
-            <td><a href="{% url 'dashboard:student_detail' student.student_id %}">{{ student.name_en }}</a></td>
-            <td>
-                {% if student.gender == 'M' %}
-                Male
-                {% elif student.gender == 'F' %}
-                Female
-                {% else %}
-                Unknown
-                {% endif %}
-            </td>
-            <td>{{ student.birth_certificate_no }}</td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+<div class="table-responsive">
+    <table class="table table-hover table-striped-columns text-center">
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Name</th>
+                <th scope="col">Gender</th>
+                <th scope="col">Blood Group</th>
+                <th scope="col">Image</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for student in students %}
+            <tr>
+                <th scope="row">{{ student.student_id }}</th>
+                <td><a href="{% url 'dashboard:student_detail' student.student_id %}">{{ student.name_en }}</a></td>
+                <td>
+                    {% if student.gender == 'M' %}
+                    Male
+                    {% elif student.gender == 'F' %}
+                    Female
+                    {% else %}
+                    Unknown
+                    {% endif %}
+                </td>
+                <td>{{ student.blood_group }}</td>
+
+                <td>
+                    {% if student.image %}
+                    <img src="{{ student.image.url }}" alt="{{ student.name_en }} Photo"
+                        style="width: 50px; height: 50px; object-fit: cover;">
+                    {% else %}
+                    <div>
+                        <img src="{% static 'assets/images/student.jpg' %}" alt="Default Photo"
+                            style="width: 50px; height: auto;" loading="lazy">
+                        <p class="mb-0">No photo available</p>
+                    </div>
+                    {% endif %}
+                </td>
+
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
 
 {% if is_paginated %}
 {% include 'dashboard/components/_pagination.html' %}

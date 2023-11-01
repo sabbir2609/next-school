@@ -11,7 +11,7 @@
 <h2 class="text-center mt-3 mb-3">Teacher List</h2>
 
 <div class="table-responsive">
-    <table class="table table-striped">
+    <table class="table table-hover table-striped-columns text-center">
         <thead>
             <tr>
                 <th>Teacher ID</th>
@@ -26,14 +26,14 @@
                 <td>{{ teacher.teacher_id }}</td>
                 <td><a href="{% url 'dashboard:teacher_detail' teacher.teacher_id %}">{{ teacher.name_en }}</a></td>
                 <td>{{ teacher.phone }}</td>
-                <td class="d-flex align-items-center">
+                <td>
                     {% if teacher.photo %}
                     <img src="{{ teacher.photo.url }}" alt="{{ teacher.name_en }} Photo"
-                        style="width: 50px; height: auto;">
+                        style="width: 50px; height: 50px; object-fit: cover;">
                     {% else %}
                     <div>
                         <img src="{% static 'assets/images/teacher.jpg' %}" alt="Default Photo"
-                            style="width: 50px; height: auto;">
+                            style="width: 50px; height: 50px; object-fit: cover;" loading="lazy">
                         <p class="mb-0">No photo available</p>
                     </div>
                     {% endif %}

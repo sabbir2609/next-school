@@ -255,9 +255,6 @@ class ClassCreateView(SuccessMessageMixin, CreateView):
     def get_success_url(self):
         return reverse_lazy("dashboard:class_detail", kwargs={"slug": self.object.slug})
 
-    def get_success_message(self, cleaned_data):
-        return "Class created successfully"
-
     def form_valid(self, form):
         title = form.save(commit=False)
         title.slug = slugify(title)

@@ -1,178 +1,118 @@
 <style>
-    .fab-wrapper {
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        display: flex;
-        justify-content: center;
+    .fab-menu a {
+        text-decoration: none;
+    }
+
+    .fab-menu {
         position: fixed;
-        bottom: 40px;
         right: 40px;
-        z-index: 100;
-    }
-
-    .fab-wrapper .fab {
-        background: #30444f;
+        bottom: 35px;
         width: 40px;
         height: 40px;
-        /* position: relative; */
-        z-index: 3;
         border-radius: 50%;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
         display: flex;
+        align-items: center;
         justify-content: center;
-        align-items: center;
-        animation: fab-animation-reverse 0.4s ease-out forwards;
-    }
-
-    .fab-wrapper .fab::before,
-    .fab-wrapper .fab::after {
-        content: "";
-        display: block;
-        position: absolute;
-        border-radius: 4px;
-        background: #fff;
-    }
-
-    .fab-wrapper .fab::before {
-        width: 4px;
-        height: 18px;
-    }
-
-    .fab-wrapper .fab::after {
-        width: 18px;
-        height: 4px;
-    }
-
-    .fab-wrapper .fac {
-        width: 38px;
-        height: 150px;
-        border-radius: 64px;
-        position: absolute;
-        z-index: 2;
-        padding: 0.5rem 0.5rem;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
-        opacity: 0;
-        top: -110px;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-around;
-        align-items: center;
-        transition: opacity 0.2s ease-in, top 0.2s ease-in, width 0.1s ease-in;
-    }
-
-    .fab-wrapper .fac a {
-        color: #5c13e4;
-        opacity: 0.8;
-    }
-
-    .fab-wrapper .fac a:hover {
-        transition: 0.2s;
-        opacity: 1;
-        color: #30444f;
-    }
-
-    .fab-wrapper input {
-        height: 100%;
-        width: 100%;
-        border-radius: 50%;
         cursor: pointer;
+    }
+
+    .menu-box {
+        position: relative;
+        border: 2px dashed orange;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        transition: 0.4;
+    }
+
+    .menu-circle {
         position: absolute;
-        z-index: 5;
-        opacity: 0;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        margin: auto;
+        width: 20px;
+        height: 20px;
+        background-color: orange;
+        border-radius: 50%;
+        transition: 0.4s;
     }
 
-    .fab-wrapper input:checked~.fab {
-        animation: fab-animation 0.4s ease-out forwards;
+    .menu-box:hover .menu-circle {
+        transform: scale(1.1);
+        transition: 0.2s;
     }
 
-    .fab-wrapper input:checked~.fac {
-        width: 38px;
-        height: 150px;
-        animation: fac-animation 0.4s ease-out forwards 0.1s;
-        top: -180px;
-        opacity: 1;
+    .menu-items {
+        position: relative;
+        right: 0;
+        margin: 0;
+        padding: 4px;
+        border-radius: 10px;
+        text-align: center;
+        transform: translateY(-40%) scale(0) translateX(-30%);
+        transition: 0.4s;
+        display: inline-block;
+        vertical-align: middle;
     }
 
-    @keyframes fab-animation {
-        0% {
-            transform: rotate(0) scale(1);
-        }
 
-        20% {
-            transform: rotate(60deg) scale(0.93);
-        }
-
-        55% {
-            transform: rotate(35deg) scale(0.97);
-        }
-
-        80% {
-            transform: rotate(48deg) scale(0.94);
-        }
-
-        100% {
-            transform: rotate(45deg) scale(0.95);
-        }
+    .menu-items li {
+        height: 40px;
+        width: 40px;
+        border-radius: 50%;
+        list-style: none;
+        margin: 3px;
+        background-color: blue;
     }
 
-    @keyframes fab-animation-reverse {
-        0% {
-            transform: rotate(45deg) scale(0.95);
-        }
-
-        20% {
-            transform: rotate(-15deg);
-        }
-
-        55% {
-            transform: rotate(10deg);
-        }
-
-        80% {
-            transform: rotate(-3deg);
-        }
-
-        100% {
-            transform: rotate(0) scale(1);
-        }
+    .menu-items li:hover {
+        background-color: gray;
     }
 
-    @keyframes fac-animation {
-        0% {
-            transform: scale(1, 1);
-        }
+    .menu-items a {
+        color: #fff;
+        line-height: 1.5;
+    }
 
-        33% {
-            transform: scale(0.95, 1.05);
-        }
+    .fab-menu input {
+        position: absolute;
+        left: -1000rem;
+    }
 
-        66% {
-            transform: scale(1.05, 0.95);
-        }
+    .fab-menu input:checked+.menu-box {
+        border: 2px dashed rgba(0, 0, 0, 0.9);
+        transition: 0.4s;
+    }
 
-        100% {
-            transform: scale(1, 1);
-        }
+    .fab-menu input:checked+.menu-box .menu-circle {
+        background-color: rgba(0, 0, 0, 0.95);
+        transition: 0.4s;
+    }
+
+    .fab-menu input:checked+.menu-box .menu-items {
+        transform: translateY(-100%) scale(1) translateX(-20%);
+        transition: 0.4s;
     }
 </style>
 
-<div class="fab-wrapper">
-    <input type="checkbox" />
-    <div class="fab"></div>
-    <div class="fac bg-body-tertiary ">
 
-        <a onclick="toggleDarkMode()">
-            <i id="dark-mode-icon" class="fas fa-moon"></i>
-        </a>
 
-        <a onclick="scrollToTop()">
-            <i class="fas fa-arrow-up"></i>
-        </a>
-
-        <a href="{% url 'homepage:home' %}">
-            <i class="fa-solid fa-house"></i>
-        </a>
-
+<label class="fab-menu">
+    <input type="checkbox">
+    <div class="menu-box">
+        <div class="menu-circle"></div>
+        <ul class="menu-items">
+            <li>
+                <a href=""></a>
+            </li>
+            <li>
+                <a href=""></a>
+            </li>
+            <li>
+                <a href=""></a>
+            </li>
+        </ul>
     </div>
-</div>
+</label>
