@@ -28,7 +28,7 @@
 
 <h2>Student List</h2>
 <div class="table-responsive">
-    <table class="table table-hover table-striped-columns text-center">
+    <table class="table table-striped text-center table-bordered">
         <thead>
             <tr>
                 <th scope="col">ID</th>
@@ -38,7 +38,7 @@
                 <th scope="col">Image</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody class="table-group-divider">
             {% for student in students %}
             <tr>
                 <th scope="row">{{ student.student_id }}</th>
@@ -62,7 +62,6 @@
                     <div>
                         <img src="{% static 'assets/images/student.jpg' %}" alt="Default Photo"
                             style="width: 50px; height: auto;" loading="lazy">
-                        <p class="mb-0">No photo available</p>
                     </div>
                     {% endif %}
                 </td>

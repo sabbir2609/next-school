@@ -1,118 +1,115 @@
 <style>
-    .fab-menu a {
-        text-decoration: none;
-    }
-
-    .fab-menu {
+    .btn-group-fab {
         position: fixed;
-        right: 40px;
-        bottom: 35px;
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
+        width: 50px;
+        height: auto;
+        right: 20px;
+        bottom: 20px;
     }
 
-    .menu-box {
+    .btn-group-fab div {
         position: relative;
-        border: 2px dashed orange;
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        transition: 0.4;
+        width: 100%;
+        height: auto;
     }
 
-    .menu-circle {
+    .btn-group-fab .btn {
         position: absolute;
-        top: 0;
         bottom: 0;
-        left: 0;
-        right: 0;
-        margin: auto;
-        width: 20px;
-        height: 20px;
-        background-color: orange;
         border-radius: 50%;
-        transition: 0.4s;
-    }
-
-    .menu-box:hover .menu-circle {
-        transform: scale(1.1);
-        transition: 0.2s;
-    }
-
-    .menu-items {
-        position: relative;
-        right: 0;
-        margin: 0;
-        padding: 4px;
-        border-radius: 10px;
-        text-align: center;
-        transform: translateY(-40%) scale(0) translateX(-30%);
-        transition: 0.4s;
-        display: inline-block;
-        vertical-align: middle;
-    }
-
-
-    .menu-items li {
-        height: 40px;
+        margin-bottom: 4px;
         width: 40px;
-        border-radius: 50%;
-        list-style: none;
-        margin: 3px;
-        background-color: blue;
+        height: 40px;
+        /* margin: 4px auto; */
     }
 
-    .menu-items li:hover {
-        background-color: gray;
+    .btn-group-fab .btn-main {
+        width: 41px;
+        height: 41px;
+        right: 50%;
+        margin-right: -20x;
+        z-index: 9;
     }
 
-    .menu-items a {
-        color: #fff;
-        line-height: 1.5;
+    .btn-group-fab .btn-sub {
+        bottom: 0;
+        z-index: 8;
+        right: 50%;
+        margin-right: 0;
+        -webkit-transition: all 2s;
+        transition: all 0.5s;
     }
 
-    .fab-menu input {
-        position: absolute;
-        left: -1000rem;
+    .btn-group-fab.active .btn-sub:nth-child(2) {
+        bottom: 45px;
     }
 
-    .fab-menu input:checked+.menu-box {
-        border: 2px dashed rgba(0, 0, 0, 0.9);
-        transition: 0.4s;
+    .btn-group-fab.active .btn-sub:nth-child(3) {
+        bottom: 90px;
     }
 
-    .fab-menu input:checked+.menu-box .menu-circle {
-        background-color: rgba(0, 0, 0, 0.95);
-        transition: 0.4s;
+    .btn-group-fab.active .btn-sub:nth-child(4) {
+        bottom: 135px;
     }
 
-    .fab-menu input:checked+.menu-box .menu-items {
-        transform: translateY(-100%) scale(1) translateX(-20%);
-        transition: 0.4s;
-    }
+    /* use it if you have more item  */
+
+    /* .btn-group-fab .btn-sub:nth-child(5) {
+        bottom: 180px;
+    } */
 </style>
 
 
 
-<label class="fab-menu">
-    <input type="checkbox">
-    <div class="menu-box">
-        <div class="menu-circle"></div>
-        <ul class="menu-items">
-            <li>
-                <a href=""></a>
-            </li>
-            <li>
-                <a href=""></a>
-            </li>
-            <li>
-                <a href=""></a>
-            </li>
-        </ul>
+<div class="btn-group-fab" role="group" aria-label="FAB Menu">
+
+    <div class="text-center ">
+
+        <button type="button"
+            class="btn btn-main btn-primary d-flex justify-content-center align-items-center has-tooltip"
+            data-placement="left" title="Menu">
+            <i class="fa fa-bars"></i>
+        </button>
+
+        <button type="button"
+            class="btn btn-sub btn-warning d-flex justify-content-center align-items-center has-tooltip"
+            data-placement="left" title="Top" onclick="scrollToTop()">
+            <i class="fa-solid fa-arrow-turn-up"></i>
+        </button>
+
+        <button type="button"
+            class="btn btn-sub btn-danger d-flex justify-content-center align-items-center has-tooltip"
+            data-placement="left" title="Theme" onclick="toggleDarkMode()">
+            <i id="dark-mode-icon" class="fa-solid fa-moon"></i>
+        </button>
+
+        <a href="/" class="btn btn-sub btn-info d-flex justify-content-center align-items-center has-tooltip"
+            data-placement="left" title="Home">
+            <i class="fa-solid fa-house"></i>
+        </a>
+
+
+
     </div>
-</label>
+</div>
+
+<script>
+
+    $(function () {
+        $('.btn-group-fab').on('click', '.btn-main', function () {
+            $('.btn-group-fab').toggleClass('active');
+        });
+        $('has-tooltip').tooltip();
+    });
+
+    // Add an event listener to close FAB options when clicking outside
+    document.body.addEventListener("click", function (event) {
+        var fabToggle = document.querySelector(".btn-group-fab");
+
+        if (fabToggle.classList.contains("active") && !event.target.closest(".btn-group-fab")) {
+            fabToggle.classList.remove("active");
+        }
+    });
+
+
+</script>
