@@ -146,20 +146,40 @@
                             data-bs-parent="#classAndSection">
 
                             <li class="sidebar-item">
-                                <a href="{% url 'dashboard:student_new' %}" class="sidebar-link">
+                                <a href="{% url 'dashboard:section_list' %}" class="sidebar-link">
                                     Section List
                                 </a>
                             </li>
 
                             <li class="sidebar-item">
-                                <a href="{% url 'dashboard:student_new' %}" class="sidebar-link">
-                                    Section Update
+                                <a href="{% url 'dashboard:section_new' %}" class="sidebar-link">
+                                    Add Section
+                                </a>
+                            </li>
+
+                        </ul>
+
+                    </li>
+
+                    <li class="sidebar-item">
+
+                        <a href="#" class="sidebar-link collapsed" data-bs-toggle="collapse" data-bs-target="#subject"
+                            aria-expanded="false">
+                            Subjects
+                        </a>
+
+                        <ul id="subject" class="sidebar-dropdown list-unstyled collapse"
+                            data-bs-parent="#classAndSection">
+
+                            <li class="sidebar-item">
+                                <a href="{% url 'dashboard:subject_list' %}" class="sidebar-link">
+                                    Subject List
                                 </a>
                             </li>
 
                             <li class="sidebar-item">
-                                <a href="{% url 'dashboard:student_new' %}" class="sidebar-link">
-                                    Add Section
+                                <a href="{% url 'dashboard:subject_new' %}" class="sidebar-link">
+                                    Add Subject
                                 </a>
                             </li>
 
@@ -176,7 +196,7 @@
             </li>
 
             <li class="sidebar-item">
-                <a href="/admin" class="sidebar-link">
+                <a href="/admin" class="sidebar-link" target="_blank">
                     <i class="fa-solid fa-user-gear"></i> Super Admin
                 </a>
             </li>

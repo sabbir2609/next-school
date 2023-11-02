@@ -4,7 +4,9 @@
 
 {% block content %}
 <h1> All Sections </h1>
-<table class="table">
+
+{% if sections %}
+<table class="table table-striped text-center table-bordered">
     <thead>
         <tr>
             <th>Class</th>
@@ -14,7 +16,7 @@
             <th>Section Actions</th>
         </tr>
     </thead>
-    <tbody>
+    <tbody class="table-group-divider">
         {% for section in sections %}
         <tr>
             <td>{{ section.class_name }}</td>
@@ -22,9 +24,14 @@
             <td>{{ section.class_teacher }}</td>
             <td>{{ section.description }}</td>
             <td>
-                <a class="btn btn-primary" href="{% url 'school:section_detail' section.id %}">Details</a>
+                <a class="btn btn-primary" href="{% url 'dashboard:section_detail' section.id %}">Details</a>
             </td>
         </tr>
         {% endfor %}
 </table>
+{% else %}
+<h2>No Section Assigned Yet ! </h2>
+<a class="btn btn-primary" href="{% url 'dashboard:section_new'%}">Assign+</a>
+{% endif %}
+
 {% endblock %}

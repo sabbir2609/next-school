@@ -27,6 +27,15 @@ from .views import (
     TeacherDetailView,
     TeacherUpdateView,
     TeacherDeleteView,
+    # section views
+    SectionListView,
+    SectionDetailView,
+    SectionCreateView,
+    # subject views
+    SubjectListView,
+    SubjectCreateView,
+    SectionUpdateView,
+    delete_section_subject,
 )
 
 app_name = "dashboard"
@@ -71,7 +80,21 @@ urlpatterns = [
     path("dashboard/teachers/<int:pk>/update/", TeacherUpdateView.as_view(), name="teacher_update"),
     path("dashboard/teachers/<int:pk>/delete/", TeacherDeleteView.as_view(), name="teacher_delete"),
     ################
-    # Other URLs #
+    # Section URLs #
     ################
+    path("dashboard/sections/", SectionListView.as_view(), name="section_list"),
+    path("dashboard/sections/new/", SectionCreateView.as_view(), name="section_new"),
+    path("dashboard/sections/<int:pk>/", SectionDetailView.as_view(), name="section_detail"),
+    # delete section subjects
+    path("dashboard/sections/subject/<int:pk>/delete", delete_section_subject, name="delete_section_subject"),
+    ################
+    # Subject URLs #
+    ################
+    path("dashboard/subjects/", SubjectListView.as_view(), name="subject_list"),
+    path("dashboard/sections/<int:pk>/update/", SectionUpdateView.as_view(), name="section_update"),
+    path("dashboard/subjects/new/", SubjectCreateView.as_view(), name="subject_new"),
+
+
+
 
 ]

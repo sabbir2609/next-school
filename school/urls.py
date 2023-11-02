@@ -3,8 +3,6 @@ from django.urls import include, path
 from .views import (
     AttendanceCreateView,
     AttendanceReportView,
-    SectionDetailView,
-    SectionListView,
     StudentAttendanceCreateView,
     StudentAttendanceReportDetailView,
     StudentResultAutocompleteView,
@@ -27,9 +25,6 @@ urlpatterns = [
     # Attendance URLs (All)
     path("attendance/add/", AttendanceCreateView.as_view(), name="attendance_add_any"),
     path("attendance/all/", AttendanceReportView.as_view(), name="attendance_all_report"),
-    # Section URLs
-    path("sections/", SectionListView.as_view(), name="section_list"),
-    path("sections/<int:pk>/", SectionDetailView.as_view(), name="section_detail"),
     # Result URLs
     path("student-result-autocomplete/", StudentResultAutocompleteView.as_view(), name="student-result-autocomplete"),
     path("students/result-add/", StudentResultCreateView.as_view(), name="result_add"),

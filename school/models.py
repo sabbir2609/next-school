@@ -19,10 +19,6 @@ class Subject(models.Model):
         verbose_name_plural = "Subjects"
 
 
-from django.core.exceptions import ValidationError
-from django.db import models
-
-
 class Class(models.Model):
     CLASS_CHOICES = (
         ("Six", "Six"),
@@ -49,10 +45,6 @@ class Class(models.Model):
     class Meta:
         verbose_name_plural = "Classes"
         ordering = ("slug",)
-
-
-# TODO: IMPORTANAT Work on this section
-# FIX:  after assigning class 9,10 to section arts , commerce or science section then the class nine section science needs to be assigned to section a,b or c . how can I gain that functionality
 
 
 class Section(models.Model):
@@ -85,7 +77,7 @@ class Section(models.Model):
         verbose_name="Class",
     )
 
-    section_teacher = models.OneToOneField(
+    teacher = models.OneToOneField(
         "Teacher",
         on_delete=models.SET_NULL,
         null=True,

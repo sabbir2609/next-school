@@ -1,0 +1,31 @@
+{% extends 'dashboard/dashboard.html' %}
+
+{% block title %} Subject List {% endblock %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<div class="container-fluid ">
+    <h2>Subject List</h2>
+
+    <div class="table-responsive">
+        <table class="table table-striped text-center table-bordered">
+            <thead>
+                <tr>
+                    <th>Subject Title</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for subject in subjects %}
+                <tr>
+                    <td>{{ subject.title }}</td>
+                    <td>{{ subject.description }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

@@ -1,4 +1,4 @@
-{% extends 'base/base.html' %}
+{% extends 'dashboard/dashboard.html' %}
 
 {% block title %} {{ section.class_name }} - {{ section.name }} {% endblock %}
 
@@ -14,7 +14,7 @@
             <p><strong>Class :</strong> {{ section.class_name }}</p>
             <p><strong>Section :</strong> {{ section.name }}</p>
             <p><strong>Seat:</strong> {{ section.seat }}</p>
-            <p><strong>Section Teacher:</strong> {{ section.class_teacher }}</p>
+            <p><strong>Section Teacher:</strong> {{ section.teacher }}</p>
             <p><strong>Total Student:</strong> {{total_students}}</p>
         </div>
     </div>
@@ -27,8 +27,8 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <th scope="col">Period</th>
                         <th scope="col">Subject</th>
+                        <th scope="col">Period</th>
                         <th scope="col">Teacher</th>
                         <th scope="col">Time</th>
                     </tr>
@@ -36,8 +36,8 @@
                 <tbody>
                     {% for subject in subjects %}
                     <tr>
-                        <td>{{ subject.period }}</td>
                         <td>{{ subject.subject }}</td>
+                        <td>{{ subject.period }}</td>
                         <td>{{ subject.teachers }}</td>
                         <td>{{ subject.time }}</td>
                     </tr>
@@ -51,7 +51,7 @@
         </div>
     </div>
 
-    <div class="card mt-3">
+    <div class="card mt-3 mb-3">
         <div class="card-header">
             <h4>Students</h4>
         </div>
@@ -72,8 +72,10 @@
                         <td>{{ student.student }}</td>
                         <td>{{ student.class_roll }}</td>
                         <td>
-                            <button type="button" class="btn "
-                                onclick="window.location.href='{% url 'school:student_detail' student.student_id %}'">Detail</button>
+                            <a class="btn btn-danger " href="{% url 'school:student_detail' student.student_id %}"
+                                target="_blank">
+                                Detail
+                            </a>
                         </td>
                     </tr>
                     {% endfor %}
@@ -81,5 +83,6 @@
             </table>
         </div>
     </div>
+    <a href="{% url 'dashboard:section_update' section.id %}" class="btn btn-warning ">Update</a>
 </div>
 {% endblock %}

@@ -1,12 +1,15 @@
 from django.contrib import messages
-from django.db import IntegrityError
+from django.db import IntegrityError, transaction
 from django.db.models import Q
 from django.db.models.deletion import ProtectedError
 from django.http import HttpResponseRedirect
+from django.shortcuts import get_object_or_404, redirect
 from django.utils.text import slugify
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.contrib.messages.views import SuccessMessageMixin
-from django.urls import reverse_lazy
+from django.views.generic.detail import SingleObjectMixin
+from django.contrib.contenttypes.models import ContentType
+from django.urls import reverse, reverse_lazy
 from django.views.generic import (
     TemplateView,
     DetailView,
@@ -14,24 +17,32 @@ from django.views.generic import (
     ListView,
     UpdateView,
     DeleteView,
+    FormView,
 )
-
-from school.models import Class, Student, Teacher
-from school.forms import StudentAssignForm, StudentForm, TeacherForm
-from .forms import NoticeForm
-
-from homepage.models import Notice
-from homepage.views import NoticeListView, NoticeDetailView
 
 from dal import autocomplete
 
 from taggit.models import Tag
 
-from django.contrib.contenttypes.models import ContentType
-
 import logging
 
 logger = logging.getLogger(__name__)
+
+from school.models import (
+    SectionSubject,
+    Student,
+    StudentAssign,
+    Subject,
+    Teacher,
+    Class,
+    Section,
+)
+from school.forms import StudentAssignForm, StudentForm, TeacherForm
+
+from homepage.models import Notice
+from homepage.views import NoticeListView, NoticeDetailView
+
+from .forms import NoticeForm, SectionForm, SectionSubjectInlineFormset
 
 
 class DashboardView(TemplateView):
@@ -389,3 +400,178 @@ class TeacherCreateView(SuccessMessageMixin, CreateView):
 
     def get_success_message(self, cleaned_data):
         return "Teacher profile created successfully"
+
+
+##################
+# Subjects views #
+##################
+
+
+class SubjectListView(ListView):
+    model = Subject
+    context_object_name = "subjects"
+    template_name = "dashboard/subject/subject_list.html"
+
+
+class SubjectCreateView(SuccessMessageMixin, CreateView):
+    model = Subject
+    fields = "__all__"
+    template_name = "dashboard/subject/subject_add.html"
+
+    def get_success_url(self):
+        return reverse_lazy("dashboard:subject_list")
+
+    def get_success_message(self, cleaned_data):
+        return "Subject created successfully"
+
+
+#################
+# Section views #
+#################
+
+
+class SectionListView(ListView):
+    model = Section
+    context_object_name = "sections"
+    template_name = "dashboard/section/section_list.html"
+
+
+class SectionDetailView(DetailView):
+    model = Section
+    template_name = "dashboard/section/section_detail.html"
+    context_object_name = "section"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # get all students of this section
+        context["students"] = StudentAssign.objects.filter(
+            section=self.object
+        ).select_related("student")
+
+        # total students of this section.
+        context["total_students"] = context["students"].count()
+
+        # get all subjects of this section
+        context["subjects"] = SectionSubject.objects.filter(section_id=self.object.id)
+
+        return context
+
+
+# TODO: FIX
+
+
+class SectionCreateView(SuccessMessageMixin, CreateView):
+    form_class = SectionForm
+    template_name = "dashboard/section/section_add_or_update.html"
+    success_message = "Section created successfully"
+
+    def get(self, request, *args, **kwargs):
+        self.object = None
+        form = self.get_form()
+        section_subject_formset = SectionSubjectInlineFormset()
+        return self.render_to_response(
+            self.get_context_data(
+                form=form, section_subject_formset=section_subject_formset
+            )
+        )
+
+    def post(self, request, *args, **kwargs):
+        self.object = None
+        form = self.get_form()
+        section_subject_formset = SectionSubjectInlineFormset(self.request.POST)
+        if form.is_valid() and section_subject_formset.is_valid():
+            return self.form_valid(form, section_subject_formset)
+        else:
+            return self.form_invalid(form, section_subject_formset)
+
+    def form_valid(self, form, section_subject_formset):
+        self.object = form.save()
+        section_subject_formset.instance = self.object
+        section_subject_formset.save()
+        return HttpResponseRedirect(self.get_success_url())
+
+    def form_invalid(self, form, section_subject_formset):
+        return self.render_to_response(
+            self.get_context_data(
+                form=form, section_subject_formset=section_subject_formset
+            )
+        )
+
+    def get_success_url(self):
+        return reverse_lazy("dashboard:section_detail", kwargs={"pk": self.object.pk})
+
+
+# TODO : NOT WORKING
+
+
+class SectionUpdateView(UpdateView):
+    model = Section
+    form_class = SectionForm
+    template_name = "dashboard/section/section_add_or_update.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if self.request.POST:
+            context["section_subject_formset"] = SectionSubjectInlineFormset(
+                self.request.POST, instance=self.object
+            )
+        else:
+            context["section_subject_formset"] = SectionSubjectInlineFormset(
+                instance=self.object
+            )
+        return context
+
+    def form_valid(self, form):
+        context = self.get_context_data()
+        section_subject_formset = context["section_subject_formset"]
+        with transaction.atomic():
+            self.object = form.save()
+            if section_subject_formset.is_valid():
+                section_subject_formset.instance = self.object
+                section_subject_formset.save()
+
+            # Process deleted subjects
+            for deleted_form in section_subject_formset.deleted_forms:
+                if deleted_form.instance.pk:
+                    deleted_form.instance.delete()
+
+        return super().form_valid(form)
+
+    def form_invalid(self, form):
+        context = self.get_context_data()
+        section_subject_formset = context["section_subject_formset"]
+        return self.render_to_response(
+            self.get_context_data(
+                form=form, section_subject_formset=section_subject_formset
+            )
+        )
+
+    def get_success_url(self):
+        return reverse_lazy("dashboard:section_detail", kwargs={"pk": self.object.pk})
+
+
+class SectionDeleteView(SuccessMessageMixin, DeleteView):
+    model = Section
+    template_name = "dashboard/section/section_confirm_delete.html"
+    success_url = reverse_lazy("dashboard:section_list")
+
+    def get_success_message(self, cleaned_data):
+        return "Section deleted successfully"
+
+
+def delete_section_subject(request, section_subject_id):
+    # Retrieve the SectionSubject object or return a 404 error if it doesn't exist
+    section_subject = get_object_or_404(SectionSubject, id=section_subject_id)
+
+    # Store the associated Section ID for redirection after deletion
+    section_id = section_subject.section.id
+
+    # Delete the SectionSubject object
+    section_subject.delete()
+
+    # Optionally, add a success message
+    messages.success(request, "Section Subject deleted successfully")
+
+    # Redirect to the Section edit or detail page after deletion
+    # Adjust the URL pattern and view name as needed
+    return redirect("dashboard:section_edit", pk=section_id)

@@ -24,56 +24,6 @@ from .models import (
 )
 
 
-class SectionListView(ListView):
-    model = Section
-    context_object_name = "sections"
-    template_name = "school/section_list.html"
-
-
-# TODO: TeacherListView - config urls and templates
-class TeacherListView(ListView):
-    model = Teacher
-    context_object_name = "teachers"
-    template_name = "school/teacher_list.html"
-
-
-# TODO: TeacherDetailView urls and templates
-class TeacherDetailView(DetailView):
-    model = Teacher
-    template_name = "school/teacher_detail.html"
-    context_object_name = "teacher"
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["subjects"] = SectionSubject.objects.filter(
-            teachers=self.object
-        ).select_related("section", "subject")
-        return context
-
-    pass
-
-
-class SectionDetailView(DetailView):
-    model = Section
-    template_name = "school/section_detail.html"
-    context_object_name = "section"
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        # get all students of this section
-        context["students"] = StudentAssign.objects.filter(
-            section=self.object
-        ).select_related("student")
-
-        # total students of this section.
-        context["total_students"] = context["students"].count()
-
-        # get all subjects of this section
-        context["subjects"] = SectionSubject.objects.filter(section_id=self.object.id)
-
-        return context
-
-
 # student autocomplete view for student assign
 class StudentAutocompleteView(autocomplete.Select2QuerySetView):
     def get_queryset(self):

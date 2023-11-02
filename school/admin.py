@@ -22,15 +22,6 @@ from .models import (
 # Register your models here.
 
 
-class SectionSubjectInline(admin.TabularInline):
-    model = SectionSubject
-    extra = 0
-    autocomplete_fields = [
-        # "teachers",
-        # "subject",
-    ]
-
-
 @admin.register(Subject)
 class SubjectAdmin(admin.ModelAdmin):
     """Class representing Subject Admin"""
@@ -60,12 +51,21 @@ class ClassAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ["title"]}
 
 
+class SectionSubjectInline(admin.TabularInline):
+    model = SectionSubject
+    extra = 0
+    autocomplete_fields = [
+        # "teachers",
+        # "subject",
+    ]
+
+
 @admin.register(Section)
 class SectionAdmin(admin.ModelAdmin):
     list_display = (
         "name",
         "class_name",
-        "section_teacher",
+        "teacher",
         "seat",
         "description",
     )
@@ -76,7 +76,7 @@ class SectionAdmin(admin.ModelAdmin):
     )
 
     autocomplete_fields = [
-        "section_teacher",
+        "teacher",
     ]
 
 
