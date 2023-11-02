@@ -12,7 +12,7 @@
         {% for field in form %}
         <div class="form-group row">
             <label class="col-md-3 col-form-label">{{ field.label }}</label>
-            <div class="col-md-9">{{ field }}</div>
+            <div class="col-md-9 p-2">{{ field }}</div>
         </div>
         {% endfor %}
     </fieldset>
@@ -31,8 +31,8 @@
                         {{ form.non_field_errors }}
                         {% for field in form.visible_fields %}
                         <td class="field-{{ field.name }}">{{ field }}</td>
-                        <td><button type="button" class="remove-subject">Remove</button></td>
                         {% endfor %}
+                        <td><button type="button" class="btn btn-danger remove-subject">Remove</button></td>
                     </tr>
                     {% endfor %}
                 </tbody>
