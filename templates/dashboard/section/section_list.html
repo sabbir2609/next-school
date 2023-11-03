@@ -21,10 +21,28 @@
         <tr>
             <td>{{ section.class_name }}</td>
             <td>{{ section.name }}</td>
-            <td>{{ section.class_teacher }}</td>
+            <td>{{ section.teacher }}</td>
             <td>{{ section.description }}</td>
             <td>
-                <a class="btn btn-primary" href="{% url 'dashboard:section_detail' section.id %}">Details</a>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-sm btn-secondary dropdown-toggle" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        Action
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a class="dropdown-item" href="{% url 'dashboard:section_detail' section.id %}">View</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="{% url 'dashboard:section_update' section.id %}">Edit</a>
+                        </li>
+
+                        <li>
+                            <a class="dropdown-item" href="{% url 'dashboard:section_delete' section.id %}">Delete</a>
+                        </li>
+
+                    </ul>
+                </div>
             </td>
         </tr>
         {% endfor %}

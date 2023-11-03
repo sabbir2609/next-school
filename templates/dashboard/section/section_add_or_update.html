@@ -1,70 +1,12 @@
 {% extends "dashboard/dashboard.html" %}
-
+{% load crispy_forms_tags %}
 {% block content %}
+<h1>Assign Section</h1>
 
-<form action="" method="post">
+<form method="post">
     {% csrf_token %}
-
-    <!-- Main Section Form -->
-    <fieldset>
-        {{ form.non_field_errors }}
-        <legend>Main Section Information</legend>
-        {% for field in form %}
-        <div class="form-group row">
-            <label class="col-md-3 col-form-label">{{ field.label }}</label>
-            <div class="col-md-9 p-2">{{ field }}</div>
-        </div>
-        {% endfor %}
-    </fieldset>
-
-    <!-- SectionSubject Formset -->
-    <fieldset>
-        <legend>Assignment Questions</legend>
-        {{ section_subject_formset.management_form }}
-        {{ section_subject_formset.non_form_errors }}
-
-        <div class="module">
-            <table id="id_{{ section_subject_formset.prefix }}-group" class="module">
-                <tbody>
-                    {% for form in section_subject_formset %}
-                    <tr class="dynamic-{{ section_subject_formset.prefix }}">
-                        {{ form.non_field_errors }}
-                        {% for field in form.visible_fields %}
-                        <td class="field-{{ field.name }}">{{ field }}</td>
-                        {% endfor %}
-                        <td><button type="button" class="btn btn-danger remove-subject">Remove</button></td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
-    </fieldset>
-
-    <!-- Submit Button -->
-    <div class="submit-row">
-        <input type="submit" value="Save" class="btn btn-primary" name="_save">
-    </div>
+    {{ form | crispy }}
+    <button type="submit" class="btn btn-secondary">Save</button>
 </form>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.formset/1.2.2/jquery.formset.min.js"
-    integrity="sha512-ltwjKsDTo3hW/wV66ZaEkf2wOAFxmg7rWM76J8kOcYKLSKy44WBYO/BFaNNH3NGDS8BSz3meB9wtSnm41oL+pA=="
-    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
-<script type="text/javascript">
-
-    $('#id_{{ section_subject_formset.prefix }}-group').formset({
-        prefix: '{{ section_subject_formset.prefix }}',
-        addText: 'Add another Subject',
-        deleteText: 'Remove Subject',
-        formCssClass: 'dynamic-{{ section_subject_formset.prefix }}',
-        extraClasses: ['module']
-    });
-
-    $(document).ready(function () {
-        $(".remove-subject").on('click', function () {
-            $(this).closest("tr").remove();
-        });
-    });
-</script>
 
 {% endblock content %}

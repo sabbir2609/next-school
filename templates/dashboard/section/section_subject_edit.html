@@ -1,0 +1,75 @@
+{% extends "dashboard/dashboard.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %} Edit {{section.class_name}} Section {{section.name}}'s Periods {% endblock %}
+
+{% block content %}
+
+<div class="container-fluid">
+
+    <form action="" method="post" enctype="multipart/form-data">
+
+        {% for hidden_field in forms.hidden_fields %}
+        {{ hidden_field.error }}
+        {{ hidden_field }}
+        {% endfor %}
+
+        {% csrf_token %}
+
+        {{ form.management_form }}
+        {{ form.non.form_errors }}
+
+        <h2>Edit Section Periods</h2>
+        {% for section_subject in form.forms %}
+            <hr>
+            <div class="row a">
+                {% if section_subject.instance.id %}
+                
+                <table class="table table-bordered">
+                    <tbody>
+                        <tr>
+                            <th style="width: 25%"><strong>Subject</strong></th>
+                            <td>{{ section_subject.instance.subject|title }}</td>
+                            <th style="width: 25%"><strong>Period</strong></th>
+                            <td>{{ section_subject.instance.period|title }}</td>
+                        </tr>
+                        <tr>
+                            <th><strong>Teacher</strong></th>
+                            <td>{{ section_subject.instance.teacher.name_en|title }}</td>
+                            <th><strong>Time</strong></th>
+                            <td>{{ section_subject.instance.time|title }}</td>
+                        </tr>
+                    </tbody>
+                </table>              
+                
+                {% else %}
+                    {% if form.forms|length > 1 %}
+                        <h4> Add another Subject </h4>
+                    {% else %}
+                        <h4> Add A Subject / Period </h4>
+                    {% endif %}
+                {% endif %}
+
+            </div>
+
+            <div class="row border p-2 bg-success-subtle rounded ">
+
+                {% for hidden_field in section_subject.hidden_fields %}
+                    {{ hidden_field.error }}
+                {% endfor %}
+
+                <table class="table table-responsive">
+                    {{ section_subject|crispy }}
+                </table>
+            </div>
+
+        {% endfor %}
+        </hr>
+        <div class="p-2">
+            <button type="submit" value="Update Subjects" class="btn btn-primary">Save</button>
+            <a href="{% url "dashboard:section_detail" section.id %}" role="button" class="btn btn-secondary "> Cancle </a>
+        </div>
+    </form>
+</div>
+
+{% endblock content %}

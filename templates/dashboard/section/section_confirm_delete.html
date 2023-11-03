@@ -1,0 +1,50 @@
+{% extends 'dashboard/dashboard.html' %}
+
+{% block title %}
+Delete Section
+{% endblock %}
+
+{% block content %}
+
+<style>
+    /* Your custom styles */
+    .card {
+        max-width: 400px;
+        margin: 0 auto;
+        border: 1px solid #e2e2e2;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .btn-danger {
+        background-color: #dc3545;
+        /* Red color for danger button */
+        border-color: #dc3545;
+    }
+
+    .btn-danger:hover {
+        background-color: #c82333;
+        /* Darker red color on hover */
+        border-color: #c82333;
+    }
+</style>
+
+<div class="container mt-5">
+    <form method="post">
+        {% csrf_token %}
+        <div class="card p-4">
+            <div class="form-group text-center">
+                <p>Sure you want to delete that object?</p>
+                <strong>{{ object }}</strong>
+                {{ form.errors }}
+            </div>
+            <div class="text-center mt-3">
+                <input type="hidden" name="confirm_delete" value="confirm_delete">
+                <button type="submit" class="btn btn-danger mr-2">Delete</button>
+                <a href="{% url 'dashboard:class_list' %}" class="btn btn-secondary">Cancel</a>
+            </div>
+        </div>
+    </form>
+</div>
+
+{% endblock %}

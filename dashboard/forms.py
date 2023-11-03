@@ -2,6 +2,8 @@ from django import forms
 from django.forms import inlineformset_factory
 from homepage.models import Notice
 from dal import autocomplete
+from crispy_forms.helper import FormHelper
+from crispy_forms.layout import Layout, Div, Row, Column
 
 from school.models import Section, SectionSubject
 
@@ -43,24 +45,48 @@ class SectionForm(forms.ModelForm):
         }
 
 
-class SectionSubjectForm(forms.ModelForm):
+class SectionUpdateForm(forms.ModelForm):
     class Meta:
-        model = SectionSubject
-        fields = ["subject", "teachers", "period", "time"]
+        model = Section
+        fields = ["name", "description", "class_name", "teacher", "seat"]
 
         widgets = {
-            "subject": forms.Select(attrs={"class": "form-select"}),
-            "teachers": forms.Select(attrs={"class": "form-select"}),
-            "period": forms.TextInput(attrs={"class": "form-control "}),
-            "time": forms.TextInput(attrs={"class": "form-control "}),
+            "name": forms.TextInput(
+                attrs={"readonly": "readonly", "disabled": "disabled"}
+            ),
+            "description": forms.Textarea(attrs={"class": "form-control "}),
+            "class_name": forms.TextInput(
+                attrs={"readonly": "readonly", "disabled": "disabled"}
+            ),
+            "teacher": forms.Select(attrs={"class": "form-select"}),
+            "seat": forms.NumberInput(attrs={"class": "form-control "}),
         }
 
 
-SectionSubjectInlineFormset = inlineformset_factory(
+class SectionSubjectForm(forms.ModelForm):
+    # helper = FormHelper()
+    # helper = Layout(
+    #     Row(
+    #         Column("subject", css_class="form-group col-2 mb-0"),
+    #         Column("teachers", css_class="form-group col-4 mb-0"),
+    #     )
+    # )
+
+    class Meta:
+        model = SectionSubject
+        fields = "__all__"
+
+        widgets = {
+            "subject": forms.Select(attrs={"class": "form-select"}),
+            "teacher": forms.Select(attrs={"class": "form-select"}),
+            "period": forms.TextInput(attrs={"class": "form-control "}),
+            "time": forms.TimeInput(attrs={"type": "time", "class": "form-control "}),
+        }
+
+
+SectionSubjectFormset = inlineformset_factory(
     Section,
     SectionSubject,
     form=SectionSubjectForm,
     extra=1,
-    can_delete=True,
-    can_delete_extra=True,
 )

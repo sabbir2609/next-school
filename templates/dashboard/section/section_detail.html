@@ -15,16 +15,31 @@
             <p><strong>Section :</strong> {{ section.name }}</p>
             <p><strong>Seat:</strong> {{ section.seat }}</p>
             <p><strong>Section Teacher:</strong> {{ section.teacher }}</p>
-            <p><strong>Total Student:</strong> {{total_students}}</p>
+
+            {% comment %}
+            <p><strong>Total Student:</strong> {{ get this from class context }}</p>
+            {% endcomment %}
+
+            <p><strong>Description:</strong> {{section.description}}</p>
         </div>
     </div>
     <hr>
     <div class="card mt-3">
         <div class="card-header">
-            <h4>Periods</h4>
+
+            <div class="row align-items-center">
+                <div class="col">
+                    <h5 class="mb-0">Periods</h5>
+                </div>
+                <div class="col-auto">
+                    <a href="{% url 'dashboard:section_subject_edit' section.id %}" class="btn btn-sm btn-danger "> Add
+                        / Edit Periods </a>
+                </div>
+            </div>
+
         </div>
         <div class="card-body">
-            <table class="table">
+            <table class="table table-responsive">
                 <thead>
                     <tr>
                         <th scope="col">Subject</th>

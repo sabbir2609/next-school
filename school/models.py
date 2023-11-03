@@ -325,7 +325,7 @@ class Teacher(models.Model):
 class SectionSubject(models.Model):
     section = models.ForeignKey(Section, on_delete=models.CASCADE)
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
-    teachers = models.ForeignKey(Teacher, on_delete=models.CASCADE)
+    teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
     period = models.IntegerField(
         default=0, validators=[MaxValueValidator(10), MinValueValidator(0)]
     )
@@ -336,7 +336,7 @@ class SectionSubject(models.Model):
 
     class Meta:
         ordering = ["period"]
-        unique_together = ("teachers", "section", "period")
+        unique_together = ("teacher", "section", "period")
 
     def __str__(self):
         return f"{self.section} - {self.subject.title} - {self.teachers.name_en}"

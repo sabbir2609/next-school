@@ -31,10 +31,12 @@ from .views import (
     SectionListView,
     SectionDetailView,
     SectionCreateView,
+    SectionDeleteView,
     # subject views
     SubjectListView,
     SubjectCreateView,
     SectionUpdateView,
+    SectionSubjectEditView,
     delete_section_subject,
 )
 
@@ -85,6 +87,9 @@ urlpatterns = [
     path("dashboard/sections/", SectionListView.as_view(), name="section_list"),
     path("dashboard/sections/new/", SectionCreateView.as_view(), name="section_new"),
     path("dashboard/sections/<int:pk>/", SectionDetailView.as_view(), name="section_detail"),
+    path("dashboard/sections/<int:pk>/subject/edit", SectionSubjectEditView.as_view(), name="section_subject_edit"),
+    path("dashboard/sections/<int:pk>/update/", SectionUpdateView.as_view(), name="section_update"),
+    path("dashboard/sections/<int:pk>/delete/", SectionDeleteView.as_view(), name="section_delete"),
     # delete section subjects
     path("dashboard/sections/subject/<int:pk>/delete", delete_section_subject, name="delete_section_subject"),
     ################
