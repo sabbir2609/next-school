@@ -88,14 +88,13 @@ class Section(models.Model):
     subjects = models.ManyToManyField(Subject, through="SectionSubject")
 
     def save(self, *args, **kwargs):
-        if self.name in ["Ar", "Co", "Sc"] and self.class_name.title not in [
-            "Nine",
-            "Ten",
-        ]:
+        if self.name in ("Ar", "Co", "Sc") and self.class_name.title not in (
+            "Nine", "Ten",
+        ):
             raise ValidationError(
                 f"'{self.name}' can only be applied to classes 'Nine' and 'Ten'"
             )
-        if self.name in ["A", "B", "C"] and self.class_name.title in ["Nine", "Ten"]:
+        if self.name in ("A", "B", "C") and self.class_name.title in ("Nine", "Ten"):
             raise ValidationError(
                 f"'{self.name}' can only be applied to classes 'Six', 'Seven', and 'Eight'"
             )
