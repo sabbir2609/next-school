@@ -8,9 +8,6 @@ from django.utils.text import slugify
 
 class Subject(models.Model):
     title = models.CharField(max_length=255, help_text="Subject Name", unique=True)
-    description = models.TextField(
-        null=True, blank=True, help_text="Subject Description", default=""
-    )
 
     def __str__(self):
         return self.title
@@ -60,6 +57,13 @@ class Section(models.Model):
         ("Ar", "Arts"),
     ]
 
+    class_name = models.ForeignKey(
+        Class,
+        on_delete=models.CASCADE,
+        help_text="Class",
+        verbose_name="Class",
+    )
+
     name = models.CharField(
         max_length=2,
         verbose_name="Section",
@@ -69,12 +73,6 @@ class Section(models.Model):
         null=True,
         blank=True,
         help_text="Section Description, e.g. 'Section A of Class 6, total 30 students'",
-    )
-    class_name = models.ForeignKey(
-        Class,
-        on_delete=models.CASCADE,
-        help_text="Class",
-        verbose_name="Class",
     )
 
     teacher = models.OneToOneField(
@@ -327,7 +325,7 @@ class SectionSubject(models.Model):
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
     teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
     period = models.IntegerField(
-        default=0, validators=[MaxValueValidator(10), MinValueValidator(0)]
+        unique=True, default=0, validators=[MaxValueValidator(10), MinValueValidator(0)]
     )
     time = models.TimeField(
         null=True,
@@ -339,7 +337,7 @@ class SectionSubject(models.Model):
         unique_together = ("teacher", "section", "period")
 
     def __str__(self):
-        return f"{self.section} - {self.subject.title} - {self.teachers.name_en}"
+        return f"{self.section} - {self.subject.title} - {self.teacher.name_en}"
 
 
 # student assign to section and class roll model

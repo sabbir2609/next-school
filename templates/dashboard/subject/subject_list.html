@@ -9,23 +9,19 @@
 <div class="container-fluid ">
     <h2>Subject List</h2>
 
-    <div class="table-responsive">
-        <table class="table table-striped text-center table-bordered">
-            <thead>
-                <tr>
-                    <th>Subject Title</th>
-                    <th>Description</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for subject in subjects %}
-                <tr>
-                    <td>{{ subject.title }}</td>
-                    <td>{{ subject.description }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
+    <ul class="list-group">
+        {% for subject in subjects %}
+
+        <li class="list-group-item d-block justify-content-center ">
+            <h4> {{ subject.title }} </h4>
+        </li>
+
+        {% endfor %}
+    </ul>
+
+    <hr>
+    <a class="btn btn-primary btn-sm" href="{% url 'dashboard:subject_new' %}">Add A Subject +
+    </a>
+
 </div>
 {% endblock %}

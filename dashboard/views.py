@@ -248,7 +248,7 @@ class StudentAssignView(SuccessMessageMixin, CreateView):
 
     def get_success_url(self):
         return reverse_lazy(
-            "school:section_detail", kwargs={"pk": self.object.section.id}
+            "dashboard:section_detail", kwargs={"pk": self.object.section.id}
         )
 
     def get_success_message(self, cleaned_data):
@@ -525,11 +525,3 @@ class SectionDeleteView(SuccessMessageMixin, DeleteView):
 
     def get_success_message(self, cleaned_data):
         return "Section deleted successfully"
-
-
-def delete_section_subject(request, section_subject_id):
-    section_subject = get_object_or_404(SectionSubject, id=section_subject_id)
-    section_id = section_subject.section.id
-    section_subject.delete()
-    messages.success(request, "Section Subject deleted successfully")
-    return redirect("dashboard:section_edit", pk=section_id)

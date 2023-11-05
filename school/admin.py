@@ -26,10 +26,7 @@ from .models import (
 class SubjectAdmin(admin.ModelAdmin):
     """Class representing Subject Admin"""
 
-    list_display = (
-        "title",
-        "description",
-    )
+    list_display = ("title",)
 
     search_fields = ("title",)
 

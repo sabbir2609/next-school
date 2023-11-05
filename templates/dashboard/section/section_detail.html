@@ -72,6 +72,7 @@
         </div>
         <div class="card-body">
             <table class="table">
+
                 <thead>
                     <tr>
                         <th scope="col">Student ID</th>
@@ -80,6 +81,7 @@
                         <th scope="col">Action</th>
                     </tr>
                 </thead>
+
                 <tbody>
                     {% for student in students %}
                     <tr>
@@ -87,7 +89,7 @@
                         <td>{{ student.student }}</td>
                         <td>{{ student.class_roll }}</td>
                         <td>
-                            <a class="btn btn-danger " href="{% url 'school:student_detail' student.student_id %}"
+                            <a class="btn btn-primary btn-sm " href="{% url 'dashboard:student_detail' student.student_id %}"
                                 target="_blank">
                                 Detail
                             </a>
@@ -95,9 +97,11 @@
                     </tr>
                     {% endfor %}
                 </tbody>
+
             </table>
         </div>
     </div>
-    <a href="{% url 'dashboard:section_update' section.id %}" class="btn btn-warning ">Update</a>
+    <a href="{% url 'dashboard:section_update' section.id %}" class="btn btn-warning btn-sm">Update</a>
+    <a href="{% url 'dashboard:section_list'%}" class="btn btn-primary btn-sm ">Section List</a>
 </div>
 {% endblock %}

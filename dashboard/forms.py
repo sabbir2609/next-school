@@ -34,7 +34,7 @@ class NoticeForm(forms.ModelForm):
 class SectionForm(forms.ModelForm):
     class Meta:
         model = Section
-        fields = ["name", "description", "class_name", "teacher", "seat"]
+        fields = ["class_name", "name", "description", "teacher", "seat"]
 
         widgets = {
             "name": forms.Select(attrs={"class": "form-select"}),
@@ -48,7 +48,7 @@ class SectionForm(forms.ModelForm):
 class SectionUpdateForm(forms.ModelForm):
     class Meta:
         model = Section
-        fields = ["name", "description", "class_name", "teacher", "seat"]
+        fields = ["class_name", "name", "description", "teacher", "seat"]
 
         widgets = {
             "name": forms.TextInput(
@@ -64,14 +64,6 @@ class SectionUpdateForm(forms.ModelForm):
 
 
 class SectionSubjectForm(forms.ModelForm):
-    # helper = FormHelper()
-    # helper = Layout(
-    #     Row(
-    #         Column("subject", css_class="form-group col-2 mb-0"),
-    #         Column("teachers", css_class="form-group col-4 mb-0"),
-    #     )
-    # )
-
     class Meta:
         model = SectionSubject
         fields = "__all__"

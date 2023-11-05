@@ -37,7 +37,6 @@ from .views import (
     SubjectCreateView,
     SectionUpdateView,
     SectionSubjectEditView,
-    delete_section_subject,
 )
 
 app_name = "dashboard"
@@ -90,8 +89,6 @@ urlpatterns = [
     path("dashboard/sections/<int:pk>/subject/edit", SectionSubjectEditView.as_view(), name="section_subject_edit"),
     path("dashboard/sections/<int:pk>/update/", SectionUpdateView.as_view(), name="section_update"),
     path("dashboard/sections/<int:pk>/delete/", SectionDeleteView.as_view(), name="section_delete"),
-    # delete section subjects
-    path("dashboard/sections/subject/<int:pk>/delete", delete_section_subject, name="delete_section_subject"),
     ################
     # Subject URLs #
     ################
