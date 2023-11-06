@@ -5,7 +5,7 @@ from dal import autocomplete
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Div, Row, Column
 
-from school.models import Section, SectionSubject
+from school.models import Section, SectionSubject, Guardian
 
 
 class NoticeForm(forms.ModelForm):
@@ -82,3 +82,15 @@ SectionSubjectFormset = inlineformset_factory(
     form=SectionSubjectForm,
     extra=1,
 )
+
+
+class GuardianForm(forms.ModelForm):
+    class Meta:
+        model = Guardian
+        fields = "__all__"
+
+        widgets = {
+            "name": forms.TextInput(attrs={"class": "form-control "}),
+            "phone": forms.TextInput(attrs={"class": "form-control "}),
+            "address": forms.TextInput(attrs={"class": "form-control "}),
+        }

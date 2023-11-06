@@ -15,7 +15,7 @@
         </div>
         <div class="card-body">
             <div class="row">
-                <div class="col-md-6">
+                <div class=" col-lg-8 col-md-6">
                     <p><strong>Name (English):</strong> {{ student.name_en }}</p>
                     <p><strong>Name (Bangla):</strong> {{ student.name_bn }}</p>
                     <p><strong>Date of Birth:</strong> {{ student.dob }}</p>
@@ -25,7 +25,7 @@
                     <p><strong>Student ID:</strong> {{ student.student_id }}</p>
                     <p><strong>Birth Certificate Number:</strong> {{ student.birth_certificate_no }}</p>
                 </div>
-                <div class="col-md-6">
+                <div class="col-lg-4 col-md-6">
                     {% if student.image %}
                     <img src="{{ student.image.url }}" alt="Profile Picture" class="img-fluid"
                         style="height: 200px; width: 200px; object-fit: cover;" loading="lazy">
@@ -91,13 +91,68 @@
             <p><strong>Status:</strong> {{ student.status }}</p>
         </div>
     </div>
+
+
+    <div class="card mt-3">
+        <div class="card-header">
+            <h4>Guardian Information</h4>
+        </div>
+        <div class="card-body">
+            <div class="row">
+
+                {% if student.guardian %}
+
+                <div class=" col-lg-8 col-md-6">
+
+                    <p> <strong> Name (English): </strong> {{ student.guardian.name_en }} </p>
+                    <p> <strong> Name (Bangla): </strong> {{ student.guardian.name_bn }} </p>
+                    <p> <strong> NID: </strong> {{ student.guardian.nid }} </p>
+                    <p> <strong> Email: </strong>
+                        <a href="mailto:{{ student.guardian.email }}">{{ student.guardian.email }} </a>
+                    </p>
+                    <p> <strong> Phone Number: </strong>
+                        <a href="tel:+{{ student.guardian.phone }}"> {{ student.guardian.phone }} </a>
+                    </p>
+                    <p> <strong> Relation: </strong> {{ student.guardian.relation }} </p>
+
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    {% if student.guardian.image %}
+                    <img src="{{ student.guardian.image.url }}" alt="Profile Picture" class="img-fluid"
+                        style="height: 200px; width: 200px; object-fit: cover;" loading="lazy">
+                    {% else %}
+                    <img src="{% static 'assets/images/profile.jpg' %}" alt="Profile Picture" class="img-fluid"
+                        style="height: 200px; width: 200px;" loading="lazy">
+                    {% endif %}
+                </div>
+                <div class="col-12 mt-2 ">
+                    <a href="{% url 'dashboard:guardian_update' student.student_id %}"
+                        class="btn btn-sm btn-warning ">Update</a>
+                </div>
+
+
+
+                {% else %}
+
+                <h2> No Guardian Information Available </h2>
+                <div class="col-12 mt-2 ">
+                    <a href="{% url 'dashboard:guardian_add' student.student_id %}" class="btn btn-sm btn-primary ">Add
+                        + </a>
+                </div>
+
+                {% endif %}
+
+            </div>
+        </div>
+    </div>
+    <hr>
     <div class="card mt-3">
         <div class="card-header">
             <h4>Action : </h4>
         </div>
         <div class="card-body">
 
-            <div class="button-group float-right">
+            <div class="button-group float-right btn-group-sm">
 
                 <a href="{% url 'dashboard:student_list' %}" class="btn btn-primary">Back</a>
                 <a href="{% url 'dashboard:student_update' student.student_id %}" class="btn btn-warning">Update</a>
@@ -114,7 +169,7 @@
 
             <hr>
 
-            <div class="button-group float-right">
+            <div class="button-group float-right btn-group-sm">
                 <h4>Attendance Section</h4>
                 <a href="{% url 'school:attendance_report_detail' student.student_id %}"
                     class="btn btn-success">Attendance Report</a>

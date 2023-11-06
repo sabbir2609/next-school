@@ -9,7 +9,9 @@ from .models import (
     Class,
     Section,
     SectionSubject,
+    # student admins
     Student,
+    Guardian,
     StudentAssign,
     Subject,
     Teacher,
@@ -50,7 +52,7 @@ class ClassAdmin(admin.ModelAdmin):
 
 class SectionSubjectInline(admin.TabularInline):
     model = SectionSubject
-    extra = 0
+    extra = 1
     autocomplete_fields = [
         # "teachers",
         # "subject",
@@ -75,6 +77,17 @@ class SectionAdmin(admin.ModelAdmin):
     autocomplete_fields = [
         "teacher",
     ]
+
+
+@admin.register(Guardian)
+class GuardianAdmin(admin.ModelAdmin):
+    list_display = (
+        "name_en",
+        "nid",
+        "email",
+        "phone",
+    )
+    search_fields = ("first_name", "last_name", "email")
 
 
 @admin.register(Student)
@@ -171,6 +184,14 @@ class StudentAdmin(admin.ModelAdmin):
                     "admission_class",
                     "comment",
                     "status",
+                ]
+            },
+        ),
+        (
+            "Guardian Information",
+            {
+                "fields": [
+                    "guardian",
                 ]
             },
         ),

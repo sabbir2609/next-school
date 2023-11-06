@@ -6,7 +6,7 @@ from django.db import IntegrityError, transaction
 from django.db.models import Q
 from django.db.models.deletion import ProtectedError
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import get_object_or_404, redirect
+from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.text import slugify
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.contrib.messages.views import SuccessMessageMixin
@@ -32,6 +32,7 @@ import logging
 logger = logging.getLogger(__name__)
 
 from school.models import (
+    Guardian,
     SectionSubject,
     Student,
     StudentAssign,
@@ -50,6 +51,7 @@ from .forms import (
     SectionForm,
     SectionUpdateForm,
     SectionSubjectFormset,
+    GuardianForm,
 )
 
 
@@ -240,6 +242,39 @@ class StudentCreateView(SuccessMessageMixin, CreateView):
 
     def get_success_message(self, cleaned_data):
         return "Student profile created successfully"
+
+
+class GuardianAddView(CreateView):
+    model = Guardian
+    form_class = GuardianForm
+    template_name = "dashboard/student/add_or_update_guardian.html"
+
+    def form_valid(self, form):
+        student = get_object_or_404(Student, pk=self.kwargs["pk"])
+        guardian = form.save()
+        student.guardian = guardian
+        student.save()
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse_lazy(
+            "dashboard:student_detail", kwargs={"pk": self.kwargs["pk"]}
+        )
+
+
+class GuardianUpdateView(UpdateView):
+    model = Guardian
+    form_class = GuardianForm
+    template_name = "dashboard/student/add_or_update_guardian.html"
+
+    def get_object(self, queryset=None):
+        student = get_object_or_404(Student, pk=self.kwargs["pk"])
+        return student.guardian
+
+    def get_success_url(self):
+        return reverse_lazy(
+            "dashboard:student_detail", kwargs={"pk": self.kwargs["pk"]}
+        )
 
 
 class StudentAssignView(SuccessMessageMixin, CreateView):

@@ -15,8 +15,8 @@ from school.models import (
 
 class SubjectTestCase(TestCase):
     def setUp(self):
-        Subject.objects.create(title="Math", description="Mathematics")
-        Subject.objects.create(title="Science", description="Science")
+        Subject.objects.create(title="Math")
+        Subject.objects.create(title="Science")
 
     def test_subject_title(self):
         math = Subject.objects.get(title="Math")
@@ -24,29 +24,17 @@ class SubjectTestCase(TestCase):
         self.assertEqual(math.title, "Math")
         self.assertEqual(science.title, "Science")
 
-    def test_subject_description(self):
-        math = Subject.objects.get(title="Math")
-        science = Subject.objects.get(title="Science")
-        self.assertEqual(math.description, "Mathematics")
-        self.assertEqual(science.description, "Science")
-
 
 class ClassTestCase(TestCase):
     def setUp(self):
-        Class.objects.create(title="Class 1", description="Class 1")
-        Class.objects.create(title="Class 2", description="Class 2")
+        Class.objects.create(title="Class 1")
+        Class.objects.create(title="Class 2")
 
     def test_class_title(self):
         cls1 = Class.objects.get(title="Class 1")
         cls2 = Class.objects.get(title="Class 2")
         self.assertEqual(cls1.title, "Class 1")
         self.assertEqual(cls2.title, "Class 2")
-
-    def test_class_description(self):
-        cls1 = Class.objects.get(description="Class 1")
-        cls2 = Class.objects.get(description="Class 2")
-        self.assertEqual(cls1.description, "Class 1")
-        self.assertEqual(cls2.description, "Class 2")
 
 
 class StudentTestCase(TestCase):

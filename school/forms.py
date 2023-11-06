@@ -14,6 +14,7 @@ class StudentForm(forms.ModelForm):
             "admission_date",
             "status",
             "admission_class",
+            "guardian",
         ]
 
         widgets = {

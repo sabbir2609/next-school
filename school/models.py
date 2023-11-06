@@ -87,7 +87,8 @@ class Section(models.Model):
 
     def save(self, *args, **kwargs):
         if self.name in ("Ar", "Co", "Sc") and self.class_name.title not in (
-            "Nine", "Ten",
+            "Nine",
+            "Ten",
         ):
             raise ValidationError(
                 f"'{self.name}' can only be applied to classes 'Nine' and 'Ten'"
@@ -104,6 +105,29 @@ class Section(models.Model):
     class Meta:
         verbose_name_plural = "Sections"
         unique_together = ("name", "class_name")
+
+
+class Guardian(models.Model):
+    FATHER = "Father"
+    MOTHER = "Mother"
+    OTHER = "Guardian"
+
+    RELATION_CHOICES = [
+        (FATHER, "Father"),
+        (MOTHER, "Mother"),
+        (OTHER, "Guardian"),
+    ]
+
+    name_en = models.CharField(max_length=50)
+    name_bn = models.CharField(max_length=50, null=True, blank=True)
+    nid = models.CharField(max_length=20, null=True, blank=True)
+    email = models.EmailField()
+    phone = models.CharField(max_length=15)
+    image = models.ImageField(upload_to="guardian", blank=True, null=True)
+    relation = models.CharField(max_length=8, choices=RELATION_CHOICES, default=OTHER)
+
+    def __str__(self):
+        return f"{self.name_en}"
 
 
 class Student(models.Model):
@@ -226,6 +250,14 @@ class Student(models.Model):
     )
 
     status = models.BooleanField(default=True)
+
+    guardian = models.OneToOneField(
+        Guardian,
+        on_delete=models.CASCADE,
+        related_name="guardian",
+        blank=True,
+        null=True,
+    )
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

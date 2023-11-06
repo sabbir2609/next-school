@@ -15,6 +15,8 @@ from .views import (
     StudentListView,
     StudentUpdateView,
     StudentAssignView,
+    GuardianAddView,
+    GuardianUpdateView,
     # class views
     ClassListView,
     ClassDetailView,
@@ -64,6 +66,9 @@ urlpatterns = [
     path("dashboard/students/<int:pk>/delete/", StudentDeleteView.as_view(), name="student_delete"),
     # Student Assign URLs
     path("dashboard/students/assign/", StudentAssignView.as_view(), name="student_assign"),
+    # guardian URLs
+    path("dashboard/student/<int:pk>/add_guardian", GuardianAddView.as_view(), name="guardian_add"),
+    path("dashboard/student/<int:pk>/update_guardian", GuardianUpdateView.as_view(), name="guardian_update"),
     ################
     # Class URLs #
     ################
