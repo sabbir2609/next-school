@@ -519,8 +519,6 @@ class SectionCreateView(SuccessMessageMixin, CreateView):
     def form_valid(self, form):
         instance = form.save(commit=False)
 
-        pprint(instance.class_name.title)
-
         if instance.name in ("Ar", "Co", "Sc") and instance.class_name.title not in (
             "9",
             "10",
