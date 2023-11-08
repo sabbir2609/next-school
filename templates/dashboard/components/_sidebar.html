@@ -191,6 +191,31 @@
 
             </li>
 
+            <li class="sidebar-item">
+
+                <a href="#" class="sidebar-link collapsed" data-bs-toggle="collapse" data-bs-target="#attendance"
+                    aria-expanded="false">
+                    <i class="fa-solid fa-clipboard-user"></i> Attendance
+                </a>
+
+                <ul id="attendance" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#classAndSection">
+
+                    <li class="sidebar-item">
+                        <a href="{% url 'dashboard:section_attendance_report' %}" class="sidebar-link">
+                            Section
+                        </a>
+                    </li>
+
+                    <li class="sidebar-item">
+                        <a href="{% url 'dashboard:subject_new' %}" class="sidebar-link">
+                            Student
+                        </a>
+                    </li>
+
+                </ul>
+
+            </li>
+
             <li class="sidebar-header">
                 Others
             </li>

@@ -1,0 +1,55 @@
+{% extends 'dashboard/dashboard.html' %}
+
+{% block title %} Attendance report {% endblock %}
+
+{% block content %}
+<div class="container">
+
+    <h1>Section-wise Attendance Report</h1>
+
+    <form action="" method="GET" class="row g-2 mb-2">
+        <div class="col-auto">
+            <label for="date">Filter by Date:</label>
+        </div>
+        <div class="col-auto">
+            <input type="date" id="date" name="date" class="form-control">
+        </div>
+        <div class="col-auto">
+            <input type="submit" value="Apply Filter" class="btn btn-sm btn-success">
+        </div>
+
+
+        {% if request.GET.date %}
+        <div class="col-auto">
+            <a href="?" class="btn btn-sm btn-warning ">Reset Filter</a>
+        </div>
+        {% endif %}
+
+    </form>
+
+    {% if request.GET.date %}
+    <div class="alert alert-info" role="alert">
+        Showing Results for {{ request.GET.date }}
+    </div>
+    {% endif %}
+
+    <table class="table ">
+        <tr>
+            <th>Section</th>
+            <th>Total Students</th>
+            <th>Total Attendance Records</th>
+            <th>Present Count</th>
+        </tr>
+        {% for data in section_attendance_data %}
+        <tr>
+            <td>
+                <a href="{% url 'dashboard:section_detail' data.section.id %}">{{ data.section }}</a>
+            </td>
+            <td>{{ data.total_students }}</td>
+            <td>{{ data.total_attendance }}</td>
+            <td>{{ data.present_count }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}

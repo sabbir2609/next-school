@@ -1,5 +1,5 @@
 from pprint import pprint
-from typing import Any
+from datetime import datetime
 from django.contrib import messages
 from django.forms import ValidationError
 from django.forms.utils import ErrorList
@@ -33,6 +33,7 @@ import logging
 logger = logging.getLogger(__name__)
 
 from school.models import (
+    Attendance,
     Guardian,
     SectionSubject,
     Student,
@@ -53,6 +54,7 @@ from .forms import (
     SectionUpdateForm,
     SectionSubjectFormset,
     GuardianForm,
+    AttendanceForm,
 )
 
 
@@ -598,3 +600,64 @@ class SectionDeleteView(SuccessMessageMixin, DeleteView):
 
     def get_success_message(self, cleaned_data):
         return "Section deleted successfully"
+
+
+####################
+# attendance views #
+####################
+
+
+class SectionAttendanceCreateView(SuccessMessageMixin, CreateView):
+    model = Attendance
+    form_class = AttendanceForm
+    template_name = "dashboard/attendance/attendance_add.html"
+
+    def get_success_url(self):
+        return reverse_lazy(
+            "dashboard:attendance_detail", kwargs={"pk": self.object.pk}
+        )
+
+    def get_success_message(self, cleaned_data):
+        return "Attendance created successfully"
+
+
+# attendance report list for all section
+class SectionAttendanceReportView(ListView):
+    template_name = "dashboard/attendance/section_attendance_report.html"
+    context_object_name = "section_attendance_data"
+
+    def get_queryset(self):
+        sections = Section.objects.all()
+        date = self.request.GET.get("date")  # Retrieve date from the query parameters
+
+        section_attendance_data = []
+        for section in sections:
+            student_assigns = StudentAssign.objects.filter(section=section)
+            total_students = student_assigns.count()
+
+            # Apply date filter if date is provided
+            attendance_records = Attendance.objects.filter(
+                student_assign__in=student_assigns
+            )
+            if date:
+                try:
+                    date_obj = datetime.strptime(date, "%Y-%m-%d").date()
+                    attendance_records = attendance_records.filter(date=date_obj)
+                except ValueError:
+                    messages.error(
+                        self.request, "Invalid date format. Please use YYYY-MM-DD."
+                    )
+
+            total_attendance = attendance_records.count()
+            present_count = attendance_records.filter(status=True).count()
+
+            section_attendance_data.append(
+                {
+                    "section": section,
+                    "total_students": total_students,
+                    "total_attendance": total_attendance,
+                    "present_count": present_count,
+                }
+            )
+
+        return section_attendance_data

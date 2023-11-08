@@ -39,32 +39,8 @@ class TeacherForm(forms.ModelForm):
         }
 
 
-class AttendanceForm(forms.ModelForm):
-    class Meta:
-        model = Attendance
-        fields = "__all__"
-        widgets = {
-            "date": forms.DateInput(attrs={"class": "form-control", "type": "date"}),
-            "student_assign": autocomplete.ModelSelect2(
-                url="school:student-autocomplete"
-            ),
-        }
-
-
 # student assign form
 class StudentAssignForm(forms.ModelForm):
     class Meta:
         model = StudentAssign
         fields = "__all__"
-
-
-class StudentResultForm(forms.ModelForm):
-    class Meta:
-        model = StudentResult
-        fields = "__all__"
-
-        # widgets = {
-        #     "student_assign": autocomplete.ModelSelect2(
-        #         url="school:student-result-autocomplete"
-        #     ),
-        # }
