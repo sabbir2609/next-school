@@ -77,35 +77,22 @@ class Section(models.Model):
         verbose_name="Section",
         choices=SECTION_CHOICES_CLASS_6_7_8 + SECTION_CHOICES_CLASS_9_10,
     )
-    description = models.TextField(
+    description = models.CharField(
+        max_length=255,
         null=True,
         blank=True,
-        help_text="Section Description, e.g. 'Section A of Class 6, total 30 students'",
+        help_text="Section Description, e.g. Section A of Class 6, total 30 students ",
     )
 
-    teacher = models.OneToOneField(
+    teacher = models.ForeignKey(
         "Teacher",
         on_delete=models.SET_NULL,
         null=True,
         blank=True,
         verbose_name="Section Teacher",
     )
-    seat = models.PositiveIntegerField(default=0)
+    seat = models.PositiveIntegerField(default=45)
     subjects = models.ManyToManyField(Subject, through="SectionSubject")
-
-    def save(self, *args, **kwargs):
-        if self.name in ("Ar", "Co", "Sc") and self.class_name.title not in (
-            "Nine",
-            "Ten",
-        ):
-            raise ValidationError(
-                f"'{self.name}' can only be applied to classes 'Nine' and 'Ten'"
-            )
-        if self.name in ("A", "B", "C") and self.class_name.title in ("Nine", "Ten"):
-            raise ValidationError(
-                f"'{self.name}' can only be applied to classes 'Six', 'Seven', and 'Eight'"
-            )
-        super(Section, self).save(*args, **kwargs)
 
     def __str__(self):
         return f"{self.class_name} - Section {self.name}"

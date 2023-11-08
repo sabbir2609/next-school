@@ -1,6 +1,6 @@
 {% extends 'dashboard/dashboard.html' %}
 
-{% block title %} {{ section.class_name }} - {{ section.name }} {% endblock %}
+{% block title %} {{ section.class_name }} - {{ section.get_name_display }} {% endblock %}
 
 {% block content %}
 <div class="container">
@@ -12,7 +12,7 @@
         </div>
         <div class="card-body">
             <p><strong>Class :</strong> {{ section.class_name }}</p>
-            <p><strong>Section :</strong> {{ section.name }}</p>
+            <p><strong>Section :</strong> {{ section.get_name_display }}</p>
             <p><strong>Seat:</strong> {{ section.seat }}</p>
             <p><strong>Section Teacher:</strong> {{ section.teacher }}</p>
 
@@ -89,8 +89,8 @@
                         <td>{{ student.student }}</td>
                         <td>{{ student.class_roll }}</td>
                         <td>
-                            <a class="btn btn-primary btn-sm " href="{% url 'dashboard:student_detail' student.student_id %}"
-                                target="_blank">
+                            <a class="btn btn-primary btn-sm "
+                                href="{% url 'dashboard:student_detail' student.student_id %}" target="_blank">
                                 Detail
                             </a>
                         </td>

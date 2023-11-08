@@ -1,12 +1,45 @@
 {% extends "dashboard/dashboard.html" %}
 {% load crispy_forms_tags %}
+{% block title %} Section {% endblock %}
+
 {% block content %}
-<h1>Assign Section</h1>
+<div class="row">
+    <div class="col-lg-8">
+        <h3>Assign Section</h3>
 
-<form method="post">
-    {% csrf_token %}
-    {{ form | crispy }}
-    <button type="submit" class="btn btn-secondary">Save</button>
-</form>
+        <form method="post">
+            {% csrf_token %}
+            {{ form | crispy }}
+            <button type="submit" class="btn btn-sm btn-success">Save</button>
+        </form>
 
-{% endblock content %}
+    </div>
+    <div class="col-lg-4 mt-2">
+        <h3> Sections </h3>
+
+        {% if sections %}
+        <table class="table text-center">
+            <thead>
+                <tr>
+                    <th>Class</th>
+                    <th>Section Name</th>
+                    <th>Class Teacher</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for section in sections %}
+                <tr>
+                    <td>{{ section.class_name }}</td>
+                    <td>{{ section.name }}</td>
+                    <td>{{ section.teacher }}</td>
+                </tr>
+                {% endfor %}
+        </table>
+        {% else %}
+        <h4>No Section Assigned Yet ! </h4>
+        {% endif %}
+    </div>
+</div>
+
+
+{% endblock %}

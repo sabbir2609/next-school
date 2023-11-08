@@ -38,7 +38,7 @@ class SectionForm(forms.ModelForm):
 
         widgets = {
             "name": forms.Select(attrs={"class": "form-select"}),
-            "description": forms.Textarea(attrs={"class": "form-control "}),
+            "description": forms.TextInput(attrs={"class": "form-control "}),
             "class_name": forms.Select(attrs={"class": "form-select"}),
             "teacher": forms.Select(attrs={"class": "form-select"}),
             "seat": forms.NumberInput(attrs={"class": "form-control "}),
