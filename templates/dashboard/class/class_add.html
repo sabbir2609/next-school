@@ -7,14 +7,53 @@
 {% block content %}
 
 <div class="container-flex">
-    <h2>Add a new Class</h2>
-    <form method="POST" autocomplete="off">
-        {% csrf_token %}
+    <div class="row">
 
-        {{ form | crispy }}
+        <div class="col-lg-8">
+            <h2>Add a new Class</h2>
+            <form method="POST" autocomplete="off">
+                {% csrf_token %}
 
-        <button type="submit" class="btn btn-primary">Add</button>
-    </form>
+                {{ form | crispy }}
+
+                <button type="submit" class="btn btn-sm btn-primary">Add</button>
+                <a class="btn btn-sm btn-warning" href="{% url 'dashboard:class_list' %}">Cancel</a>
+            </form>
+        </div>
+
+        <div class="col-lg-4 mt-2">
+            <h1>Classes : </h1>
+            {% if classes %}
+            <div class="table-container position-relative mb-2 mt-2">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Class</th>
+                            <th scope="col">Class Teacher</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for class in classes %}
+                        <tr>
+                            <th scope="row">
+                                <div class="text-nowrap">
+                                    {{ class.title }}
+                                </div>
+                            </th>
+                            <td>
+                                {{ class.teacher }}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <a class="btn btn-sm btn-info" href="{% url 'dashboard:class_list' %}">List</a>
+            {% else %}
+            <h4>No class added yet!</h4>
+            {% endif %}
+        </div>
+    </div>
 </div>
 
 {% endblock %}

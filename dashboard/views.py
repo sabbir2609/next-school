@@ -1,4 +1,5 @@
 from pprint import pprint
+from typing import Any
 from django.contrib import messages
 from django.forms import ValidationError
 from django.forms.utils import ErrorList
@@ -305,6 +306,11 @@ class ClassCreateView(SuccessMessageMixin, CreateView):
     model = Class
     fields = ["title", "teacher", "description"]
     template_name = "dashboard/class/class_add.html"
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(ClassCreateView, self).get_context_data(*args, **kwargs)
+        context["classes"] = Class.objects.all()
+        return context
 
     def get_success_url(self):
         return reverse_lazy("dashboard:class_detail", kwargs={"slug": self.object.slug})

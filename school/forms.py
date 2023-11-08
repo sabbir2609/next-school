@@ -33,6 +33,9 @@ class TeacherForm(forms.ModelForm):
             "date_of_birth": forms.DateInput(
                 attrs={"class": "form-control", "type": "date"}
             ),
+            "joining_date": forms.DateInput(
+                attrs={"class": "form-control", "type": "date"}
+            ),
         }
 
 

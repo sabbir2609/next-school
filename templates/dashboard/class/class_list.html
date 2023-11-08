@@ -39,7 +39,8 @@ Class List
                         </button>
                         <ul class="dropdown-menu">
                             <li>
-                                <a class="dropdown-item" href="{% url 'dashboard:class_detail' class.slug %}">View</a>
+                                <a class="dropdown-item bg-danger-subtle"
+                                    href="{% url 'dashboard:class_detail' class.slug %}">View</a>
                             </li>
                             <li>
                                 <a class="dropdown-item" href="{% url 'dashboard:class_update' class.slug %}">Edit</a>
@@ -58,7 +59,7 @@ Class List
         </tbody>
     </table>
 
-    <a class="btn btn-primary" href="{% url 'dashboard:class_new' %}">Add + </a>
+    <a class="btn btn-sm btn-primary" href="{% url 'dashboard:class_new' %}">Add + </a>
 
 </div>
 

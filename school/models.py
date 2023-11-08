@@ -4,6 +4,7 @@ from django.core.exceptions import ValidationError
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django.utils.text import slugify
+from django.utils.translation import gettext_lazy as _
 
 
 class Subject(models.Model):
@@ -17,22 +18,29 @@ class Subject(models.Model):
 
 
 class Class(models.Model):
-    CLASS_CHOICES = (
-        ("Six", "Six"),
-        ("Seven", "Seven"),
-        ("Eight", "Eight"),
-        ("Nine", "Nine"),
-        ("Ten", "Ten"),
+    class ClassChoices(models.TextChoices):
+        CLASS_6 = "6", _("Class 6")
+        CLASS_7 = "7", _("Class 7")
+        CLASS_8 = "8", _("Class 8")
+        CLASS_9 = "9", _("Class 9")
+        CLASS_10 = "10", _("Class 10")
+
+    title = models.CharField(
+        max_length=8, choices=ClassChoices.choices, primary_key=True
     )
-    title = models.CharField(max_length=8, choices=CLASS_CHOICES, primary_key=True)
     slug = models.SlugField(unique=True, blank=True, null=True)
     teacher = models.ForeignKey(
-        "Teacher", on_delete=models.SET_NULL, null=True, blank=True
-    )
-    description = models.TextField(
+        "Teacher",
+        on_delete=models.SET_NULL,
         null=True,
         blank=True,
-        help_text="eg: 'Class 6, total 120 students, 4 sections, 30 students in each section'",
+        help_text="Class Teacher",
+    )
+    description = models.CharField(
+        null=True,
+        blank=True,
+        max_length=255,
+        help_text="eg: Class 6, total 120 students, 4 sections, 30 students in each section",
         default="",
     )
 
@@ -41,7 +49,7 @@ class Class(models.Model):
 
     class Meta:
         verbose_name_plural = "Classes"
-        ordering = ("slug",)
+        ordering = ("title",)
 
 
 class Section(models.Model):
@@ -407,9 +415,8 @@ class Attendance(models.Model):
     def __str__(self):
         return f"{self.student_assign} - {self.date} ({self.status})"
 
-    # Exam model
 
-
+# Exam model
 class Exam(models.Model):
     EXAM_CHOICES = (
         ("Half Yearly", "Half Yearly"),
