@@ -27,7 +27,8 @@
                     <i class="fa-regular fa-file-lines"></i> Notice
                 </a>
 
-                <ul id="pages" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                <ul id="pages" class="sidebar-dropdown list-unstyled collapse bg-primary-subtle"
+                    data-bs-parent="#sidebar">
                     <li class="sidebar-item">
                         <a href="{% url 'dashboard:notice_list' %}" class="sidebar-link">
                             Notice List
@@ -48,7 +49,8 @@
                     <i class="fa-solid fa-graduation-cap"></i> Student Management
                 </a>
 
-                <ul id="student" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                <ul id="student" class="sidebar-dropdown list-unstyled collapse bg-primary-subtle"
+                    data-bs-parent="#sidebar">
 
                     <li class="sidebar-item">
                         <a href="{% url 'dashboard:student_list' %}" class="sidebar-link">
@@ -79,7 +81,8 @@
                     <i class="fa-solid fa-chalkboard-user"></i> Teacher Management
                 </a>
 
-                <ul id="teacher" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                <ul id="teacher" class="sidebar-dropdown list-unstyled collapse bg-primary-subtle"
+                    data-bs-parent="#sidebar">
 
                     <li class="sidebar-item">
                         <a href="{% url 'dashboard:teacher_list' %}" class="sidebar-link">
@@ -106,7 +109,8 @@
 
                 </a>
 
-                <ul id="classAndSection" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                <ul id="classAndSection" class="sidebar-dropdown list-unstyled collapse bg-primary-subtle"
+                    data-bs-parent="#sidebar">
 
 
                     <li class="sidebar-item">
@@ -168,7 +172,7 @@
                             Subjects
                         </a>
 
-                        <ul id="subject" class="sidebar-dropdown list-unstyled collapse"
+                        <ul id="subject" class="sidebar-dropdown list-unstyled collapse bg-primary-subtle"
                             data-bs-parent="#classAndSection">
 
                             <li class="sidebar-item">
@@ -193,12 +197,19 @@
 
             <li class="sidebar-item">
 
-                <a href="#" class="sidebar-link collapsed" data-bs-toggle="collapse" data-bs-target="#attendance"
+                <a class="sidebar-link collapsed" data-bs-toggle="collapse" data-bs-target="#attendance"
                     aria-expanded="false">
                     <i class="fa-solid fa-clipboard-user"></i> Attendance
                 </a>
 
-                <ul id="attendance" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#classAndSection">
+                <ul id="attendance" class="sidebar-dropdown list-unstyled collapse bg-primary-subtle"
+                    data-bs-parent="#classAndSection">
+
+                    <li class="sidebar-item">
+                        <a href="{% url 'dashboard:attendance_index' %}" class="sidebar-link">
+                            Attendance
+                        </a>
+                    </li>
 
                     <li class="sidebar-item">
                         <a href="{% url 'dashboard:section_attendance_report' %}" class="sidebar-link">

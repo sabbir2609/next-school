@@ -40,6 +40,7 @@ from .views import (
     SectionUpdateView,
     SectionSubjectEditView,
     # attendance views
+    AttendanceIndexView,
     SectionAttendanceCreateView,
     SectionAttendanceReportView,
 )
@@ -106,9 +107,9 @@ urlpatterns = [
     ###################
     # Attendance URLs #
     ###################
-    path("dashboard/sections/<int:pk>/attendance/create/", SectionAttendanceCreateView.as_view(), name="section_attendance_create"),
+    path("dashboard/attendance/", AttendanceIndexView.as_view(), name="attendance_index"),
+    path("dashboard/sections/<int:pk>/attendance/add/", SectionAttendanceCreateView.as_view(), name="section_attendance_new"),
     path("dashboard/sections/attendance/report", SectionAttendanceReportView.as_view(), name="section_attendance_report"),
-
 
 
 ]

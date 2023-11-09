@@ -1,0 +1,49 @@
+{% extends 'dashboard/dashboard.html' %}
+
+{% block title %} Attendance {% endblock %}
+
+{% block content %}
+
+<div class="container-fluid ">
+    <h1 class="mt-3">Attendance Index</h1>
+    <div class="card mt-4">
+        <div class="card-body">
+            <h5 class="card-title">Take Attendance for a Student</h5>
+            <p class="card-text">Click the button below to take attendance for a specific student.</p>
+            <a href="#" class="btn btn-primary">Take Attendance for a Student</a>
+        </div>
+    </div>
+
+    <div class="card mt-4">
+        <div class="card-body">
+            <h5 class="card-title">Take Attendance for a Section</h5>
+            <p class="card-text">Click the button below to take attendance for an entire section.</p>
+
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Class Name</th>
+                        <th>Section Name</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for section in sections %}
+                    <tr>
+                        <td>{{ section.class_name }}</td>
+                        <td>{{ section.name }}</td>
+                        <td>
+                            <a href="{% url 'dashboard:section_attendance_new' section.id %}"
+                                class="btn btn-sm btn-outline-danger">Attendance</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}

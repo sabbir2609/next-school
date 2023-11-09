@@ -1,0 +1,16 @@
+{% extends 'dashboard/dashboard.html' %}
+{% load subtract %}
+
+{% block title %} Take Section Attendance {% endblock %}
+
+{% block content %}
+<h1>Take Section Attendance</h1>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+
+    <input type="submit" value="Submit Attendance">
+</form>
+
+{% endblock %}
