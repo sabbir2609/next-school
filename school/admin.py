@@ -256,20 +256,22 @@ class StudentAssignAdmin(admin.ModelAdmin):
 @admin.register(Attendance)
 class AttendanceAdmin(admin.ModelAdmin):
     def get_student_id(self, obj):
-        return obj.student_assign.student.student_id
+        return obj.student.student.student_id
 
     list_display = (
-        "student_assign",
+        "student",
         "get_student_id",
         "date",
         "status",
     )
 
-    search_fields = ("student_assign__student__student_id",)
+    autocomplete_fields = ["student"]
+
+    search_fields = ("student__student__student_id",)
 
     list_filter = (
-        "student_assign__section__class_name",
-        "student_assign__section__name",
+        "student__section__class_name",
+        "student__section__name",
         "status",
     )
 

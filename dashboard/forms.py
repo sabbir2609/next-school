@@ -103,5 +103,4 @@ class AttendanceForm(forms.ModelForm):
 
         widgets = {
             "date": forms.DateInput(attrs={"class": "form-control ", "type": "date"}),
-            "status": forms.Select(attrs={"class": "form-select"}),
         }

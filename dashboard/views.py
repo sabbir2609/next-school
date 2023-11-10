@@ -616,19 +616,52 @@ class AttendanceIndexView(TemplateView):
         return context
 
 
-# TODO: make it work
-class SectionAttendanceCreateView(SuccessMessageMixin, CreateView):
+class StudentAttendanceCreateView(SuccessMessageMixin, CreateView):
     model = Attendance
     form_class = AttendanceForm
-    template_name = "dashboard/attendance/section_attendance_add.html"
+    template_name = "dashboard/attendance/section_attendance_add_and_detail.html"
 
     def get_success_url(self):
-        return reverse_lazy(
-            "dashboard:attendance_detail", kwargs={"pk": self.object.pk}
+        return reverse_lazy("dashboard:attendance_index")
+
+
+class StudentAttendanceDetailView(DetailView):
+    model = Attendance
+    template_name = "dashboard/attendance/student_attendance_detail.html"
+    context_object_name = "attendance"
+
+
+class SectionAttendanceCreateView(ListView):
+    model = Attendance
+    form_class = AttendanceForm
+    template_name = "dashboard/attendance/section_attendance_add_and_detail.html"
+    context_object_name = "section_attendance"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        section = get_object_or_404(Section, pk=self.kwargs["pk"])
+        date = self.request.GET.get("date", datetime.now().strftime("%Y-%m-%d"))
+
+        students = StudentAssign.objects.filter(section=section).order_by(
+            "class_roll",
+        )
+        attendances = Attendance.objects.filter(
+            student__section=section, date=date
+        ).order_by(
+            "student__class_roll",
         )
 
-    def get_success_message(self, cleaned_data):
-        return "Attendance created successfully"
+        context.update(
+            {
+                "section": section,
+                "attendances": attendances,
+                "students": students,
+                "date": date,
+            }
+        )
+
+        return context
 
 
 # attendance report list for all section
@@ -638,11 +671,7 @@ class SectionAttendanceReportView(ListView):
 
     def get_queryset(self):
         sections = Section.objects.all()
-        date = self.request.GET.get("date")
-
-        # Set default date to today if no date filter is provided
-        if not date:
-            date = datetime.now().strftime("%Y-%m-%d")
+        date = self.request.GET.get("date", datetime.now().strftime("%Y-%m-%d"))
 
         section_attendance_data = []
         for section in sections:
@@ -650,7 +679,7 @@ class SectionAttendanceReportView(ListView):
             total_students = student_assigns.count()
 
             attendance_records = Attendance.objects.filter(
-                student_assign__in=student_assigns, date=date
+                student__in=student_assigns, date=date
             )
             present_count = attendance_records.filter(status=True).count()
 

@@ -1,5 +1,5 @@
 {% extends 'dashboard/dashboard.html' %}
-{% load subtract %}
+{% load custom_filters %}
 
 {% block title %} Attendance report {% endblock %}
 
@@ -48,7 +48,9 @@
             {% for data in section_attendance_data %}
             <tr>
                 <td class="text-nowrap">
-                    <a href="{% url 'dashboard:section_detail' data.section.id %}">{{ data.section }}</a>
+                    <a href="{% url 'dashboard:section_detail' data.section.id %}" class="text-decoration-none ">
+                        {{data.section.class_name}} - {{ data.section.get_name_display}}
+                    </a>
                 </td>
                 <td>{{ data.total_students }}</td>
                 <td>{{ data.present_count }}</td>

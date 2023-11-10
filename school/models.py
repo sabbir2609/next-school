@@ -387,20 +387,20 @@ class StudentAssign(models.Model):
 
 # student attendance model
 class Attendance(models.Model):
-    student_assign = models.ForeignKey(
+    student = models.ForeignKey(
         StudentAssign,
         on_delete=models.CASCADE,
-        related_name="student_attendance",
+        related_name="attendance_student",
     )
     date = models.DateField(default=datetime.date.today)
     status = models.BooleanField(default=False)
 
     class Meta:
         ordering = ["-date"]
-        unique_together = ("student_assign", "date")
+        unique_together = ("student", "date")
 
     def __str__(self):
-        return f"{self.student_assign} - {self.date} ({self.status})"
+        return f"{self.student} - {self.date} ({self.status})"
 
 
 # Exam model
