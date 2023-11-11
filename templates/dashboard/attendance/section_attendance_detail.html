@@ -1,0 +1,82 @@
+{% extends 'dashboard/dashboard.html' %}
+
+{% block title %} Section Attendance Report {% endblock %}
+
+{% load custom_filters %}
+
+{% block content %}
+
+<div class="container-fluid">
+    <div class="row">
+        <h4>Attendance for {{ section.class_name }} - {{ section.get_name_display }}</h4>
+
+        {% if request.GET.date %}
+        <div class="alert alert-info" role="alert">
+            Showing Results for {{ request.GET.date }}
+        </div>
+        {% else %}
+        <h5> <span class="text-success">Today</span> ({{ date }}) </h5>
+        {% endif %}
+
+        <form action="" method="GET" class="row g-2 mb-2">
+            <div class="col-auto fw-bold text-danger">
+                <label for="date">FILTER: </label>
+            </div>
+
+            <div class="col-auto">
+                <input type="date" id="date" name="date" class="form-control form-control-sm" value="{{ date }}">
+            </div>
+            <div class="col-auto">
+                <input type="submit" value="Apply Filter" class="btn btn-sm btn-success">
+            </div>
+
+
+            {% if request.GET.date %}
+            <div class="col-auto">
+                <a href="?" class="btn btn-sm btn-warning ">Reset Filter</a>
+            </div>
+            {% endif %}
+
+        </form>
+    </div>
+
+    <div class="row">
+        <table class="table table-striped text-center ">
+            <thead>
+                <tr>
+                    <th>Class Roll</th>
+                    <th>Student Name</th>
+                    <th>Attendance Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for student in students %}
+                <tr>
+                    <td>{{ student.class_roll }}</td>
+                    <td>{{ student.student.name_en }}</td>
+                    <td>
+                        {% with attendance=attendances|get_by_student:student %}
+                        {% if attendance %}
+                        {% if attendance.status %}
+                        <i class="fa-solid fa-circle-check text-success"></i> Present
+                        {% else %}
+                        <i class="fa-solid fa-circle-xmark text-danger"></i> Absent
+                        {% endif %}
+                        {% else %}
+
+                        <span class="text-danger ">No Record Found</span>
+
+                        {% endif %}
+                        {% endwith %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <a href="{% url 'dashboard:section_attendance_report' %}" class="btn btn-sm btn-primary ">
+        Back To List
+    </a>
+</div>
+
+{% endblock %}

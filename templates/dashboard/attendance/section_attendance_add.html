@@ -24,7 +24,7 @@
       </div>
 
       <div class="col-auto">
-        <input type="date" id="date" name="date" class="form-control form-control-sm">
+        <input type="date" id="date" name="date" class="form-control form-control-sm" value="{{ date }}">
       </div>
       <div class="col-auto">
         <input type="submit" value="Apply Filter" class="btn btn-sm btn-success">
@@ -39,6 +39,38 @@
 
     </form>
   </div>
+
+  <script>
+    // Function to get the CSRF token from cookies
+    function getCSRFToken() {
+      const csrfCookie = document.cookie.split(';').find(c => c.trim().startsWith('csrftoken='));
+      return csrfCookie ? csrfCookie.split('=')[1] : null;
+    }
+
+    function updateAttendance(studentId, status) {
+      const csrfToken = getCSRFToken();
+
+      $.ajax({
+        url: '{% url "dashboard:section_student_attendance_new" %}',
+        method: 'POST',
+        headers: {
+          'X-CSRFToken': csrfToken,
+        },
+        data: {
+          student_id: studentId,
+          date: '{{ date }}',
+          status: status
+        },
+        success: function (data) {
+          console.log(data);
+          location.reload();
+        },
+        error: function (error) {
+          console.error(error);
+        }
+      });
+    }
+  </script>
 
   <div class="row">
     <table class="table table-striped text-center ">
@@ -64,15 +96,16 @@
             {% endif %}
             {% else %}
 
-            <a href="#" class="text-decoration-none ">
+            <button class="btn btn-sm btn-warning " onclick="updateAttendance('{{ student.id }}', 'True')">
               <i class="fa-solid fa-circle-check text-success"></i>
-            </a>
-            <a href="#" class="text-decoration-none">
-              <i class="fa-solid fa-circle-xmark text-danger"></i>
-            </a>
+            </button>
 
-            {% endif %}
-            {% endwith %}
+            <button class="btn btn-sm btn-info " onclick="updateAttendance('{{ student.id }}', 'False')">
+              <i class="fa-solid fa-circle-xmark text-danger"></i>
+              </a>
+
+              {% endif %}
+              {% endwith %}
           </td>
         </tr>
         {% endfor %}

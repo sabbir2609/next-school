@@ -41,10 +41,11 @@ from .views import (
     SectionSubjectEditView,
     # attendance views
     AttendanceIndexView,
-    StudentAttendanceCreateView,
+    SectionStudentAttendanceCreateView,
     StudentAttendanceDetailView,
     SectionAttendanceCreateView,
     SectionAttendanceReportView,
+    SectionAttendanceDetailView,
 )
 
 app_name = "dashboard"
@@ -111,7 +112,7 @@ urlpatterns = [
     ###################
     path("dashboard/attendance/", AttendanceIndexView.as_view(), name="attendance_index"),
 
-    path("dashboard/students/<int:pk>/attendance/add/", StudentAttendanceCreateView.as_view(), name="student_attendance_new"),
+    path("dashboard/students/attendance/add/", SectionStudentAttendanceCreateView.as_view(), name="section_student_attendance_new"),
 
     path("dashboard/students/<int:pk>/attendance/", StudentAttendanceDetailView.as_view(), name="student_attendance_detail"),
 
@@ -119,5 +120,6 @@ urlpatterns = [
     
     path("dashboard/sections/attendance/report", SectionAttendanceReportView.as_view(), name="section_attendance_report"),
 
+    path("dashboard/sections/<int:pk>/attendance/", SectionAttendanceDetailView.as_view(), name="section_attendance_detail"),
 
 ]

@@ -7,11 +7,12 @@ from django.forms.utils import ErrorList
 from django.db import IntegrityError, models, transaction
 from django.db.models import Q
 from django.db.models.deletion import ProtectedError
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.text import slugify
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.contrib.messages.views import SuccessMessageMixin
+from django.views import View
 from django.views.generic.detail import SingleObjectMixin
 from django.contrib.contenttypes.models import ContentType
 from django.urls import reverse, reverse_lazy
@@ -616,13 +617,25 @@ class AttendanceIndexView(TemplateView):
         return context
 
 
-class StudentAttendanceCreateView(SuccessMessageMixin, CreateView):
-    model = Attendance
-    form_class = AttendanceForm
-    template_name = "dashboard/attendance/section_attendance_add_and_detail.html"
+class SectionStudentAttendanceCreateView(SuccessMessageMixin, View):
+    def post(self, request, *args, **kwargs):
+        student_id = request.POST.get("student_id")
+        date = request.POST.get("date")
+        status = request.POST.get("status")
 
-    def get_success_url(self):
-        return reverse_lazy("dashboard:attendance_index")
+        student = get_object_or_404(StudentAssign, pk=student_id)
+        attendance, created = Attendance.objects.get_or_create(
+            student=student, date=date
+        )
+        attendance.status = status
+        attendance.save()
+
+        messages.success(
+            request,
+            f"Attendance of {student.student.name_en} @ {date} added successfully",
+        )
+
+        return JsonResponse({"status": "success"})
 
 
 class StudentAttendanceDetailView(DetailView):
@@ -634,7 +647,7 @@ class StudentAttendanceDetailView(DetailView):
 class SectionAttendanceCreateView(ListView):
     model = Attendance
     form_class = AttendanceForm
-    template_name = "dashboard/attendance/section_attendance_add_and_detail.html"
+    template_name = "dashboard/attendance/section_attendance_add.html"
     context_object_name = "section_attendance"
 
     def get_context_data(self, **kwargs):
@@ -672,7 +685,6 @@ class SectionAttendanceReportView(ListView):
     def get_queryset(self):
         sections = Section.objects.all()
         date = self.request.GET.get("date", datetime.now().strftime("%Y-%m-%d"))
-
         section_attendance_data = []
         for section in sections:
             student_assigns = StudentAssign.objects.filter(section=section)
@@ -692,3 +704,14 @@ class SectionAttendanceReportView(ListView):
             )
 
         return section_attendance_data
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["date"] = self.request.GET.get(
+            "date", datetime.now().strftime("%Y-%m-%d")
+        )
+        return context
+
+
+class SectionAttendanceDetailView(SectionAttendanceCreateView):
+    template_name = "dashboard/attendance/section_attendance_detail.html"
