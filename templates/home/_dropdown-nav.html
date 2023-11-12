@@ -10,20 +10,39 @@
     <div class="container">
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav mx-auto">
+                {% if dropdowns %}
                 {% for dropdown in dropdowns %}
                 <li class="nav-item dropdown dropdown-hov">
-                    <a class="nav-link dropdown-toggle fw-bold" href="#" id="navbarDropdown1" role="button"
-                        data-bs-toggle="dropdown" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle fw-bold" href="#" id="navbarDropdown{{ forloop.counter }}"
+                        role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         {{ dropdown.name }}
                     </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown1">
-                        <!-- NOTE: Do this for tabular data  -->
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown{{ forloop.counter }}">
+                        {% if dropdown.items.exists %}
+                        <!-- Actual items when data is available -->
                         {% for item in dropdown.items.all %}
                         <li><a class="dropdown-item" href="{{ item.slug }}">{{ item.name }}</a></li>
                         {% endfor %}
+                        {% else %}
+                        <!-- Dummy item when no data is available -->
+                        <li><a class="dropdown-item" href="#">Dummy Item</a></li>
+                        {% endif %}
                     </ul>
                 </li>
                 {% endfor %}
+                {% else %}
+                <!-- Dummy dropdown when no data is available -->
+                <li class="nav-item dropdown dropdown-hov">
+                    <a class="nav-link dropdown-toggle fw-bold" href="#" id="navbarDropdown{{ forloop.counter }}"
+                        role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Dummy Dropdown
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="#">Customize Please</a></li>
+                        <li><a class="dropdown-item" href="#">Dummy Item</a></li>
+                    </ul>
+                </li>
+                {% endif %}
             </ul>
         </div>
     </div>

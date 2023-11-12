@@ -5,12 +5,17 @@
     </div>
     <marquee class="news-scroll" behavior="scroll" direction="left" onmouseover="this.stop();"
         onmouseout="this.start();">
+        {% if important %}
         {% for notice in important %}
-
         <a href="{% url 'homepage:notice_detail' notice.slug %}">{{ notice.title}}</a>
         <span class="dot"></span>
-
         {% endfor %}
-
+        {% else %}
+        <!-- Dummy content when no 'important' notices are available -->
+        <span>
+            <a href="#" class="text-muted">Dummy Notice Title</a>
+            <span class="dot"></span>
+        </span>
+        {% endif %}
     </marquee>
 </div>

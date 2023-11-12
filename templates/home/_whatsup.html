@@ -16,28 +16,47 @@
 
             <div class="row g-lg-2">
 
+                {% if whats_happening %}
                 {% for item in whats_happening %}
                 <div class="col-lg-3 col-md-6 col-sm-6">
-
                     <div class="card mb-2" style="height: 350px;">
-                        <img src="{{ item.image.url }}" class="d-block w-100 mx-auto rounded-top"
-                            alt="{{ item.title }} " style="height: 200px; object-fit: cover;" loading="lazy">
+                        <img src="{{ item.image.url }}" class="d-block w-100 mx-auto rounded-top" alt="{{ item.title }}"
+                            style="height: 200px; object-fit: cover;" loading="lazy">
                         <div class="card-body">
                             <div class="card-title fw-bold">{{ item.title }}</div>
                             <p class="card-text">
                                 {{ item.description | truncatewords:10 }}
-                                <a href="#" class="btn btn-link custom-link" target=”_blank”>
+                                <a href="#" class="btn btn-link custom-link" target="_blank">
                                     See More
                                     <i class="fa-solid fa-arrow-up-right-from-square"></i>
                                 </a>
                             </p>
                         </div>
                     </div>
-
                 </div>
                 {% endfor %}
+                {% else %}
+                <!-- Dummy content when no 'whats_happening' is available -->
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                    <div class="card mb-2" style="height: 350px;">
+                        <img src="https://source.unsplash.com/random/200x200" class="d-block w-100 mx-auto rounded-top"
+                            alt="Dummy Title" style="height: 200px; object-fit: cover;" loading="lazy">
+                        <div class="card-body">
+                            <div class="card-title fw-bold">Dummy Title</div>
+                            <p class="card-text">
+                                Dummy Description Lorem ipsum dolor sit amet.
+                                <a href="#" class="btn btn-link custom-link" target="_blank">
+                                    See More
+                                    <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
 
             </div>
+
 
         </div>
 

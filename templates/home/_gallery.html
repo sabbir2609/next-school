@@ -3,6 +3,7 @@
 
     <!-- Image Gallery -->
     <div class="image-gallery image-gallery-container" id="imageGalleryContainer">
+
         {% for image in gallery_images %}
         <div>
             <a href="{{ image.image.url }}" data-toggle="lightbox" data-gallery="mixedgallery">
@@ -10,6 +11,26 @@
             </a>
         </div>
         {% endfor %}
+
+        {% if not gallery_images %}
+
+        <div>
+            <a href="https://source.unsplash.com/random" data-toggle="lightbox" data-gallery="mixedgallery">
+                <img src="https://source.unsplash.com/random" alt="placeholder" loading="lazy">
+            </a>
+        </div>
+        <div>
+            <a href="https://source.unsplash.com/random/600x500" data-toggle="lightbox" data-gallery="mixedgallery">
+                <img src="https://source.unsplash.com/random" alt="placeholder" loading="lazy">
+            </a>
+        </div>
+        <div>
+            <a href="https://source.unsplash.com/random/500x300" data-toggle="lightbox" data-gallery="mixedgallery">
+                <img src="https://source.unsplash.com/random" alt="placeholder" loading="lazy">
+            </a>
+        </div>
+
+        {% endif %}
     </div>
 
 </div>

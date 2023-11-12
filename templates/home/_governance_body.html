@@ -3,9 +3,9 @@
 </div>
 
 <div class="governing-container rounded ">
-    <!-- <div class="container "> -->
+    {% if governance_bodies %}
     {% for item in governance_bodies %}
-    <div class=" mb-2 ">
+    <div class="mb-2">
         <div class="card bg-info-subtle">
             <div class="card-body">
                 <div class="d-flex">
@@ -19,7 +19,7 @@
                         <div class="d-flex justify-content-start rounded-3 p-1 mb-1">
                             {{ item.description }}
                         </div>
-                        <div class="text-end ">
+                        <div class="text-end">
                             <a href="{% url 'homepage:governance_body_detail' item.slug %}" type="button"
                                 class="btn btn-primary flex-grow-3">More</a>
                         </div>
@@ -29,5 +29,29 @@
         </div>
     </div>
     {% endfor %}
-    <!-- </div> -->
+    {% else %}
+    <!-- Dummy content when no governance bodies are available -->
+    <div class="mb-2">
+        <div class="card bg-info-subtle">
+            <div class="card-body">
+                <div class="d-flex">
+                    <div class="flex-shrink-0">
+                        <img src="https://source.unsplash.com/random/200x200" alt="Dummy Image"
+                            class="img-fluid rounded" style="width: 120px;" loading="lazy">
+                    </div>
+                    <div class="flex-grow-1 ms-3">
+                        <h5 class="mb-1 fw-bold">Dummy Name</h5>
+                        <p class="mb-2 pb-1 fw-semibold">Dummy Designation</p>
+                        <div class="d-flex justify-content-start rounded-3 p-1 mb-1">
+                            Dummy Description
+                        </div>
+                        <div class="text-end">
+                            <a href="#" type="button" class="btn btn-primary flex-grow-3">More</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
 </div>

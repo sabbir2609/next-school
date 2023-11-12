@@ -617,6 +617,9 @@ class AttendanceIndexView(TemplateView):
         return context
 
 
+# TODO: fix student.roll_no and student.id
+
+
 class SectionStudentAttendanceCreateView(SuccessMessageMixin, View):
     def post(self, request, *args, **kwargs):
         student_id = request.POST.get("student_id")

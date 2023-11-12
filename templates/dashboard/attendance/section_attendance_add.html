@@ -66,11 +66,13 @@
 
           // Assuming data is a boolean value (True or False)
           if (data.status == "True") {
-            // If the value is True, update the corresponding HTML element for Present
-            $(".status" + data.class_roll).html('<i class="fa-solid fa-circle-check text-success"></i> Present');
+            // If the value is True, add a check mark to the button
+            $(".status" + data.class_roll + ' .btn-warning').html('<i class="fa-solid fa-circle-check text-success"></i>');
+            $(".status" + data.class_roll + ' .btn-info').html('');
           } else {
-            // If the value is False, update the corresponding HTML element for Absent
-            $(".status" + data.class_roll).html('<i class="fa-solid fa-circle-xmark text-danger"></i> Absent');
+            // If the value is False, add an x mark to the button
+            $(".status" + data.class_roll + ' .btn-warning').html('');
+            $(".status" + data.class_roll + ' .btn-info').html('<i class="fa-solid fa-circle-xmark text-danger"></i>');
           }
         },
         error: function (error) {
@@ -79,6 +81,7 @@
       });
     }
   </script>
+
 
   <div class="row">
     <table class="table table-striped text-center ">
@@ -94,7 +97,7 @@
         <tr>
           <td>{{ student.class_roll }}</td>
           <td>{{ student.student.name_en }}</td>
-          <td class="status{{ student.class_roll }}">
+          <td class="status{{ student.class_roll }}" id="status">
 
             {% with attendance=attendances|get_by_student:student %}
             {% if attendance %}
@@ -112,16 +115,20 @@
 
             <button class="btn btn-sm btn-info " onclick="updateAttendance('{{ student.id }}', 'False')">
               <i class="fa-solid fa-circle-xmark text-danger"></i>
-              </a>
+            </button>
 
-              {% endif %}
-              {% endwith %}
+            {% endif %}
+            {% endwith %}
           </td>
         </tr>
         {% endfor %}
       </tbody>
     </table>
   </div>
+  <a href="{% url 'dashboard:section_attendance_detail' section.id %}?date={{date}}" class="btn btn-sm btn-success ">
+    See Report
+  </a>
+  <em>To update any attendance contact administrator </em>
 </div>
 
 {% endblock %}

@@ -3,6 +3,7 @@
 </div>
 
 <div class="table-container position-relative mb-2 rounded">
+    {% if notices %}
     <table class="table">
         <thead>
             <tr>
@@ -28,9 +29,15 @@
 
             </tr>
             {% endfor %}
+
         </tbody>
     </table>
     <div class="container-fluid  d-flex justify-content-center">
         <a class="btn btn-outline-danger fw-bolder " href="notices/"> See All Notice </a>
     </div>
+    {% else %}
+
+    <h3>No Notice Available Yet! </h3>
+
+    {% endif %}
 </div>

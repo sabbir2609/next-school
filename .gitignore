@@ -18,3 +18,5 @@ staticfiles
 ngrok.exe
 
 logs
+
+media

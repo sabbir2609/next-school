@@ -2,7 +2,6 @@
 
 <div id="carouselExampleFade" class="carousel slide carousel-fade" data-bs-ride="carousel">
     <div class="carousel-inner">
-        {% if banner_images %}
         {% for item in banner_images %}
         <div class="carousel-item {% if forloop.first %} active {% endif %}">
 
@@ -11,10 +10,18 @@
 
         </div>
         {% endfor %}
-        {% else %}
-        <img src="{% static 'placeholder.jpg' %}"
-            class="d-block w-100 rounded-1 border border-opacity-50 border-primary" alt="placeholder"
-            style="height: 370px; object-fit: cover;" loading="lazy">
+
+        {% if not banner_images %}
+        <div class="carousel-item active">
+            <img src="https://source.unsplash.com/random"
+                class="d-block w-100 rounded-1 border border-opacity-50 border-primary" alt="placeholder"
+                style="height: 370px; object-fit: cover;" loading="lazy">
+        </div>
+        <div class="carousel-item active">
+            <img src="https://source.unsplash.com/random/500x500"
+                class="d-block w-100 rounded-1 border border-opacity-50 border-primary" alt="placeholder"
+                style="height: 370px; object-fit: cover;" loading="lazy">
+        </div>
         {% endif %}
 
     </div>
