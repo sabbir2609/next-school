@@ -630,12 +630,7 @@ class SectionStudentAttendanceCreateView(SuccessMessageMixin, View):
         attendance.status = status
         attendance.save()
 
-        messages.success(
-            request,
-            f"Attendance of {student.student.name_en} @ {date} added successfully",
-        )
-
-        return JsonResponse({"status": "success"})
+        return JsonResponse({"status": status, "class_roll": student.class_roll})
 
 
 class StudentAttendanceDetailView(DetailView):

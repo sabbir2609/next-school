@@ -1,5 +1,8 @@
+{% load static %}
+
 <div id="carouselExampleFade" class="carousel slide carousel-fade" data-bs-ride="carousel">
     <div class="carousel-inner">
+        {% if banner_images %}
         {% for item in banner_images %}
         <div class="carousel-item {% if forloop.first %} active {% endif %}">
 
@@ -8,6 +11,11 @@
 
         </div>
         {% endfor %}
+        {% else %}
+        <img src="{% static 'placeholder.jpg' %}"
+            class="d-block w-100 rounded-1 border border-opacity-50 border-primary" alt="placeholder"
+            style="height: 370px; object-fit: cover;" loading="lazy">
+        {% endif %}
 
     </div>
     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">

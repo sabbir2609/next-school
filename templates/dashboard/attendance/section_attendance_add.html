@@ -63,7 +63,15 @@
         },
         success: function (data) {
           console.log(data);
-          location.reload();
+
+          // Assuming data is a boolean value (True or False)
+          if (data.status == "True") {
+            // If the value is True, update the corresponding HTML element for Present
+            $(".status" + data.class_roll).html('<i class="fa-solid fa-circle-check text-success"></i> Present');
+          } else {
+            // If the value is False, update the corresponding HTML element for Absent
+            $(".status" + data.class_roll).html('<i class="fa-solid fa-circle-xmark text-danger"></i> Absent');
+          }
         },
         error: function (error) {
           console.error(error);
@@ -86,7 +94,8 @@
         <tr>
           <td>{{ student.class_roll }}</td>
           <td>{{ student.student.name_en }}</td>
-          <td>
+          <td class="status{{ student.class_roll }}">
+
             {% with attendance=attendances|get_by_student:student %}
             {% if attendance %}
             {% if attendance.status %}
@@ -94,6 +103,7 @@
             {% else %}
             <i class="fa-solid fa-circle-xmark text-danger"></i> Absent
             {% endif %}
+
             {% else %}
 
             <button class="btn btn-sm btn-warning " onclick="updateAttendance('{{ student.id }}', 'True')">
