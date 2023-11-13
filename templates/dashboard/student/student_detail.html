@@ -171,10 +171,8 @@
 
             <div class="button-group float-right btn-group-sm">
                 <h4>Attendance Section</h4>
-                <a href="{% url 'school:attendance_report_detail' student.student_id %}"
+                <a href="{% url 'dashboard:student_attendance_report' student.student_id %}"
                     class="btn btn-success">Attendance Report</a>
-                <a href="{% url 'school:attendance_add' student.student_id %}" class="btn btn-warning">Add
-                    Attendance</a>
             </div>
 
         </div>

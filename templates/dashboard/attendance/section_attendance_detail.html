@@ -53,7 +53,12 @@
                 {% for student in students %}
                 <tr>
                     <td>{{ student.class_roll }}</td>
-                    <td>{{ student.student.name_en }}</td>
+                    <td>
+                        <a href="{% url 'dashboard:student_attendance_report' student.student_id %}">
+                            {{ student.student.name_en }}
+                        </a>
+
+                    </td>
                     <td>
                         {% with attendance=attendances|get_by_student:student %}
                         {% if attendance %}
@@ -77,6 +82,8 @@
     <a href="{% url 'dashboard:section_attendance_report' %}" class="btn btn-sm btn-primary ">
         Back To List
     </a>
+    <a href="{% url 'dashboard:section_attendance_add' section.id %}?date={{date}}"
+        class="btn btn-sm btn-warning">Update</a>
 </div>
 
 {% endblock %}

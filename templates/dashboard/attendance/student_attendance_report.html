@@ -1,0 +1,65 @@
+{% extends 'dashboard/dashboard.html' %}
+
+{% debug %}
+
+{% block title %} Student Attendance Report {% endblock %}
+
+{% block content %}
+
+<div class="container-fluid">
+
+    <form action="" method="get" class="row g-3 bg-success-subtle rounded mt-1 mb-2 p-2">
+
+        <div class="col-md-6">
+            <label for="id_month" class="form-label">Month:</label>
+            <select name="month" id="id_month" class="form-select" aria-label="Month select">
+                <!-- Options go here -->
+                <option value="1">January</option>
+                <option value="2">February</option>
+                <option value="3">March</option>
+                <option value="4">April</option>
+                <option value="5">May</option>
+                <option value="6">June</option>
+                <option value="7">July</option>
+                <option value="8">August</option>
+                <option value="9">September</option>
+                <option value="10">October</option>
+                <option value="11" selected>November</option>
+                <option value="12">December</option>
+            </select>
+        </div>
+
+        <div class="col-md-6">
+            <label for="id_year" class="form-label">Year:</label>
+            <input type="year" name="year" id="id_year" value="{{ current_year }}" min="1900" max="2100"
+                class="form-control" aria-describedby="year">
+        </div>
+
+        <div class="col-md-12">
+            <input type="submit" value="Apply Filter" class="btn btn-sm btn-success">
+        </div>
+    </form>
+
+    <h3>Attendance Report for <span class="text-info-emphasis ">{{student.name_en}}</span></h3>
+
+    {% if attendances %}
+    {% for attendance in attendances %}
+
+    {{attendance.date|date:"D d " }} -
+    {% if attendance.status == True %}
+    <i class="fa-solid fa-circle-check text-success "></i> Present
+    {% elif attendance.status == False %}
+    <i class="fa-solid fa-circle-xmark text-danger "></i> Absent
+    {% else %}
+    Not Recorded
+    {% endif %}
+    <br>
+    {% endfor %}
+    {% else %}
+    <p>No attendance data available.</p>
+    {% endif %}
+
+
+</div>
+
+{% endblock %}

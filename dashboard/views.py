@@ -1,5 +1,6 @@
 from pprint import pprint
-from datetime import datetime
+from calendar import HTMLCalendar, LocaleHTMLCalendar
+from datetime import date, datetime
 from typing import Any
 from django.contrib import messages
 from django.forms import ValidationError
@@ -713,3 +714,26 @@ class SectionAttendanceReportView(ListView):
 
 class SectionAttendanceDetailView(SectionAttendanceCreateView):
     template_name = "dashboard/attendance/section_attendance_detail.html"
+
+
+class StudentAttendanceReportView(ListView):
+    template_name = "dashboard/attendance/student_attendance_report.html"
+    context_object_name = "attendances"
+
+    def get_queryset(self):
+        student_id = self.kwargs["pk"]
+        year = self.request.GET.get("year", datetime.now().year)
+        month = self.request.GET.get("month", datetime.now().month)
+        queryset = Attendance.objects.filter(
+            student__student__student_id=student_id, date__year=year, date__month=month
+        )
+        pprint(queryset.count())
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["current_year"] = datetime.now().year
+        context["current_month"] = datetime.now().month
+        context["student"] = Student.objects.get(student_id=self.kwargs["pk"])
+
+        return context

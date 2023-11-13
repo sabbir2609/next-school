@@ -26,6 +26,7 @@
       <div class="col-auto">
         <input type="date" id="date" name="date" class="form-control form-control-sm" value="{{ date }}">
       </div>
+
       <div class="col-auto">
         <input type="submit" value="Apply Filter" class="btn btn-sm btn-success">
       </div>
@@ -67,12 +68,12 @@
           // Assuming data is a boolean value (True or False)
           if (data.status == "True") {
             // If the value is True, add a check mark to the button
-            $(".status" + data.class_roll + ' .btn-warning').html('<i class="fa-solid fa-circle-check text-success"></i>');
-            $(".status" + data.class_roll + ' .btn-info').html('');
+            $(".status" + data.class_roll + ' .btn-success').html('<i class="fa-solid fa-circle-check text-light"></i>');
+            $(".status" + data.class_roll + ' .btn-danger').html('');
           } else {
             // If the value is False, add an x mark to the button
-            $(".status" + data.class_roll + ' .btn-warning').html('');
-            $(".status" + data.class_roll + ' .btn-info').html('<i class="fa-solid fa-circle-xmark text-danger"></i>');
+            $(".status" + data.class_roll + ' .btn-success').html('');
+            $(".status" + data.class_roll + ' .btn-danger').html('<i class="fa-solid fa-circle-xmark text-light"></i>');
           }
         },
         error: function (error) {
@@ -96,29 +97,49 @@
         {% for student in students %}
         <tr>
           <td>{{ student.class_roll }}</td>
-          <td>{{ student.student.name_en }}</td>
+          <td>
+            {{ student.student.name_en }}
+          </td>
           <td class="status{{ student.class_roll }}" id="status">
 
             {% with attendance=attendances|get_by_student:student %}
+
             {% if attendance %}
-            {% if attendance.status %}
-            <i class="fa-solid fa-circle-check text-success"></i> Present
+
+            {% if attendance.status == True %}
+            <button class="btn btn-sm btn-success " onclick="updateAttendance('{{ student.id }}', 'True')">
+              <i class="fa-solid fa-circle-check text-light"></i>
+            </button>
+
+            <button class="btn btn-sm btn-danger " onclick="updateAttendance('{{ student.id }}', 'False')"></button>
+
+            {% elif attendance.status == False %}
+            <button class="btn btn-sm btn-success " onclick="updateAttendance('{{ student.id }}', 'True')"></button>
+
+            <button class="btn btn-sm btn-danger " onclick="updateAttendance('{{ student.id }}', 'False')">
+              <i class="fa-solid fa-circle-xmark text-light"></i>
+            </button>
+
             {% else %}
-            <i class="fa-solid fa-circle-xmark text-danger"></i> Absent
+
+            {{attendance.status}}
+
             {% endif %}
 
             {% else %}
 
-            <button class="btn btn-sm btn-warning " onclick="updateAttendance('{{ student.id }}', 'True')">
-              <i class="fa-solid fa-circle-check text-success"></i>
+            <button class="btn btn-sm btn-success " onclick="updateAttendance('{{ student.id }}', 'True')">
+              <i class="fa-solid fa-circle-check text-light"></i>
             </button>
 
-            <button class="btn btn-sm btn-info " onclick="updateAttendance('{{ student.id }}', 'False')">
-              <i class="fa-solid fa-circle-xmark text-danger"></i>
+            <button class="btn btn-sm btn-danger " onclick="updateAttendance('{{ student.id }}', 'False')">
+              <i class="fa-solid fa-circle-xmark text-light"></i>
             </button>
 
             {% endif %}
+
             {% endwith %}
+
           </td>
         </tr>
         {% endfor %}
@@ -128,7 +149,6 @@
   <a href="{% url 'dashboard:section_attendance_detail' section.id %}?date={{date}}" class="btn btn-sm btn-success ">
     See Report
   </a>
-  <em>To update any attendance contact administrator </em>
 </div>
 
 {% endblock %}
