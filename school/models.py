@@ -94,6 +94,21 @@ class Section(models.Model):
     seat = models.PositiveIntegerField(default=45)
     subjects = models.ManyToManyField(Subject, through="SectionSubject")
 
+    def clean(self):
+        # Check your validation conditions and raise ValidationError if needed
+        if self.name in ("Ar", "Co", "Sc") and self.class_name.title not in ("9", "10"):
+            raise ValidationError(f"'{self.get_name_display()}' can only be applied to classes 'Nine' and 'Ten'")
+
+        if self.name in ("A", "B", "C") and self.class_name.title in ("9", "10"):
+            raise ValidationError(f"'{self.get_name_display()}' can only be applied to classes 'Six', 'Seven', and 'Eight'")
+
+    def save(self, *args, **kwargs):
+        # Run full clean to trigger the custom clean method
+        self.full_clean()
+
+        # Proceed with the normal save process
+        super().save(*args, **kwargs)
+
     def __str__(self):
         return f"{self.class_name} - Section {self.name}"
 
@@ -395,8 +410,17 @@ class Attendance(models.Model):
     date = models.DateField(default=datetime.date.today)
     status = models.BooleanField(default=False)
 
+    def clean(self):
+            # Check if the day of the week is not Friday (where Monday is 0 and Sunday is 6)
+            if self.date.weekday() == 4:
+                raise ValidationError({'date': ["Attendance record cannot be created on Fridays."]})
+
+    def save(self, *args, **kwargs):
+        self.clean()  # Call the clean method before saving
+        super().save(*args, **kwargs)
+
     class Meta:
-        ordering = ["-date"]
+        ordering = ["date"]
         unique_together = ("student", "date")
 
     def __str__(self):

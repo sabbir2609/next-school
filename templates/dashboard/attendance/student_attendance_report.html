@@ -1,6 +1,6 @@
 {% extends 'dashboard/dashboard.html' %}
 
-{% debug %}
+{% load custom_filters %}
 
 {% block title %} Student Attendance Report {% endblock %}
 
@@ -13,51 +13,97 @@
         <div class="col-md-6">
             <label for="id_month" class="form-label">Month:</label>
             <select name="month" id="id_month" class="form-select" aria-label="Month select">
-                <!-- Options go here -->
-                <option value="1">January</option>
-                <option value="2">February</option>
-                <option value="3">March</option>
-                <option value="4">April</option>
-                <option value="5">May</option>
-                <option value="6">June</option>
-                <option value="7">July</option>
-                <option value="8">August</option>
-                <option value="9">September</option>
-                <option value="10">October</option>
-                <option value="11" selected>November</option>
-                <option value="12">December</option>
+
+                {% for month_number, month_name in months.items %}
+
+                <option value="{{ month_number }}" {% if month_number == request.GET.month %} selected {% elif not
+                    request.GET.month and month_number == current_month %} selected {% endif %}>
+
+                    {{ month_name }}
+
+                </option>
+
+                {% endfor %}
+
             </select>
+
         </div>
 
         <div class="col-md-6">
+
             <label for="id_year" class="form-label">Year:</label>
-            <input type="year" name="year" id="id_year" value="{{ current_year }}" min="1900" max="2100"
-                class="form-control" aria-describedby="year">
+            <input type="year" name="year" id="id_year"
+                value="{% if request.GET.year %}{{request.GET.year}}{% else %}{{ current_year }}{% endif %}"
+                min="1900" max="2100" class="form-control" aria-describedby="year">
+
         </div>
 
-        <div class="col-md-12">
-            <input type="submit" value="Apply Filter" class="btn btn-sm btn-success">
+        <div class="col-md-12 d-flex">
+            <input type="submit" value="Apply Filter" class="btn btn-sm btn-success me-2">
+            {% if request.GET.month or request.GET.year %}
+            <div class="col-auto">
+                <a href="?" class="btn btn-sm btn-warning ">Reset Filter</a>
+            </div>
+            {% endif %}
         </div>
     </form>
 
-    <h3>Attendance Report for <span class="text-info-emphasis ">{{student.name_en}}</span></h3>
-
-    {% if attendances %}
-    {% for attendance in attendances %}
-
-    {{attendance.date|date:"D d " }} -
-    {% if attendance.status == True %}
-    <i class="fa-solid fa-circle-check text-success "></i> Present
-    {% elif attendance.status == False %}
-    <i class="fa-solid fa-circle-xmark text-danger "></i> Absent
+    {% if request.GET.month and request.GET.year %}
+    <div class="alert alert-info" role="alert">
+        Showing Results for {{ request.GET.month|month_name }} - {{ request.GET.year }}
+    </div>
     {% else %}
-    Not Recorded
+    <h5> <span class="text-success">Current: </span> {{ current_month|month_name }} - {{ current_year }} </h5>
     {% endif %}
-    <br>
-    {% endfor %}
-    {% else %}
-    <p>No attendance data available.</p>
-    {% endif %}
+
+
+    <style>
+        .calendar {
+          display: grid;
+          grid-template-columns: repeat(7, 1fr);
+          gap: 5px;
+        }
+      
+        .day {
+          text-align: center;
+          border: 1px solid #ddd;
+          padding: 5px;
+        }
+      
+        .present {
+          color: green;
+        }
+      
+        .absent {
+          color: red;
+        }
+      
+        .not-recorded {
+          color: gray;
+        }
+      </style>
+      
+      <h3>Attendance Report for <span class="text-info-emphasis">{{student.name_en}}</span></h3>
+      
+      <div class="calendar">
+        {% if attendances %}
+          {% for attendance in attendances %}
+            <div class="day">
+              {{ attendance.date|date:"D d " }}<br>
+              {% if attendance.status == True %}
+                <i class="fa-solid fa-circle-check text-success present"></i> Present
+              {% elif attendance.status == False %}
+                <i class="fa-solid fa-circle-xmark text-danger absent"></i> Absent
+              {% else %}
+                <span class="not-recorded">Not Recorded</span>
+              {% endif %}
+            </div>
+          {% endfor %}
+        {% else %}
+          <p>No attendance data available.</p>
+        {% endif %}
+      </div>
+      
 
 
 </div>

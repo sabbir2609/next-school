@@ -1,4 +1,5 @@
 from pprint import pprint
+import calendar
 from calendar import HTMLCalendar, LocaleHTMLCalendar
 from datetime import date, datetime
 from typing import Any
@@ -618,9 +619,6 @@ class AttendanceIndexView(TemplateView):
         return context
 
 
-# TODO: fix student.roll_no and student.id
-
-
 class SectionStudentAttendanceCreateView(SuccessMessageMixin, View):
     def post(self, request, *args, **kwargs):
         student_id = request.POST.get("student_id")
@@ -653,25 +651,24 @@ class SectionAttendanceCreateView(ListView):
         context = super().get_context_data(**kwargs)
 
         section = get_object_or_404(Section, pk=self.kwargs["pk"])
-        date = self.request.GET.get("date", datetime.now().strftime("%Y-%m-%d"))
+        date_str = self.request.GET.get("date", datetime.now().strftime("%Y-%m-%d"))
 
-        students = StudentAssign.objects.filter(section=section).order_by(
-            "class_roll",
-        )
-        attendances = Attendance.objects.filter(
-            student__section=section, date=date
-        ).order_by(
-            "student__class_roll",
-        )
+        # Convert the date string to a datetime object
+        date = datetime.strptime(date_str, "%Y-%m-%d").date()
 
-        context.update(
-            {
-                "section": section,
-                "attendances": attendances,
-                "students": students,
-                "date": date,
-            }
-        )
+        students = StudentAssign.objects.filter(section=section).order_by("class_roll")
+        attendances = Attendance.objects.filter(student__section=section, date=date).order_by("student__class_roll")
+
+        # Check if the date is Friday
+        is_friday = date.weekday() == 4
+
+        context.update({
+            "section": section,
+            "attendances": attendances,
+            "students": students,
+            "date": date_str,
+            "is_friday": is_friday,
+        })
 
         return context
 
@@ -727,13 +724,13 @@ class StudentAttendanceReportView(ListView):
         queryset = Attendance.objects.filter(
             student__student__student_id=student_id, date__year=year, date__month=month
         )
-        pprint(queryset.count())
         return queryset
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context["months"] = {str(i): calendar.month_name[i] for i in range(1, 13)}
         context["current_year"] = datetime.now().year
-        context["current_month"] = datetime.now().month
+        context["current_month"] = str(datetime.now().month)
         context["student"] = Student.objects.get(student_id=self.kwargs["pk"])
 
         return context

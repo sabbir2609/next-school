@@ -84,7 +84,12 @@
   </script>
 
 
-  <div class="row">
+  <div class="row">  
+    {% if is_friday %}
+    <h2>It's Offday </h2>
+
+    {% else %}
+
     <table class="table table-striped text-center ">
       <thead>
         <tr>
@@ -149,6 +154,8 @@
   <a href="{% url 'dashboard:section_attendance_detail' section.id %}?date={{date}}" class="btn btn-sm btn-success ">
     See Report
   </a>
+
+  {% endif %}
 </div>
 
 {% endblock %}
