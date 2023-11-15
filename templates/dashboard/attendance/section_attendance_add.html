@@ -15,7 +15,11 @@
       Showing Results for {{ request.GET.date }}
     </div>
     {% else %}
-    <h5> <span class="text-success">Today</span> ({{ date }}) </h5>
+    <h5>
+      <span class="text-success">
+        Today ({{ date }})
+      </span>
+    </h5>
     {% endif %}
 
     <form action="" method="GET" class="row g-2 mb-2">
@@ -41,57 +45,14 @@
     </form>
   </div>
 
-  <script>
-    // Function to get the CSRF token from cookies
-    function getCSRFToken() {
-      const csrfCookie = document.cookie.split(';').find(c => c.trim().startsWith('csrftoken='));
-      return csrfCookie ? csrfCookie.split('=')[1] : null;
-    }
-
-    function updateAttendance(studentId, status) {
-      const csrfToken = getCSRFToken();
-
-      $.ajax({
-        url: '{% url "dashboard:section_student_attendance_new" %}',
-        method: 'POST',
-        headers: {
-          'X-CSRFToken': csrfToken,
-        },
-        data: {
-          student_id: studentId,
-          date: '{{ date }}',
-          status: status
-        },
-        success: function (data) {
-          console.log(data);
-
-          // Assuming data is a boolean value (True or False)
-          if (data.status == "True") {
-            // If the value is True, add a check mark to the button
-            $(".status" + data.class_roll + ' .btn-success').html('<i class="fa-solid fa-circle-check text-light"></i>');
-            $(".status" + data.class_roll + ' .btn-danger').html('');
-          } else {
-            // If the value is False, add an x mark to the button
-            $(".status" + data.class_roll + ' .btn-success').html('');
-            $(".status" + data.class_roll + ' .btn-danger').html('<i class="fa-solid fa-circle-xmark text-light"></i>');
-          }
-        },
-        error: function (error) {
-          console.error(error);
-        }
-      });
-    }
-  </script>
-
-
-  <div class="row"> 
+  <div class="row">
 
     {% if is_offday.offday %}
-        <h3>This is an off day!.</h3>
+    <h3>This is an off day!.</h3>
     {% elif is_offday.friday %}
-        <h3>This is a Friday. Offday!</h3>
+    <h3>This is a Friday. Offday!</h3>
     {% elif is_offday.saturday %}
-        <h3>This is a Saturday. Offday!</h3>
+    <h3>This is a Saturday. Offday!</h3>
     {% else %}
 
     <table class="table table-striped text-center ">
@@ -155,9 +116,55 @@
       </tbody>
     </table>
   </div>
+
+  {% if request.GET.date %}
   <a href="{% url 'dashboard:section_attendance_detail' section.id %}?date={{date}}" class="btn btn-sm btn-success ">
-    See Report
-  </a>
+    See Report </a>
+  {% else %}
+  <a href="{% url 'dashboard:section_attendance_detail' section.id %}" class="btn btn-sm btn-success ">
+    See Report </a>
+  {% endif %}
+  <script>
+    // Function to get the CSRF token from cookies
+    function getCSRFToken() {
+      const csrfCookie = document.cookie.split(';').find(c => c.trim().startsWith('csrftoken='));
+      return csrfCookie ? csrfCookie.split('=')[1] : null;
+    }
+
+    function updateAttendance(studentId, status) {
+      const csrfToken = getCSRFToken();
+
+      $.ajax({
+        url: '{% url "dashboard:section_student_attendance_new" %}',
+        method: 'POST',
+        headers: {
+          'X-CSRFToken': csrfToken,
+        },
+        data: {
+          student_id: studentId,
+          date: '{{ date }}',
+          status: status
+        },
+        success: function (data) {
+          console.log(data);
+
+          // Assuming data is a boolean value (True or False)
+          if (data.status == "True") {
+            // If the value is True, add a check mark to the button
+            $(".status" + data.class_roll + ' .btn-success').html('<i class="fa-solid fa-circle-check text-light"></i>');
+            $(".status" + data.class_roll + ' .btn-danger').html('');
+          } else {
+            // If the value is False, add an x mark to the button
+            $(".status" + data.class_roll + ' .btn-success').html('');
+            $(".status" + data.class_roll + ' .btn-danger').html('<i class="fa-solid fa-circle-xmark text-light"></i>');
+          }
+        },
+        error: function (error) {
+          console.error(error);
+        }
+      });
+    }
+  </script>
 
   {% endif %}
 </div>

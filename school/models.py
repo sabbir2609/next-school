@@ -415,8 +415,6 @@ class Attendance(models.Model):
     status = models.BooleanField(default=False)
 
     def clean(self):
-        # Convert the date string to a date object
-        self.date = datetime.strptime(self.date, "%Y-%m-%d").date()
 
         # Check if the day of the week is Friday (where Monday is 0 and Sunday is 6)
         if self.date.weekday() == 4:

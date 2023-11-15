@@ -20,3 +20,7 @@ def subtract(value, arg):
 @register.filter
 def month_name(month_number):
     return calendar.month_name[int(month_number)]
+
+@register.filter
+def get_type(value):
+    return str(type(value))

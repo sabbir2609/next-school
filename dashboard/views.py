@@ -13,20 +13,42 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse, reverse_lazy
 from django.utils.text import slugify
 from django.views import View
-from django.views.generic import (CreateView, DeleteView, DetailView, FormView,
-                                  ListView, TemplateView, UpdateView)
+from django.views.generic import (
+    CreateView,
+    DeleteView,
+    DetailView,
+    FormView,
+    ListView,
+    TemplateView,
+    UpdateView,
+)
 from django.views.generic.detail import SingleObjectMixin
 from taggit.models import Tag
 
 from homepage.models import Notice
 from homepage.views import NoticeDetailView, NoticeListView
 from school.forms import StudentAssignForm, StudentForm, TeacherForm
-from school.models import (Attendance, Class, Guardian, OffDay, Section,
-                           SectionSubject, Student, StudentAssign, Subject,
-                           Teacher)
+from school.models import (
+    Attendance,
+    Class,
+    Guardian,
+    OffDay,
+    Section,
+    SectionSubject,
+    Student,
+    StudentAssign,
+    Subject,
+    Teacher,
+)
 
-from .forms import (AttendanceForm, GuardianForm, NoticeForm, SectionForm,
-                    SectionSubjectFormset, SectionUpdateForm)
+from .forms import (
+    AttendanceForm,
+    GuardianForm,
+    NoticeForm,
+    SectionForm,
+    SectionSubjectFormset,
+    SectionUpdateForm,
+)
 
 
 class DashboardView(TemplateView):
@@ -602,8 +624,24 @@ class SectionAttendanceCreateView(ListView):
         section = get_object_or_404(Section, pk=self.kwargs["pk"])
 
         try:
-            date_str = request.GET.get("date", datetime.now().strftime("%Y-%m-%d"))
+            if request.GET.get("date") == datetime.now().strftime("%Y-%m-%d"):
+                messages.info(request, "It's Today")
+                return redirect(
+                    reverse(
+                        "dashboard:section_attendance_add", kwargs={"pk": section.id}
+                    )
+                )
+            elif request.GET.get("date"):
+                date_str = request.GET.get("date", datetime.now().strftime("%Y-%m-%d"))
+                date = datetime.strptime(date_str, "%Y-%m-%d").date()
+                messages.info(request, f"Filter applied for {date}")
+
+            elif request.GET.get("date") == "":
+                messages.warning(request, "No filter applied")
+
+            date_str = datetime.now().strftime("%Y-%m-%d")
             date = datetime.strptime(date_str, "%Y-%m-%d").date()
+
         except ValueError as e:
             messages.error(request, f"Error: {e}")
             return redirect(
@@ -636,7 +674,10 @@ class SectionStudentAttendanceCreateView(SuccessMessageMixin, View):
     def post(self, request, *args, **kwargs):
         student_id = request.POST.get("student_id")
         status = request.POST.get("status")
-        date = request.POST.get("date")
+        date_str = request.POST.get("date")
+
+        # Convert date string to a date object
+        date = datetime.strptime(date_str, "%Y-%m-%d").date()
 
         student = get_object_or_404(StudentAssign, pk=student_id)
         attendance, created = Attendance.objects.get_or_create(
