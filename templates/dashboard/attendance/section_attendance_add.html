@@ -84,10 +84,14 @@
   </script>
 
 
-  <div class="row">  
-    {% if is_friday %}
-    <h2>It's Offday </h2>
+  <div class="row"> 
 
+    {% if is_offday.offday %}
+        <h3>This is an off day!.</h3>
+    {% elif is_offday.friday %}
+        <h3>This is a Friday. Offday!</h3>
+    {% elif is_offday.saturday %}
+        <h3>This is a Saturday. Offday!</h3>
     {% else %}
 
     <table class="table table-striped text-center ">

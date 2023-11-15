@@ -6,7 +6,7 @@ from typing import Any
 from django.contrib import messages
 from django.forms import ValidationError
 from django.forms.utils import ErrorList
-from django.db import IntegrityError, models, transaction
+from django.db import IntegrityError, OperationalError, models, transaction
 from django.db.models import Q
 from django.db.models.deletion import ProtectedError
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
@@ -39,6 +39,7 @@ logger = logging.getLogger(__name__)
 from school.models import (
     Attendance,
     Guardian,
+    OffDay,
     SectionSubject,
     Student,
     StudentAssign,
@@ -651,24 +652,35 @@ class SectionAttendanceCreateView(ListView):
         context = super().get_context_data(**kwargs)
 
         section = get_object_or_404(Section, pk=self.kwargs["pk"])
-        date_str = self.request.GET.get("date", datetime.now().strftime("%Y-%m-%d"))
 
-        # Convert the date string to a datetime object
-        date = datetime.strptime(date_str, "%Y-%m-%d").date()
+        try:
+            date_str = self.request.GET.get("date", datetime.now().strftime("%Y-%m-%d"))
+            date = datetime.strptime(date_str, "%Y-%m-%d").date()
+        except ValueError as e:
+            messages.error(self.request,f"Error: {e}")
+            date_str = datetime.now().strftime("%Y-%m-%d")
+            date = datetime.strptime(date_str, "%Y-%m-%d").date()
 
         students = StudentAssign.objects.filter(section=section).order_by("class_roll")
-        attendances = Attendance.objects.filter(student__section=section, date=date).order_by("student__class_roll")
+        attendances = Attendance.objects.filter(
+            student__section=section, date=date
+        ).order_by("student__class_roll")
 
-        # Check if the date is Friday
-        is_friday = date.weekday() == 4
+        is_offday = {
+            "offday": OffDay.objects.filter(date=date).exists(),
+            "friday": date.weekday() == 4,
+            "saturday": date.weekday() == 5,
+        }
 
-        context.update({
-            "section": section,
-            "attendances": attendances,
-            "students": students,
-            "date": date_str,
-            "is_friday": is_friday,
-        })
+        context.update(
+            {
+                "section": section,
+                "attendances": attendances,
+                "students": students,
+                "date": date_str,
+                "is_offday": is_offday,
+            }
+        )
 
         return context
 

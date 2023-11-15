@@ -6,6 +6,7 @@ from django.utils.html import format_html
 
 from .models import (
     Attendance,
+    OffDay,
     Class,
     Section,
     SectionSubject,
@@ -279,6 +280,20 @@ class AttendanceAdmin(admin.ModelAdmin):
 
     list_per_page = 10
 
+@admin.register(OffDay)
+class OffDayAdmin(admin.ModelAdmin):
+    list_display = (
+        "date",
+        "reason",
+    )
+
+    list_filter = ("date",)
+
+    search_fields = ("date",)
+
+    date_hierarchy = "date"
+
+    list_per_page = 10
 
 @admin.register(Exam)
 class ExamAdmin(admin.ModelAdmin):

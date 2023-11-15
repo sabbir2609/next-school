@@ -425,6 +425,18 @@ class Attendance(models.Model):
 
     def __str__(self):
         return f"{self.student} - {self.date} ({self.status})"
+    
+# offday
+class OffDay(models.Model):
+    date = models.DateField(default=datetime.date.today)
+    reason = models.TextField(null=True, blank=True)
+
+    class Meta:
+        ordering = ["date"]
+        unique_together = ("date",)
+
+    def __str__(self):
+        return f"{self.date} ({self.reason})"
 
 
 # Exam model
