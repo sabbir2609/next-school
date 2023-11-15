@@ -97,10 +97,14 @@ class Section(models.Model):
     def clean(self):
         # Check your validation conditions and raise ValidationError if needed
         if self.name in ("Ar", "Co", "Sc") and self.class_name.title not in ("9", "10"):
-            raise ValidationError(f"'{self.get_name_display()}' can only be applied to classes 'Nine' and 'Ten'")
+            raise ValidationError(
+                f"'{self.get_name_display()}' can only be applied to classes 'Nine' and 'Ten'"
+            )
 
         if self.name in ("A", "B", "C") and self.class_name.title in ("9", "10"):
-            raise ValidationError(f"'{self.get_name_display()}' can only be applied to classes 'Six', 'Seven', and 'Eight'")
+            raise ValidationError(
+                f"'{self.get_name_display()}' can only be applied to classes 'Six', 'Seven', and 'Eight'"
+            )
 
     def save(self, *args, **kwargs):
         # Run full clean to trigger the custom clean method
@@ -411,9 +415,26 @@ class Attendance(models.Model):
     status = models.BooleanField(default=False)
 
     def clean(self):
-            # Check if the day of the week is not Friday (where Monday is 0 and Sunday is 6)
-            if self.date.weekday() == 4:
-                raise ValidationError({'date': ["Attendance record cannot be created on Fridays."]})
+        # Convert the date string to a date object
+        self.date = datetime.strptime(self.date, "%Y-%m-%d").date()
+
+        # Check if the day of the week is Friday (where Monday is 0 and Sunday is 6)
+        if self.date.weekday() == 4:
+            raise ValidationError(
+                {"date": ["Attendance record cannot be created on Fridays."]}
+            )
+
+        # Check if the day of the week is Saturday
+        if self.date.weekday() == 5:
+            raise ValidationError(
+                {"date": ["Attendance record cannot be created on Saturdays."]}
+            )
+
+        # Check if the date is an off-day
+        if OffDay.objects.filter(date=self.date).exists():
+            raise ValidationError(
+                {"date": ["Attendance record cannot be created on this off-day."]}
+            )
 
     def save(self, *args, **kwargs):
         self.clean()  # Call the clean method before saving
@@ -425,7 +446,8 @@ class Attendance(models.Model):
 
     def __str__(self):
         return f"{self.student} - {self.date} ({self.status})"
-    
+
+
 # offday
 class OffDay(models.Model):
     date = models.DateField(default=datetime.date.today)

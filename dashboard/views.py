@@ -1,66 +1,32 @@
-from pprint import pprint
 import calendar
-from calendar import HTMLCalendar, LocaleHTMLCalendar
-from datetime import date, datetime
-from typing import Any
+from datetime import datetime
+from dal import autocomplete
 from django.contrib import messages
-from django.forms import ValidationError
-from django.forms.utils import ErrorList
-from django.db import IntegrityError, OperationalError, models, transaction
+from django.contrib.contenttypes.models import ContentType
+from django.contrib.messages.views import SuccessMessageMixin
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
+from django.db import IntegrityError
 from django.db.models import Q
 from django.db.models.deletion import ProtectedError
-from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
+from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
-from django.utils.text import slugify
-from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
-from django.contrib.messages.views import SuccessMessageMixin
-from django.views import View
-from django.views.generic.detail import SingleObjectMixin
-from django.contrib.contenttypes.models import ContentType
 from django.urls import reverse, reverse_lazy
-from django.views.generic import (
-    TemplateView,
-    DetailView,
-    CreateView,
-    ListView,
-    UpdateView,
-    DeleteView,
-    FormView,
-)
-
-from dal import autocomplete
-
+from django.utils.text import slugify
+from django.views import View
+from django.views.generic import (CreateView, DeleteView, DetailView, FormView,
+                                  ListView, TemplateView, UpdateView)
+from django.views.generic.detail import SingleObjectMixin
 from taggit.models import Tag
 
-import logging
-
-logger = logging.getLogger(__name__)
-
-from school.models import (
-    Attendance,
-    Guardian,
-    OffDay,
-    SectionSubject,
-    Student,
-    StudentAssign,
-    Subject,
-    Teacher,
-    Class,
-    Section,
-)
-from school.forms import StudentAssignForm, StudentForm, TeacherForm
-
 from homepage.models import Notice
-from homepage.views import NoticeListView, NoticeDetailView
+from homepage.views import NoticeDetailView, NoticeListView
+from school.forms import StudentAssignForm, StudentForm, TeacherForm
+from school.models import (Attendance, Class, Guardian, OffDay, Section,
+                           SectionSubject, Student, StudentAssign, Subject,
+                           Teacher)
 
-from .forms import (
-    NoticeForm,
-    SectionForm,
-    SectionUpdateForm,
-    SectionSubjectFormset,
-    GuardianForm,
-    AttendanceForm,
-)
+from .forms import (AttendanceForm, GuardianForm, NoticeForm, SectionForm,
+                    SectionSubjectFormset, SectionUpdateForm)
 
 
 class DashboardView(TemplateView):
@@ -620,22 +586,6 @@ class AttendanceIndexView(TemplateView):
         return context
 
 
-class SectionStudentAttendanceCreateView(SuccessMessageMixin, View):
-    def post(self, request, *args, **kwargs):
-        student_id = request.POST.get("student_id")
-        date = request.POST.get("date")
-        status = request.POST.get("status")
-
-        student = get_object_or_404(StudentAssign, pk=student_id)
-        attendance, created = Attendance.objects.get_or_create(
-            student=student, date=date
-        )
-        attendance.status = status
-        attendance.save()
-
-        return JsonResponse({"status": status, "class_roll": student.class_roll})
-
-
 class StudentAttendanceDetailView(DetailView):
     model = Attendance
     template_name = "dashboard/attendance/student_attendance_detail.html"
@@ -648,18 +598,17 @@ class SectionAttendanceCreateView(ListView):
     template_name = "dashboard/attendance/section_attendance_add.html"
     context_object_name = "section_attendance"
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-
+    def get(self, request, *args, **kwargs):
         section = get_object_or_404(Section, pk=self.kwargs["pk"])
 
         try:
-            date_str = self.request.GET.get("date", datetime.now().strftime("%Y-%m-%d"))
+            date_str = request.GET.get("date", datetime.now().strftime("%Y-%m-%d"))
             date = datetime.strptime(date_str, "%Y-%m-%d").date()
         except ValueError as e:
-            messages.error(self.request,f"Error: {e}")
-            date_str = datetime.now().strftime("%Y-%m-%d")
-            date = datetime.strptime(date_str, "%Y-%m-%d").date()
+            messages.error(request, f"Error: {e}")
+            return redirect(
+                reverse("dashboard:section_attendance_add", kwargs={"pk": section.id})
+            )
 
         students = StudentAssign.objects.filter(section=section).order_by("class_roll")
         attendances = Attendance.objects.filter(
@@ -672,17 +621,31 @@ class SectionAttendanceCreateView(ListView):
             "saturday": date.weekday() == 5,
         }
 
-        context.update(
-            {
-                "section": section,
-                "attendances": attendances,
-                "students": students,
-                "date": date_str,
-                "is_offday": is_offday,
-            }
-        )
+        context = {
+            "section": section,
+            "attendances": attendances,
+            "students": students,
+            "date": date_str,
+            "is_offday": is_offday,
+        }
 
-        return context
+        return render(request, self.template_name, context)
+
+
+class SectionStudentAttendanceCreateView(SuccessMessageMixin, View):
+    def post(self, request, *args, **kwargs):
+        student_id = request.POST.get("student_id")
+        status = request.POST.get("status")
+        date = request.POST.get("date")
+
+        student = get_object_or_404(StudentAssign, pk=student_id)
+        attendance, created = Attendance.objects.get_or_create(
+            student=student, date=date
+        )
+        attendance.status = status
+        attendance.save()
+
+        return JsonResponse({"status": status, "class_roll": student.class_roll})
 
 
 # attendance report list for all section
