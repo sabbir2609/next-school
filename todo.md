@@ -1,2 +1,3 @@
 - [x] Add gallery
 - [ ] Setup push notifications -> Web, app, sms, mail
+- [ ] Section Attendance Details view modify 
