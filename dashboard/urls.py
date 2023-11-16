@@ -47,6 +47,10 @@ from .views import (
     SectionAttendanceReportView,
     SectionAttendanceDetailView,
     StudentAttendanceReportView,
+    # exam views
+    ExamListView,
+    ExamCreateView,
+    ExamDeleteView,
 )
 
 app_name = "dashboard"
@@ -124,5 +128,15 @@ urlpatterns = [
     path("dashboard/sections/attendance/report/", SectionAttendanceReportView.as_view(), name="section_attendance_report"),
 
     path("dashboard/students/attendance/<str:pk>/report/", StudentAttendanceReportView.as_view(), name="student_attendance_report"),
+
+    #############
+    # exam urls #
+    #############
+
+    path("dashboard/exams/", ExamListView.as_view(), name="exam_list"),
+    path("dashboard/exams/new/", ExamCreateView.as_view(), name="exam_new"),
+    path("dashboard/exams/<str:slug>/delete/", ExamDeleteView.as_view(), name="exam_delete"),
+
+
 
 ]

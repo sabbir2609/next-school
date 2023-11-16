@@ -370,7 +370,7 @@ class SectionSubject(models.Model):
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
     teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
     period = models.IntegerField(
-        unique=True, default=0, validators=[MaxValueValidator(10), MinValueValidator(0)]
+        default=0, validators=[MaxValueValidator(10), MinValueValidator(0)]
     )
     time = models.TimeField(
         null=True,
@@ -379,7 +379,24 @@ class SectionSubject(models.Model):
 
     class Meta:
         ordering = ["period"]
-        unique_together = ("teacher", "section", "period")
+        unique_together = ("section", "period")
+
+    def clean(self):
+        # Check if the teacher is already assigned to another section in the same period
+        existing_assignment = SectionSubject.objects.filter(
+            teacher=self.teacher, period=self.period
+        ).exclude(section=self.section)
+
+        if existing_assignment.exists():
+            raise ValidationError(
+                {
+                    "teacher": "This teacher is already assigned to another section in the same period."
+                }
+            )
+
+    def save(self, *args, **kwargs):
+        self.clean()  # Validate before saving
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return f"{self.section} - {self.subject.title} - {self.teacher.name_en}"
@@ -415,7 +432,6 @@ class Attendance(models.Model):
     status = models.BooleanField(default=False)
 
     def clean(self):
-
         # Check if the day of the week is Friday (where Monday is 0 and Sunday is 6)
         if self.date.weekday() == 4:
             raise ValidationError(
@@ -476,25 +492,15 @@ class Exam(models.Model):
 
     class Meta:
         ordering = ["-date"]
+        unique_together = ("exam_type", "year")
 
     def __str__(self):
         return f"{self.exam_type} - {self.year}"
 
 
-class ExamSubject(models.Model):
-    class_name = models.ForeignKey(Class, on_delete=models.PROTECT)
-    subject = models.ForeignKey(Subject, on_delete=models.PROTECT)
-
-    def __str__(self):
-        return f"{self.class_name} - {self.subject}"
-
-
 class ExamAssign(models.Model):
     exam = models.ForeignKey(Exam, on_delete=models.CASCADE)
-    subject = models.ForeignKey(ExamSubject, on_delete=models.CASCADE)
-    teacher = models.ForeignKey(
-        Teacher, on_delete=models.PROTECT, null=True, blank=True
-    )
+    subject = models.ForeignKey(SectionSubject, on_delete=models.CASCADE)
     question_paper = models.FileField(upload_to="question_paper", null=True, blank=True)
 
     full_mark = models.PositiveIntegerField(

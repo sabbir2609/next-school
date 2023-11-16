@@ -5,7 +5,7 @@ from dal import autocomplete
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Div, Row, Column
 
-from school.models import Section, SectionSubject, Guardian, Attendance
+from school.models import Section, SectionSubject, Guardian, Attendance, Exam
 
 
 class NoticeForm(forms.ModelForm):
@@ -100,6 +100,16 @@ class AttendanceForm(forms.ModelForm):
     class Meta:
         model = Attendance
         fields = "__all__"
+
+        widgets = {
+            "date": forms.DateInput(attrs={"class": "form-control ", "type": "date"}),
+        }
+
+
+class ExamForm(forms.ModelForm):
+    class Meta:
+        model = Exam
+        fields = ["exam_type", "year", "date"]
 
         widgets = {
             "date": forms.DateInput(attrs={"class": "form-control ", "type": "date"}),

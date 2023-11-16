@@ -19,7 +19,6 @@ from .models import (
     Exam,
     ExamAssign,
     StudentResult,
-    ExamSubject,
 )
 
 # Register your models here.
@@ -87,8 +86,17 @@ class GuardianAdmin(admin.ModelAdmin):
         "nid",
         "email",
         "phone",
+        "student_name",
     )
-    search_fields = ("first_name", "last_name", "email")
+
+    def student_name(self, obj):
+        student = obj.guardian
+        if student:
+            return f"{student.name_en}"
+        return None
+
+    search_fields = ("name_en", "name_bn", "email", "guardian__name_en")
+    search_help_text = "Search by Guardian Name, email, or Student name"
 
 
 @admin.register(Student)
@@ -280,6 +288,7 @@ class AttendanceAdmin(admin.ModelAdmin):
 
     list_per_page = 10
 
+
 @admin.register(OffDay)
 class OffDayAdmin(admin.ModelAdmin):
     list_display = (
@@ -294,6 +303,7 @@ class OffDayAdmin(admin.ModelAdmin):
     date_hierarchy = "date"
 
     list_per_page = 10
+
 
 @admin.register(Exam)
 class ExamAdmin(admin.ModelAdmin):
@@ -311,18 +321,8 @@ class ExamAdmin(admin.ModelAdmin):
     list_per_page = 10
 
 
-@admin.register(ExamSubject)
-class ExamSubjectAdmin(admin.ModelAdmin):
-    list_display = (
-        "class_name",
-        "subject",
-    )
-
-
 @admin.register(ExamAssign)
 class ExamAssignAdmin(admin.ModelAdmin):
-    # get_date = lambda self, obj: obj.exam.date
-
     list_display = (
         "exam",
         "subject",
@@ -338,15 +338,28 @@ class ExamAssignAdmin(admin.ModelAdmin):
         "exam__exam_type",
     )
 
-    # autocomplete_fields = [
-    #     "subject",
-    # ]
+    autocomplete_fields = [
+        "subject",
+    ]
 
     search_fields = ("exam__exam",)
 
     date_hierarchy = "exam__date"
 
     list_per_page = 10
+
+
+@admin.register(SectionSubject)
+class SectionSubjectAdmin(admin.ModelAdmin):
+    list_display = (
+        "section",
+        "subject",
+        "teacher",
+        "period",
+    )
+
+    search_fields = ("subject__subject",)
+    list_filter = ("section__class_name",)
 
 
 @admin.register(StudentResult)
@@ -366,11 +379,6 @@ class StudentResultAdmin(admin.ModelAdmin):
         "student_assign__student__student_id",
         "student_assign__student__name_en",
         "exam_assign",
-    )
-
-    list_filter = (
-        "exam_assign__subject__subject__title",
-        "exam_assign__subject__class_name__title",
     )
 
     search_help_text = "You can search by student id or name"

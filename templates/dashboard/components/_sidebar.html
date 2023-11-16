@@ -203,17 +203,43 @@
                 </a>
 
                 <ul id="attendance" class="sidebar-dropdown list-unstyled collapse bg-primary-subtle"
-                    data-bs-parent="#classAndSection">
+                    data-bs-parent="#sidebar">
 
                     <li class="sidebar-item">
                         <a href="{% url 'dashboard:attendance_index' %}" class="sidebar-link">
-                            Attendance
+                            Index
                         </a>
                     </li>
 
                     <li class="sidebar-item">
                         <a href="{% url 'dashboard:section_attendance_report' %}" class="sidebar-link">
                             Section Report
+                        </a>
+                    </li>
+
+                </ul>
+
+            </li>
+
+            <li class="sidebar-item">
+
+                <a class="sidebar-link collapsed" data-bs-toggle="collapse" data-bs-target="#exam"
+                    aria-expanded="false">
+                    <i class="fa-solid fa-clipboard-user"></i> Exam
+                </a>
+
+                <ul id="exam" class="sidebar-dropdown list-unstyled collapse bg-primary-subtle"
+                    data-bs-parent="#sidebar">
+
+                    <li class="sidebar-item">
+                        <a href="{% url 'dashboard:exam_list' %}" class="sidebar-link">
+                            Exam List
+                        </a>
+                    </li>
+
+                    <li class="sidebar-item">
+                        <a href="{% url 'dashboard:exam_new' %}" class="sidebar-link">
+                            Add Exam
                         </a>
                     </li>
 

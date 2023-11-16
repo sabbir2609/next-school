@@ -1,0 +1,43 @@
+{% extends 'dashboard/dashboard.html' %}
+
+{% block title %}
+Exam List
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    {% if exams %}
+    <h3>Exam List:</h3>
+
+    <table class="table table-striped text-center table-bordered">
+        <thead>
+            <tr>
+                <th>Exam</th>
+                <th>Year</th>
+                <th>Date</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody class="table-group-divider">
+            {% for exam in exams %}
+            <tr>
+                <td>{{ exam.exam_type }}</td>
+                <td>{{ exam.year }}</td>
+                <td>{{ exam.date }}</td>
+                <td>
+                    <a href="{% url 'dashboard:exam_delete' exam.slug %}" class="btn btn-sm btn-danger ">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+    </table>
+
+    {% else %}
+    <h3>No exam added yet!</h3>
+    <a href="{% url 'dashboard:exam_new' %}">
+        <button type="button" class="btn btn-sm btn-primary ">
+            Add +
+        </button>
+    </a>
+    {% endif %}
+</div>
+{% endblock %}

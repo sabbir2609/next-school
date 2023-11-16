@@ -1,5 +1,6 @@
 import calendar
 from datetime import datetime
+from typing import Any
 from dal import autocomplete
 from django.contrib import messages
 from django.contrib.contenttypes.models import ContentType
@@ -39,10 +40,13 @@ from school.models import (
     StudentAssign,
     Subject,
     Teacher,
+    Exam,
+    ExamAssign,
 )
 
 from .forms import (
     AttendanceForm,
+    ExamForm,
     GuardianForm,
     NoticeForm,
     SectionForm,
@@ -555,6 +559,11 @@ class SectionUpdateView(UpdateView):
             messages.warning(self.request, "Nothing to update")
             return super().form_invalid(form)
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["sections"] = Section.objects.all()
+        return context
+
     def get_success_message(self, cleaned_data):
         return "Section updated successfully"
 
@@ -775,3 +784,51 @@ class StudentAttendanceReportView(ListView):
         context["student"] = Student.objects.get(student_id=self.kwargs["pk"])
 
         return context
+
+
+##############
+# Exam Views #
+##############
+
+
+class ExamListView(ListView):
+    model = Exam
+    template_name = "dashboard/exam/exam_index.html"
+    context_object_name = "exams"
+    paginate_by = 10
+
+    def get_context_data(self, **kwargs):
+        context = super(ExamListView, self).get_context_data(**kwargs)
+        exams = self.get_queryset()
+        page = self.request.GET.get("page")
+        paginator = Paginator(exams, self.paginate_by)
+        try:
+            exams = paginator.page(page)
+        except PageNotAnInteger:
+            exams = paginator.page(1)
+        except EmptyPage:
+            exams = paginator.page(paginator.num_pages)
+        context["students"] = exams
+        return context
+
+
+class ExamCreateView(SuccessMessageMixin, CreateView):
+    model = Exam
+    form_class = ExamForm
+    template_name = "dashboard/exam/exam_create.html"
+    success_url = reverse_lazy("dashboard:exam_list")
+    success_message = "Exam created successfully"
+
+    def form_valid(self, form):
+        exam = form.save(commit=False)
+        exam.slug = slugify(f"{exam.exam_type}-{exam.year}")
+        exam.save()
+
+        return super().form_valid(form)
+
+
+class ExamDeleteView(SuccessMessageMixin, DeleteView):
+    model = Exam
+    template_name = "dashboard/exam/exam_confirm_delete.html"
+    success_url = reverse_lazy("dashboard:exam_list")
+    success_message = "Exam deleted successfully"
