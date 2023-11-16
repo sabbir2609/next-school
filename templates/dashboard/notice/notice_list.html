@@ -4,24 +4,25 @@
 {% endblock %}
 
 {% block content %}
-
-<h1>All Notice: </h1>
-
-<div class="dropdown">
-    <button class="btn btn-sm btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
-        aria-expanded="false">
-        Filter
-    </button>
-    <ul class="dropdown-menu">
-        {% for tag in tag_list %}
-        <li><a class="dropdown-item" href="{% url 'dashboard:notice_list' %}?filter={{ tag }}">{{ tag }}</a>
-        </li>
-        {% endfor %}
-
-    </ul>
-</div>
-
 <div class="table-container position-relative mb-2 mt-2">
+    {% if notices %}
+
+    <h1>All Notice: </h1>
+
+    <div class="dropdown">
+        <button class="btn btn-sm btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+            aria-expanded="false">
+            Filter
+        </button>
+        <ul class="dropdown-menu">
+            {% for tag in tag_list %}
+            <li><a class="dropdown-item" href="{% url 'dashboard:notice_list' %}?filter={{ tag }}">{{ tag }}</a>
+            </li>
+            {% endfor %}
+
+        </ul>
+    </div>
+
     <table class="table">
         <thead>
             <tr>
@@ -67,6 +68,11 @@
 
     {% if is_paginated %}
     {% include "home/_pagination.html" %}
+    {% endif %}
+
+    {% else %}
+    <h3>No Notices has been added yet! </h3>
+    Add one <a href="{% url 'dashboard:notice_create' %}" class="btn btn-sm btn-primary">Add + </a>
     {% endif %}
 </div>
 {% endblock %}
