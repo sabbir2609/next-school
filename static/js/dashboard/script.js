@@ -16,7 +16,7 @@ toastElList.forEach(function (toastEl, index) {
     // auto hide toast after 5 seconds
     setTimeout(function () {
         toastList[index].hide()
-    }, 10000)
+    }, 5000)
 
 })
 

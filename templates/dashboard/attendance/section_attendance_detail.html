@@ -8,7 +8,7 @@
 
 <div class="container-fluid">
     <div class="row">
-        <h4>Attendance for {{ section.class_name }} - {{ section.get_name_display }}</h4>
+        <h4>Attendance Report for {{ section.class_name }} - {{ section.get_name_display }}</h4>
 
         {% if request.GET.date %}
         <div class="alert alert-info" role="alert">
@@ -41,6 +41,15 @@
     </div>
 
     <div class="row">
+
+        {% if is_offday.offday %}
+        <h3>This is an off day!.</h3>
+        {% elif is_offday.friday %}
+        <h3>This is a Friday. Offday!</h3>
+        {% elif is_offday.saturday %}
+        <h3>This is a Saturday. Offday!</h3>
+        {% else %}
+
         <table class="table table-striped text-center ">
             <thead>
                 <tr>
@@ -79,11 +88,20 @@
             </tbody>
         </table>
     </div>
-    <a href="{% url 'dashboard:section_attendance_report' %}" class="btn btn-sm btn-primary ">
-        Back To List
-    </a>
+
+    {% if request.GET.date %}
     <a href="{% url 'dashboard:section_attendance_add' section.id %}?date={{date}}"
         class="btn btn-sm btn-warning">Update</a>
+    {% else %}
+    <a href="{% url 'dashboard:section_attendance_add' section.id %}" class="btn btn-sm btn-warning">Update</a>
+    {% endif %}
+
+    {% endif %}
+
+    <a href="{% url 'dashboard:section_attendance_report' %}">
+        <button type="button" class="btn btn-sm btn-primary "> Back To List </button>
+    </a>
+
 </div>
 
 {% endblock %}

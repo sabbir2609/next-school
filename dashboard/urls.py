@@ -115,14 +115,14 @@ urlpatterns = [
 
     path("dashboard/students/attendance/add/", SectionStudentAttendanceCreateView.as_view(), name="section_student_attendance_new"),
 
-    path("dashboard/students/<int:pk>/attendance/", StudentAttendanceDetailView.as_view(), name="student_attendance_detail"),
+    path("dashboard/students/attendance/<int:pk>/detail/", StudentAttendanceDetailView.as_view(), name="student_attendance_detail"),
 
-    path("dashboard/sections/<int:pk>/attendance/add/", SectionAttendanceCreateView.as_view(), name="section_attendance_add"),
+    path("dashboard/sections/attendance/<int:pk>/detail/", SectionAttendanceDetailView.as_view(), name="section_attendance_detail"),
+
+    path("dashboard/sections/attendance/<int:pk>/add/", SectionAttendanceCreateView.as_view(), name="section_attendance_add"),
     
-    path("dashboard/sections/attendance/report", SectionAttendanceReportView.as_view(), name="section_attendance_report"),
+    path("dashboard/sections/attendance/report/", SectionAttendanceReportView.as_view(), name="section_attendance_report"),
 
-    path("dashboard/sections/<int:pk>/attendance/", SectionAttendanceDetailView.as_view(), name="section_attendance_detail"),
-
-    path("dashboard/students/<str:pk>/attendance/report", StudentAttendanceReportView.as_view(), name="student_attendance_report"),
+    path("dashboard/students/attendance/<str:pk>/report/", StudentAttendanceReportView.as_view(), name="student_attendance_report"),
 
 ]

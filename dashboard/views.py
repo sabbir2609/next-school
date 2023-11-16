@@ -614,39 +614,19 @@ class StudentAttendanceDetailView(DetailView):
     context_object_name = "attendance"
 
 
-class SectionAttendanceCreateView(ListView):
-    model = Attendance
-    form_class = AttendanceForm
+class SectionAttendanceCreateView(View):
     template_name = "dashboard/attendance/section_attendance_add.html"
-    context_object_name = "section_attendance"
 
     def get(self, request, *args, **kwargs):
         section = get_object_or_404(Section, pk=self.kwargs["pk"])
 
         try:
-            if request.GET.get("date") == datetime.now().strftime("%Y-%m-%d"):
-                messages.info(request, "It's Today")
-                return redirect(
-                    reverse(
-                        "dashboard:section_attendance_add", kwargs={"pk": section.id}
-                    )
-                )
-            elif request.GET.get("date"):
-                date_str = request.GET.get("date", datetime.now().strftime("%Y-%m-%d"))
-                date = datetime.strptime(date_str, "%Y-%m-%d").date()
-                messages.info(request, f"Filter applied for {date}")
-
-            elif request.GET.get("date") == "":
-                messages.warning(request, "No filter applied")
-
-            date_str = datetime.now().strftime("%Y-%m-%d")
+            date_str = request.GET.get("date", datetime.now().strftime("%Y-%m-%d"))
             date = datetime.strptime(date_str, "%Y-%m-%d").date()
 
         except ValueError as e:
             messages.error(request, f"Error: {e}")
-            return redirect(
-                reverse("dashboard:section_attendance_add", kwargs={"pk": section.id})
-            )
+            return redirect("dashboard:section_attendance_add", pk=section.id)
 
         students = StudentAssign.objects.filter(section=section).order_by("class_roll")
         attendances = Attendance.objects.filter(
@@ -668,6 +648,55 @@ class SectionAttendanceCreateView(ListView):
         }
 
         return render(request, self.template_name, context)
+
+
+class SectionAttendanceDetailView(ListView):
+    template_name = "dashboard/attendance/section_attendance_detail.html"
+    model = Attendance
+    context_object_name = "attendances"
+
+    def get_queryset(self):
+        section = get_object_or_404(Section, pk=self.kwargs["pk"])
+
+        try:
+            date_str = self.request.GET.get("date", datetime.now().strftime("%Y-%m-%d"))
+            date = datetime.strptime(date_str, "%Y-%m-%d").date()
+
+        except ValueError as e:
+            messages.error(self.request, f"Error: {e}")
+            return Attendance.objects.none()
+
+        attendances = Attendance.objects.filter(
+            student__section=section, date=date
+        ).order_by("student__class_roll")
+
+        return attendances
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        section = get_object_or_404(Section, pk=self.kwargs["pk"])
+        date_str = self.request.GET.get("date", datetime.now().strftime("%Y-%m-%d"))
+        date = datetime.strptime(date_str, "%Y-%m-%d").date()
+
+        students = StudentAssign.objects.filter(section=section).order_by("class_roll")
+
+        is_offday = {
+            "offday": OffDay.objects.filter(date=date).exists(),
+            "friday": date.weekday() == 4,
+            "saturday": date.weekday() == 5,
+        }
+
+        context.update(
+            {
+                "section": section,
+                "students": students,
+                "date": date_str,
+                "is_offday": is_offday,
+            }
+        )
+
+        return context
 
 
 class SectionStudentAttendanceCreateView(SuccessMessageMixin, View):
@@ -723,10 +752,6 @@ class SectionAttendanceReportView(ListView):
             "date", datetime.now().strftime("%Y-%m-%d")
         )
         return context
-
-
-class SectionAttendanceDetailView(SectionAttendanceCreateView):
-    template_name = "dashboard/attendance/section_attendance_detail.html"
 
 
 class StudentAttendanceReportView(ListView):
