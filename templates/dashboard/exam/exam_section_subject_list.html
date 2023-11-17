@@ -1,0 +1,37 @@
+{% extends 'dashboard/dashboard.html' %}
+
+{% block title %}
+Exam Section Details
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <h2 class="text-success ">{{exam}} - {{section}}</h2>
+    <h3>Subject List: </h3>
+    <table class="table table-striped text-center ">
+        <thead>
+            <tr>
+                <th>Subject</th>
+                <th>Teacher</th>
+                <th>Date</th>
+                <th>Time</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for subject in exam_assign_subjects %}
+            <tr>
+                <td>
+                    <a
+                        href="{% url 'dashboard:exam_section_subject_detail' subject.exam.slug subject.subject.section.id subject.id %}">
+                        {{ subject.subject.subject.title }}
+                    </a>
+                </td>
+                <td>{{ subject.subject.teacher.name_en }}</td>
+                <td>{{ subject.date }}</td>
+                <td>{{ subject.time }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

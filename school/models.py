@@ -488,7 +488,7 @@ class Exam(models.Model):
     year = models.CharField(max_length=4)
     date = models.DateField(default=datetime.date.today)
 
-    slug = models.SlugField(unique=True, blank=True, null=True)
+    slug = models.SlugField(unique=True)
 
     class Meta:
         ordering = ["-date"]
@@ -509,7 +509,8 @@ class ExamAssign(models.Model):
     pass_mark = models.PositiveIntegerField(
         default=0, validators=[MaxValueValidator(100), MinValueValidator(0)]
     )
-    exam_time = models.TimeField(null=True, blank=True, help_text="Exam Time")
+    date = models.DateField(default=datetime.date.today)
+    time = models.TimeField(null=True, blank=True, help_text="Exam Time")
 
     class Meta:
         ordering = ["exam", "subject"]

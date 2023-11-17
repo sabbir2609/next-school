@@ -1,0 +1,44 @@
+{% extends 'dashboard/dashboard.html' %}
+
+{% block title %}
+Exam Section Details
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="card mt-4">
+        <div class="card-header bg-info-subtle">
+            <h5 class="card-title">
+                Exam: <span class="fw-light ">{{ object.exam }}</span>
+                <br>
+                Section: <span class="fw-normal ">{{object.subject.section}}</span>
+            </h5>
+        </div>
+        <div class="card-body">
+            <p class="card-text h5 fw-light"><strong>Subject:</strong> {{ object.subject.subject.title }}</p>
+
+            <p class="card-text h5 fw-light">
+                <strong>Question Paper:</strong>
+
+                {% if object.question_paper %}
+                {{ object.question_paper.url }}
+                {% else %}
+                <em>No Question Paper Associated!</em>
+                {% endif %}
+
+            </p>
+
+            <p class="card-text h5 fw-light"><strong>Full Mark:</strong> {{ object.full_mark }}</p>
+            <p class="card-text h5 fw-light"><strong>Pass Mark:</strong> {{ object.pass_mark }}</p>
+            <p class="card-text h5 fw-light"><strong>Date:</strong> {{ object.date }}</p>
+            <p class="card-text h5 fw-light"><strong>Time:</strong> {{ object.time }}</p>
+        </div>
+    </div>
+
+    <a href="{% url 'dashboard:exam_section_subject_update' slug=object.exam.slug section_id=object.subject.section.id pk=object.pk %}"
+        class="btn btn-sm btn-warning mt-3">
+        Update
+    </a>
+</div>
+
+{% endblock %}

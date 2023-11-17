@@ -1,0 +1,24 @@
+{% extends "dashboard/dashboard.html" %}
+
+{% block title %} Exam Subject Update {% endblock %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<div class="container-flex">
+    <h2>Add an exam: </h2>
+    <form method="POST" autocomplete="off">
+        {% csrf_token %}
+
+        {{ form | crispy }}
+
+        <button type="submit" class="btn btn-sm btn-primary">Update</button>
+        <a href="{% url 'dashboard:exam_section_subject_detail' slug=object.exam.slug section_id=object.subject.section.id pk=object.pk %}"
+            class="btn btn-sm btn-danger">
+            Cancel
+        </a>
+    </form>
+</div>
+
+{% endblock %}

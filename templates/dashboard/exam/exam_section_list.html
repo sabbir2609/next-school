@@ -1,0 +1,23 @@
+{% extends 'dashboard/dashboard.html' %}
+
+{% block title %}
+Exam Section List
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <h2 class="text-success ">{{exam}}</h2>
+    <h3>Section List: </h3>
+    <ul>
+        {% for item in exam_assign %}
+        <li>
+            <i class="bi bi-record2"></i>
+            <a href="{% url 'dashboard:exam_section_subject_list' exam.slug item.subject.section.id %}"
+                class="text-decoration-none">
+                {{item.subject.section}}
+            </a>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

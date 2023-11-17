@@ -225,7 +225,7 @@
 
                 <a class="sidebar-link collapsed" data-bs-toggle="collapse" data-bs-target="#exam"
                     aria-expanded="false">
-                    <i class="fa-solid fa-clipboard-user"></i> Exam
+                    <i class="bi bi-clipboard"></i></i> Exam
                 </a>
 
                 <ul id="exam" class="sidebar-dropdown list-unstyled collapse bg-primary-subtle"
@@ -240,6 +240,12 @@
                     <li class="sidebar-item">
                         <a href="{% url 'dashboard:exam_new' %}" class="sidebar-link">
                             Add Exam
+                        </a>
+                    </li>
+
+                    <li class="sidebar-item">
+                        <a href="{% url 'dashboard:exam_assign' %}" class="sidebar-link">
+                            Assign Exam
                         </a>
                     </li>
 

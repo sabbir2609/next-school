@@ -21,7 +21,12 @@ Exam List
         <tbody class="table-group-divider">
             {% for exam in exams %}
             <tr>
-                <td>{{ exam.exam_type }}</td>
+                <td>
+                    <a class="text-decoration-none" href="{% url 'dashboard:exam_section_list' exam.slug %}"
+                        title="Section List ">
+                        {{ exam.exam_type }}
+                    </a>
+                </td>
                 <td>{{ exam.year }}</td>
                 <td>{{ exam.date }}</td>
                 <td>

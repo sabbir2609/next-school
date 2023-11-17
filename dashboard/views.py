@@ -6,9 +6,10 @@ from django.contrib import messages
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.messages.views import SuccessMessageMixin
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
-from django.db import IntegrityError
+from django.db import IntegrityError, models
 from django.db.models import Q
 from django.db.models.deletion import ProtectedError
+from django.db.models.query import QuerySet
 from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse, reverse_lazy
@@ -46,6 +47,7 @@ from school.models import (
 
 from .forms import (
     AttendanceForm,
+    ExamAssignForm,
     ExamForm,
     GuardianForm,
     NoticeForm,
@@ -832,3 +834,123 @@ class ExamDeleteView(SuccessMessageMixin, DeleteView):
     template_name = "dashboard/exam/exam_confirm_delete.html"
     success_url = reverse_lazy("dashboard:exam_list")
     success_message = "Exam deleted successfully"
+
+
+# exam assign view
+
+
+class ExamAssignCreateView(SuccessMessageMixin, CreateView):
+    model = ExamAssign
+    form_class = ExamAssignForm
+    template_name = "dashboard/exam/exam_assign.html"
+    success_message = "Exam assigned successfully"
+
+    def get_success_url(self):
+        return reverse_lazy(
+            "dashboard:exam_section_subject_list",
+            kwargs={
+                "slug": self.object.exam.slug,
+                "section_id": self.object.subject.section.id,
+            },
+        )
+
+
+# autocomplete for exam subjects
+class ExamSubjectAutoComplete(autocomplete.Select2QuerySetView):
+    def get_queryset(self):
+        qs = SectionSubject.objects.all()
+        if self.q:
+            qs = qs.filter(subject__title__icontains=self.q)
+        return qs
+
+
+class ExamSectionListView(ListView):
+    model = ExamAssign
+    context_object_name = "exam_assign"
+    template_name = "dashboard/exam/exam_section_list.html"
+
+    def get_queryset(self):
+        exam_slug = self.kwargs["slug"]
+        queryset = ExamAssign.objects.filter(exam__slug=exam_slug)
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["exam"] = Exam.objects.get(slug=self.kwargs["slug"])
+        return context
+
+
+class ExamSectionSubjectListView(ListView):
+    model = ExamAssign
+    template_name = "dashboard/exam/exam_section_subject_list.html"
+    context_object_name = "exam_assign_subjects"
+
+    def get_queryset(self):
+        exam_slug = self.kwargs["slug"]
+        section_id = self.kwargs["section_id"]
+        queryset = ExamAssign.objects.filter(
+            exam__slug=exam_slug, subject__section__id=section_id
+        )
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["exam"] = Exam.objects.get(slug=self.kwargs["slug"])
+        context["section"] = Section.objects.get(id=self.kwargs["section_id"])
+        return context
+
+
+class ExamSectionSubjectDetailView(DetailView):
+    model = ExamAssign
+    template_name = "dashboard/exam/exam_section_subject_detail.html"
+    context_object_name = "subject"
+
+    def get_queryset(self):
+        exam_slug = self.kwargs["slug"]
+        section_id = self.kwargs["section_id"]
+        id = self.kwargs["pk"]
+        queryset = ExamAssign.objects.filter(
+            exam__slug=exam_slug,
+            subject__section__id=section_id,
+            id=id,
+        )
+        return queryset
+
+
+class ExamSectionSubjectUpdateView(SuccessMessageMixin, UpdateView):
+    model = ExamAssign
+    form_class = ExamAssignForm
+    template_name = "dashboard/exam/exam_section_subject_update.html"
+    context_object_name = "subject"
+
+    def get_queryset(self):
+        exam_slug = self.kwargs["slug"]
+        section_id = self.kwargs["section_id"]
+        id = self.kwargs["pk"]
+        queryset = ExamAssign.objects.filter(
+            exam__slug=exam_slug,
+            subject__section__id=section_id,
+            id=id,
+        )
+        return queryset
+
+    def form_valid(self, form):
+        if not form.has_changed():
+            messages.warning(self.request, "Nothing to update")
+            return super().form_invalid(form)
+
+        messages.success(
+            self.request,
+            f"Updated successfully",
+        )
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse_lazy(
+            "dashboard:exam_section_subject_detail",
+            kwargs={
+                "slug": self.kwargs["slug"],
+                "section_id": self.kwargs["section_id"],
+                "pk": self.kwargs["pk"],
+            },
+        )

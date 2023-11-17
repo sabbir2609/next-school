@@ -51,6 +51,14 @@ from .views import (
     ExamListView,
     ExamCreateView,
     ExamDeleteView,
+    # exam assign
+    ExamAssignCreateView,
+    ExamSectionListView,
+    ExamSectionSubjectListView,
+    ExamSectionSubjectDetailView,
+    ExamSectionSubjectUpdateView,
+    # exam subject autocomplete
+    ExamSubjectAutoComplete,
 )
 
 app_name = "dashboard"
@@ -136,7 +144,15 @@ urlpatterns = [
     path("dashboard/exams/", ExamListView.as_view(), name="exam_list"),
     path("dashboard/exams/new/", ExamCreateView.as_view(), name="exam_new"),
     path("dashboard/exams/<str:slug>/delete/", ExamDeleteView.as_view(), name="exam_delete"),
+    path("dashboard/exams/assign/", ExamAssignCreateView.as_view(), name="exam_assign"),
+    path("dashboard/exams/<str:slug>/sections/", ExamSectionListView.as_view(), name="exam_section_list"),
 
+    path("dashboard/exams/<str:slug>/sections/<int:section_id>/subjects/", ExamSectionSubjectListView.as_view(), name="exam_section_subject_list"),
 
+    path("dashboard/exams/<str:slug>/sections/<int:section_id>/subjects/<int:pk>/details", ExamSectionSubjectDetailView.as_view(), name="exam_section_subject_detail"),
+
+    path("dashboard/exams/<str:slug>/sections/<int:section_id>/subjects/<int:pk>/update", ExamSectionSubjectUpdateView.as_view(), name="exam_section_subject_update"),
+    # exam subject autocomplete
+    path("dashboard/exams/subject-autocomplete/", ExamSubjectAutoComplete.as_view(), name="exam_subject_autocomplete"),
 
 ]
