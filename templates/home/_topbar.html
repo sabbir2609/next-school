@@ -1,5 +1,25 @@
 <div class="d-flex align-items-center justify-content-between px-3 bg-primary-subtle ">
 
+  {% if contacts %}
+
+  {% for contact in contacts %}
+
+  <div class="fw-semibold">
+    <span class="d-block d-sm-inline">
+      {% for phone in contact.phonenumber_set.all | first %}
+      <i class="fa-sharp fa-solid fa-phone"></i>
+      <a href="tel:02477701339" class="phone-number">{{ phone.number }}</a>
+      {% endfor %}
+    </span>
+    <span class="d-block d-sm-inline">
+
+      <i class="fa-solid fa-envelope"></i>
+      <a href="mailto:info@turbo.edu.bd" class="email-address">info@turbo.edu.bd</a>
+    </span>
+
+  </div>
+  {% endfor %}
+  {% else %}
   <div class="fw-semibold">
     <span class="d-block d-sm-inline">
       <i class="fa-sharp fa-solid fa-phone"></i>
@@ -10,6 +30,7 @@
       <a href="mailto:info@turbo.edu.bd" class="email-address">info@turbo.edu.bd</a>
     </span>
   </div>
+  {% endif %}
 
   <div class="language-picker dropdown p-1">
     <button class="btn dropdown-toggle btn-sm shadow-lg fw-semibold btn-light border-opacity-50 border-primary"

@@ -41,7 +41,6 @@ class HomePageView(TemplateView):
             :4
         ]  # will show recent 4 items
         context["co_curricular"] = CoCurricular.objects.all()
-
         context["bright_students"] = BrightStudent.objects.all()
 
         return context
