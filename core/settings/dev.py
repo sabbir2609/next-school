@@ -3,6 +3,8 @@ import os
 from .base import *
 
 from dotenv import load_dotenv
+import dj_database_url
+
 
 # Load environment variables from .env file
 try:
@@ -21,10 +23,10 @@ DEBUG = os.environ["DEBUG"]
 
 ALLOWED_HOSTS = ["*"]
 
-# INTERNAL_IPS = [
-#     "127.0.0.1",
-#     "localhost",
-# ]
+INTERNAL_IPS = [
+    "127.0.0.1",
+    "localhost",
+]
 
 DATABASES = {
     "default": {
@@ -32,6 +34,10 @@ DATABASES = {
         "NAME": BASE_DIR / "db.sqlite3",
     }
 }
+
+# DATABASES = {
+#     "default": dj_database_url.parse(os.environ.get("DATABASE_URL"), conn_max_age=600),
+# }
 
 # importing logger settings
 try:
