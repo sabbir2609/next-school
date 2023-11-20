@@ -3,19 +3,13 @@
 import os
 import sys
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
-from dotenv import load_dotenv
-
 
 def main():
     """Run administrative tasks."""
-    print("WEBSITE_HOSTNAME" in os.environ)
-    # Only for Local Development - Load environment variables from the .env file
-    if "WEBSITE_HOSTNAME" not in os.environ:
-        print("Loading environment variables for .env file")
-        env_path = os.path.join(BASE_DIR, ".env")
-        load_dotenv(env_path)
+    if "WEBSITE_HOSTNAME" in os.environ:
+        print("WEBSITE_HOSTNAME available")
+    else:
+        print("WEBSITE_HOSTNAME not available")
 
     settings_module = (
         "core.settings.prod"

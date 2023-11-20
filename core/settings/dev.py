@@ -2,6 +2,15 @@ import os
 
 from .base import *
 
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+try:
+    load_dotenv()
+    print("Loaded environment variables from .env file")
+except Exception as e:
+    print("Failed to load environment variables from .env file")
+
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ["SECRET_KEY"]
 
