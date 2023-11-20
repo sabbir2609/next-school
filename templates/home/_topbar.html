@@ -6,24 +6,31 @@
 
   <div class="fw-semibold">
     <span class="d-block d-sm-inline">
-      {% for phone in contact.phonenumber_set.all | first %}
+      {% for phone in contact.phonenumber_set.all %}
+      {% if forloop.first %}
       <i class="fa-sharp fa-solid fa-phone"></i>
-      <a href="tel:02477701339" class="phone-number">{{ phone.number }}</a>
+      <a href="tel:{{ phone.number }}" class="phone-number">{{ phone.number }}</a>
+      {% endif %}
       {% endfor %}
     </span>
     <span class="d-block d-sm-inline">
-
+      {% for email in contact.emailaddress_set.all %}
+      {% if forloop.first %}
       <i class="fa-solid fa-envelope"></i>
-      <a href="mailto:info@turbo.edu.bd" class="email-address">info@turbo.edu.bd</a>
+      <a href="mailto:{{ email.email }}" class="email-address">{{email.email}}</a>
+      {% endif %}
+      {% endfor %}
+
     </span>
 
   </div>
   {% endfor %}
+
   {% else %}
   <div class="fw-semibold">
     <span class="d-block d-sm-inline">
       <i class="fa-sharp fa-solid fa-phone"></i>
-      <a href="tel:02477701339" class="phone-number">02477701339</a>
+      <a href="tel:+880 123-456-7890" class="phone-number">+880 123-456-7890</a>
     </span>
     <span class="d-block d-sm-inline">
       <i class="fa-solid fa-envelope"></i>

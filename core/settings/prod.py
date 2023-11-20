@@ -1,4 +1,5 @@
 from .base import *
+import dj_database_url
 
 import os
 
@@ -17,15 +18,7 @@ CSRF_TRUSTED_ORIGINS = (
 DEBUG = os.environ["DEBUG"]
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": os.environ["DB_NAME"],
-        "USER": os.environ["DB_USER"],
-        "PASSWORD": os.environ["DB_PASSWORD"],
-        "HOST": os.environ["DB_HOST"],
-        "PORT": os.environ["DB_PORT"],
-        "ATOMIC_REQUESTS": True,
-    }
+    "default": dj_database_url.parse(os.environ.get("DATABASE_URL"), conn_max_age=600),
 }
 
 
