@@ -4,7 +4,7 @@ charset-normalizer==3.3.0
 crispy-bootstrap5==0.7
 defusedxml==0.7.1
 dj-database-url==2.1.0
-Django==4.2.4
+Django==4.2.7
 django-autocomplete-light==3.9.7
 django-browser-reload==1.11.0
 django-ckeditor==6.7.0
