@@ -131,7 +131,7 @@ class ExamAssignForm(forms.ModelForm):
         widgets = {
             "exam": forms.Select(
                 attrs={
-                    "class": "form-select form-select-lg mb-3",
+                    "class": "form-select form-select",
                 }
             ),
             "subject": autocomplete.ModelSelect2(
