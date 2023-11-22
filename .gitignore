@@ -4,8 +4,7 @@
 *.pyc
 __pycache__
 
-# Environments 
-.env 
+# Environments  
 .venv 
 env/ 
 venv/ 
