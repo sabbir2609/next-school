@@ -2,6 +2,8 @@
 
 This is a School Management System that allows schools to manage their students, teachers, courses, classes, exams, results, attendance, fees, and routines.
 
+[![Deployed on Vercel](https://vercel.com/button)](https://next-school-psi.vercel.app/)
+
 ## Features
 1. Manage students, teachers, courses, classes, exams, results, attendance, fees, and routines
 2. Enroll students in classes and record their attendance
@@ -33,4 +35,4 @@ Usage
 Contributions are welcome! Please feel free to submit a pull request or open an issue if you find a bug or have a feature request.
 
 # License
-This project is licensed under the MIT License. See the LICENSE file for details.
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.

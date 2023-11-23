@@ -19,3 +19,5 @@ ngrok.exe
 logs
 
 media
+
+prod.env
