@@ -1,0 +1,1 @@
+use urllib3 <=1.26.15 for vercel or use urllib3==2.0.6 / latest
