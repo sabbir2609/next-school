@@ -1,7 +1,13 @@
 from .base import *
 import dj_database_url
-
+from dotenv import load_dotenv
 import os
+
+try:
+    load_dotenv()
+    print("Loaded environment variables from .env file")
+except Exception as e:
+    print("Failed to load environment variables from .env file")
 
 SECRET_KEY = os.environ["SECRET_KEY"]
 
@@ -22,3 +28,9 @@ DEBUG = False
 DATABASES = {
     "default": dj_database_url.parse(os.environ.get("DATABASE_URL"), conn_max_age=600),
 }
+
+
+try:
+    from .logger_settings import *
+except Exception as e:
+    pass

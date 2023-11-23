@@ -51,7 +51,3 @@ MIDDLEWARE += [
     # reload
     "django_browser_reload.middleware.BrowserReloadMiddleware",
 ]
-
-
-MEDIA_URL = "media/"
-MEDIA_ROOT = BASE_DIR / "media"
