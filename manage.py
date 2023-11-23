@@ -7,9 +7,9 @@ import sys
 def main():
     """Run administrative tasks."""
     if "WEBSITE_HOSTNAME" in os.environ:
-        print("WEBSITE_HOSTNAME available")
+        print("file:manage.py WEBSITE_HOSTNAME available")
     else:
-        print("WEBSITE_HOSTNAME not available")
+        print("file:manage.py WEBSITE_HOSTNAME not available")
 
     settings_module = (
         "core.settings.prod"

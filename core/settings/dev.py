@@ -44,8 +44,6 @@ except Exception as e:
 MIDDLEWARE += [
     # Django Debug Toolbar
     "debug_toolbar.middleware.DebugToolbarMiddleware",
-    # reload
-    "django_browser_reload.middleware.BrowserReloadMiddleware",
 ]
 
 
