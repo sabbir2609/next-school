@@ -53,17 +53,11 @@ class Class(models.Model):
 
 
 class Section(models.Model):
-    SECTION_CHOICES_CLASS_6_7_8 = [
-        ("A", "Section A"),
-        ("B", "Section B"),
-        ("C", "Section C"),
-    ]
-
-    SECTION_CHOICES_CLASS_9_10 = [
-        ("Sc", "Science"),
-        ("Co", "Commerce"),
-        ("Ar", "Arts"),
-    ]
+    class SectionChoices(models.TextChoices):
+        SECTION_A = "A", _("Section A")
+        SECTION_B = "B", _("Section B")
+        SECTION_C = "C", _("Section C")
+        SECTION_D = "D", _("Section D")
 
     class_name = models.ForeignKey(
         Class,
@@ -73,10 +67,17 @@ class Section(models.Model):
     )
 
     name = models.CharField(
-        max_length=2,
-        verbose_name="Section",
-        choices=SECTION_CHOICES_CLASS_6_7_8 + SECTION_CHOICES_CLASS_9_10,
+        max_length=2, verbose_name="Section", choices=SectionChoices.choices
     )
+
+    abustract_name = models.CharField(
+        max_length=255,
+        null=True,
+        blank=True,
+        help_text=_("Section Abstract Name, e.g. Section `Meghna`"),
+        unique=True,
+    )
+
     description = models.CharField(
         max_length=255,
         null=True,
@@ -93,18 +94,6 @@ class Section(models.Model):
     )
     seat = models.PositiveIntegerField(default=45)
     subjects = models.ManyToManyField(Subject, through="SectionSubject")
-
-    def clean(self):
-        # Check your validation conditions and raise ValidationError if needed
-        if self.name in ("Ar", "Co", "Sc") and self.class_name.title not in ("9", "10"):
-            raise ValidationError(
-                f"'{self.get_name_display()}' can only be applied to classes 'Nine' and 'Ten'"
-            )
-
-        if self.name in ("A", "B", "C") and self.class_name.title in ("9", "10"):
-            raise ValidationError(
-                f"'{self.get_name_display()}' can only be applied to classes 'Six', 'Seven', and 'Eight'"
-            )
 
     def save(self, *args, **kwargs):
         # Run full clean to trigger the custom clean method

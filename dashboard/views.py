@@ -517,36 +517,6 @@ class SectionCreateView(SuccessMessageMixin, CreateView):
         context["sections"] = Section.objects.all()
         return context
 
-    def form_valid(self, form):
-        instance = form.save(commit=False)
-
-        if instance.name in ("Ar", "Co", "Sc") and instance.class_name.title not in (
-            "9",
-            "10",
-        ):
-            messages.warning(
-                self.request,
-                f"'{instance.get_name_display()}' can only be applied to classes 'Nine' and 'Ten'",
-            )
-            return self.form_invalid(form)
-
-        if instance.name in ("A", "B", "C") and instance.class_name.title in (
-            "9",
-            "10",
-        ):
-            messages.warning(
-                self.request,
-                f"'{instance.get_name_display()}' can only be applied to classes 'Six', 'Seven', and 'Eight'",
-            )
-            return self.form_invalid(form)
-
-        instance.save()
-        messages.success(
-            self.request,
-            f"Section {instance.class_name.title} - {instance.get_name_display()} created successfully",
-        )
-        return super().form_valid(form)
-
     def get_success_url(self):
         return reverse_lazy("dashboard:section_detail", kwargs={"pk": self.object.pk})
 

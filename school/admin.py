@@ -66,7 +66,7 @@ class SectionAdmin(admin.ModelAdmin):
         "class_name",
         "teacher",
         "seat",
-        "description",
+        "abustract_name",
     )
     inlines = [SectionSubjectInline]
     search_fields = (
