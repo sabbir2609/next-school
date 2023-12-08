@@ -511,10 +511,10 @@ class ExamAssign(models.Model):
 
 class StudentResult(models.Model):
     exam_assign = models.ForeignKey(
-        ExamAssign, on_delete=models.CASCADE, help_text="Exam Assign"
+        ExamAssign, on_delete=models.CASCADE, help_text=_("Choose Exam")
     )
     student_assign = models.ForeignKey(
-        StudentAssign, on_delete=models.CASCADE, help_text="Student Assign"
+        StudentAssign, on_delete=models.CASCADE, help_text=_("Choose Student")
     )
 
     # obtained marks
