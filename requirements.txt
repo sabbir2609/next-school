@@ -1,5 +1,5 @@
 asgiref==3.7.2
-certifi==2023.7.22
+certifi==2024.2.2
 charset-normalizer==3.3.0
 cloudinary==1.36.0
 crispy-bootstrap5==0.7
